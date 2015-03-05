@@ -1,28 +1,95 @@
-#import <iostream>
+#include <iostream>
+#include <vector>
+#include "Instance.cpp"
 
 class Room {
   private:
-	const int width;
-	const int height;
+	std::string name;
+	int width;
+	int height;
+	std::vector< std::vector< Instance > > instances;
+	bool is_initialized;
   public:
 	
-	Room(){}
-	Room(int w, int h) {
+	Room() {
+		width = 0;
+		height = 0;
+		is_initialized = false;
+	}
+	
+	Room(int w, int h, std::string n) {
 		width = w;
 		height = h;
+		name = n;
 	}
 	
 	void print_dimensions();
+	void print_instances();
+	
+	void init();
+	
+	void set_height(int h);
+	int get_height();
+	void set_width(int w);
+	int get_width();
+	void set_name(std::string str);
+	std::string get_name();
 };
 
 void Room::print_dimensions() {
 	std::cout << width << "x" << height << std::endl;
 }
 
-int main() {
-	Room a_room(25,25);
+void Room::print_instances() {
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			std::cout << "at position: " << j << "," << i << std::endl;
+			instances[i][j].print_instance();
+		}
+	}
+}
 
+void Room::init() {
+	if ((width > 0) && (height > 0))
+		instances.resize(height, std::vector< Instance >(width, Instance(0)));
+	else
+		std::cout << "ERROR: Height and width not correctly set." << std::endl;
+}
+
+void Room::set_height(int h) {
+	height = h;
+}
+
+int Room::get_height() {
+	return height;
+}
+
+void Room::set_width(int w) {
+	width = w;
+}
+
+int Room::get_width() {
+	return width;
+}
+
+void Room::set_name(std::string str) {
+	name = str;
+}
+
+std::string Room::get_name() {
+	return name;
+}
+
+int main() {
+	Room a_room;
+	
+	a_room.set_height(5);
+	a_room.set_width(3);
+
+	a_room.init();
+	
 	a_room.print_dimensions();
+	a_room.print_instances();
 	
 	return 0;
 }
