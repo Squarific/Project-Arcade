@@ -3,6 +3,7 @@
 #include <string>
 #include "Instance.cpp"
 #include "Move.cpp"
+#include "XMLParser.cpp"
 
 class Room {
   private:
@@ -30,7 +31,7 @@ class Room {
 	void print_ascii();
 	
 	// Init
-	// Fills the room width empty instances. (type = 0, moveable = false)
+	// Fills the room width empty instances. (type = 0, movable = false)
 	void init();
 	
 	// Height
@@ -46,15 +47,16 @@ class Room {
 	std::string get_name();
 	
 	// Instances
-	void set_instance(int width, int height, int type, bool moveable);
-	Instance get_instance(int width, int height);
+	void set_instance(int width, int height, int type, bool movable);
+	Instance get_instance(int width, int height); // RETURNS A COPY!
+	void set_instance_name(int width, int height, std::string str);
 	
 	// Moves an instance from location 'from', to location 'to'
 	// The previous location will be filled with an empty instance.
 	void move_instance(int from_width, int from_height, int to_width, int to_height);
 	
-	// Uses a move instance to move to a certain location, by finding the player's location and executing the move.
-	void move_player(Move& move);
+	// Executes a move command, moving the player and other adjacent objects depending on their movable status.
+	void execute_move(Move& move);
 
 	// Player Coordinates
 	int get_player_width();
@@ -112,17 +114,21 @@ std::string Room::get_name() {
 	return name;
 }
 
-void Room::set_instance(int width, int height, int type, bool moveable) {
+void Room::set_instance(int width, int height, int type, bool movable) {
 	instances[height][width].set_type(type);
-	instances[height][width].set_moveable(moveable);
+	instances[height][width].set_movable(movable);
 }
 
 Instance Room::get_instance(int width, int height) {
 	return instances[height][width];
 }
 
+void Room::set_instance_name(int width, int height, std::string str) {
+	instances[height][width].set_name(str);
+}
+
 void Room::move_instance(int from_width, int from_height, int to_width, int to_height) {
-	this->set_instance(to_width, to_height, instances[from_height][from_width].get_type(), instances[from_height][from_width].get_moveable());
+	this->set_instance(to_width, to_height, instances[from_height][from_width].get_type(), instances[from_height][from_width].get_movable());
 	this->set_instance(from_width, from_height, 0, false);
 }
 
@@ -144,45 +150,74 @@ int Room::get_player_height() {
 	}
 }
 
-void Room::move_player(Move& move) {
+void Room::execute_move(Move& move) {
 	int player_x = this->get_player_width();
 	int player_y = this->get_player_height();
 	int direction = move.get_direction();
-	int destination_x, destination_y;
+	int offset_x, offset_y;
 	
+	// Get offset
 	if (direction == 0) {
-		destination_x = player_x + 1;
-		destination_y = player_y;
+		offset_x = 1;
+		offset_y = 0;
 	}
 	else if (direction == 1) {
-		destination_x = player_x;
-		destination_y = player_y + 1;
+		offset_x = 0;
+		offset_y = 1;
 	}
 	else if (direction == 2) {
-		destination_x = player_x - 1;
-		destination_y = player_y;
+		offset_x = -1;
+		offset_y = 0;
 	}
 	else if (direction == 3) {
-		destination_x = player_x;
-		destination_y = player_y - 1;
+		offset_x = 0;
+		offset_y = -1;
 	}
 	
-	this->move_instance(player_x, player_y, destination_x, destination_y);
+	// Destination out of bounds
+	if ((player_x + offset_x > width) || (player_x + offset_x < 0) || (player_y + offset_y > height) || (player_y + offset_y < 0)) {
+		std::cout << "ERROR: Destination is out of bounds" << std::endl;
+		return;
+	}
+	
+	// Destination is air
+	if (instances[player_y + offset_y][player_x + offset_x].get_type() == 0) {
+		this->move_instance(player_x, player_y, player_x + offset_x, player_y + offset_y);
+		return;
+	}
+	
+	// Destination is a non-movable instance and is not air
+	if (instances[player_y + offset_y][player_x + offset_x].get_movable() == false) {
+		std::cout << "ERROR: Destination contains a non-movable instance" << std::endl;
+		return;
+	}
+	
+	// Destination is a moveable instance
+	if (instances[player_y + offset_y][player_x + offset_x].get_movable()) {
+		// Object behind destination is out of bounds -> moveable object gets pushed off the platform
+		if ((player_x + 2 * offset_x > width) || (player_x + 2 * offset_x < 0) || (player_y + 2 * offset_y > height) || (player_y + 2 * offset_y < 0)) {
+			this->move_instance(player_x, player_y, player_x + offset_x, player_y + offset_y);
+			return;
+		}
+		// Object behind destination is not air -> cannot move in that direction
+		if (instances[player_y + 2 * offset_y][player_x + 2 * offset_x].get_type() != 0) {
+			std::cout << "ERROR: Second non-air instance located behind moveable instance" << std::endl;
+			return;
+		}
+		// Object behind destination is air -> move both objects
+		this->move_instance(player_x + offset_x, player_y + offset_y, player_x + 2 * offset_x, player_y + 2 * offset_y);
+		this->move_instance(player_x, player_y, player_x + offset_x, player_y + offset_y);
+		return;
+	}
+	
+	// If this pops up, the code above is not correct.
+	std::cout << "ERROR: Move not recognized" << std::endl;
 }
 
 int main() {
 	Room testroom;
-	Move move1(1, "Chip");
-	Move move2(0, "Chip");
 	
-	testroom.set_height(10);
-	testroom.set_width(10);
-	testroom.init();
-	
-	testroom.set_instance(1, 1, 1, false);
-	
-	testroom.move_player(move1);
-	testroom.move_player(move2);
+	testroom.loadFromXmlFile("Speelveld1.0.xml")
 	
 	testroom.print_dimensions();
 	testroom.print_ascii();
