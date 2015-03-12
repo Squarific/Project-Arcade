@@ -1,6 +1,7 @@
 class Instance {
   private:
 	int type;
+	bool moveable;
 	std::string name;
 	/*
 		The following ints are used to define which type the instance is:
@@ -12,14 +13,20 @@ class Instance {
 	
   public:
 	Instance(){}
-	Instance(int t) {
+	Instance(int t, bool m) {
 		type = t;
+		moveable = m;
 	}
 	
 	int get_type();
 	void set_type(int t);
+	
 	std::string get_name();
 	void set_name(std::string n);
+	
+	bool get_moveable();
+	void set_moveable(bool m);
+	
 	void print_instance();
 };
 
@@ -39,6 +46,14 @@ void Instance::set_name(std::string n) {
 	name = n;
 }
 
+bool Instance::get_moveable() {
+	return moveable;
+}
+
+void Instance::set_moveable(bool m) {
+	moveable = m;
+}
+
 void Instance::print_instance() {
-	std::cout << "Instance: Type: " << type << std::endl;
+	std::cout << "INSTANCE: Type: " << type << std::endl;
 }

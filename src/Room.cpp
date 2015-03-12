@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
+#include <string>
 #include "Instance.cpp"
+#include "Move.cpp"
 
 class Room {
   private:
@@ -23,18 +25,42 @@ class Room {
 		name = n;
 	}
 	
+	// Prints
 	void print_dimensions();
-	void print_instances();
+	void print_ascii();
 	
+	// Init
+	// Fills the room width empty instances. (type = 0, moveable = false)
 	void init();
 	
+	// Height
 	void set_height(int h);
 	int get_height();
+	
+	// Width
 	void set_width(int w);
 	int get_width();
+	
+	// Name
 	void set_name(std::string str);
 	std::string get_name();
+	
+	// Instances
+	void set_instance(int width, int height, int type, bool moveable);
+	Instance get_instance(int width, int height);
+	
+	// Moves an instance from location 'from', to location 'to'
+	// The previous location will be filled with an empty instance.
+	void move_instance(int from_width, int from_height, int to_width, int to_height);
+	
+	// Uses a move instance to move to a certain location, by finding the player's location and executing the move.
+	void move_player(Move& move);
 
+	// Player Coordinates
+	int get_player_width();
+	int get_player_height();
+
+	// XML
 	bool loadFromXMLFile(const char* filename);
 };
 
@@ -42,20 +68,24 @@ void Room::print_dimensions() {
 	std::cout << width << "x" << height << std::endl;
 }
 
-void Room::print_instances() {
+void Room::print_ascii() {
+	// TOP DASHES
+	std::cout << std::string(2 * width + 1, '-') << std::endl;
+
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
-			std::cout << "at position: " << j << "," << i << std::endl;
-			instances[i][j].print_instance();
+			std::cout << "|" << instances[height - 1 - i][j].get_type();
 		}
+		std::cout << "|" << std::endl;
+		std::cout << std::string(2 * width + 1, '-') << std::endl;
 	}
 }
 
 void Room::init() {
 	if ((width > 0) && (height > 0))
-		instances.resize(height, std::vector< Instance >(width, Instance(0)));
+		instances.resize(height, std::vector< Instance >(width, Instance(0, false)));
 	else
-		std::cout << "ERROR: Height and width not correctly set." << std::endl;
+		std::cout << "ERROR: height and width not correctly set." << std::endl;
 }
 
 void Room::set_height(int h) {
@@ -82,66 +112,80 @@ std::string Room::get_name() {
 	return name;
 }
 
-bool Room::loadFromXMLFile (const char* filename) {
-	// Create xml dom
-	TiXmlDocument doc(filename);
+void Room::set_instance(int width, int height, int type, bool moveable) {
+	instances[height][width].set_type(type);
+	instances[height][width].set_moveable(moveable);
+}
+
+Instance Room::get_instance(int width, int height) {
+	return instances[height][width];
+}
+
+void Room::move_instance(int from_width, int from_height, int to_width, int to_height) {
+	this->set_instance(to_width, to_height, instances[from_height][from_width].get_type(), instances[from_height][from_width].get_moveable());
+	this->set_instance(from_width, from_height, 0, false);
+}
+
+int Room::get_player_width() {
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			if (instances[i][j].get_type() == 1)
+				return j;
+		}
+	}
+}
+
+int Room::get_player_height() {
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			if (instances[i][j].get_type() == 1)
+				return i;
+		}
+	}
+}
+
+void Room::move_player(Move& move) {
+	int player_x = this->get_player_width();
+	int player_y = this->get_player_height();
+	int direction = move.get_direction();
+	int destination_x, destination_y;
 	
-	// Load the document
-	if (!doc.LoadFile()) {
-		cerr << "File " << filename << " not found" << endl;
-		return false;
+	if (direction == 0) {
+		destination_x = player_x + 1;
+		destination_y = player_y;
 	}
-
-	// Get root element
-	TiXmlElement* root = doc.FirstChildElement();
-	if (root == NULL) {
-		cerr << "XML Error: No root element" << endl;
-		return false;
+	else if (direction == 1) {
+		destination_x = player_x;
+		destination_y = player_y + 1;
 	}
-
-	// Root element should be 'veld'
-	if (root->Value() !== "VELD") {
-		cerr << "XML Error: Root element has to be called 'veld'" << endl;
-		return false;
+	else if (direction == 2) {
+		destination_x = player_x - 1;
+		destination_y = player_y;
+	}
+	else if (direction == 3) {
+		destination_x = player_x;
+		destination_y = player_y - 1;
 	}
 	
-	// Parse the tags 'NAAM', 'LENGTE', 'BREEDTE', 'SPELER', 'OBSTAKEL'
-	for (TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
-		string elemName = elem->Value();
-		
-		if (elemName == "NAAM" || elemName == "LENGTE" || elemName == "BREEDTE") {
-			// Get the text between the name, length and width tags
-			TiXmlNode* node = elem->FirstChild();
-			TiXmlText* text = node->ToText();
-			string str = text->Value();
-			
-			if (elemName == "NAAM") this->set_name(str);
-			if (elemName == "LENGTE") this->set_length(stoi(str));
-			if (elemName == "BREEDTE") this->set_width(stoi(str));
-		}
-
-		if (elemName == "OBSTAKEL") {
-
-		}
-
-		if (elemName == "SPELER") {
-			
-		}
-	}
-
-	return true;
+	this->move_instance(player_x, player_y, destination_x, destination_y);
 }
 
 int main() {
-	Room a_room;
+	Room testroom;
+	Move move1(1, "Chip");
+	Move move2(0, "Chip");
 	
-	a_room.set_height(5);
-	a_room.set_width(3);
-
-	a_room.init();
+	testroom.set_height(10);
+	testroom.set_width(10);
+	testroom.init();
 	
-	a_room.print_dimensions();
-	a_room.print_instances();
+	testroom.set_instance(1, 1, 1, false);
+	
+	testroom.move_player(move1);
+	testroom.move_player(move2);
+	
+	testroom.print_dimensions();
+	testroom.print_ascii();
 	
 	return 0;
 }
