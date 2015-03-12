@@ -80,9 +80,17 @@ bool Room::loadFromXMLFile (const char* filename) {
 		if (elemName == "SPELER") {
 			TiXmlNode* node = elem->FirstChild()->FirstChild();
 			TiXmlText* text = node->ToText();
-			string str = text->Value();
+			string name = text->Value();
 
-			//this->set_instance_name(x, y, type, moveable);
+			int x = 0;
+			int y = 0;
+
+			elem->Attribute("x", &x);
+			elem->Attribute("y", &y);
+
+			cout << x << y << endl;
+
+			this->set_instance_name(x, y, name);
 		}
 	}
 
