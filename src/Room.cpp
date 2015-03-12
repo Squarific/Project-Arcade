@@ -1,9 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "Instance.cpp"
 #include "Move.cpp"
-#include "XMLParser.cpp"
+#include "Instance.cpp"
 
 class Room {
   private:
@@ -212,15 +211,4 @@ void Room::execute_move(Move& move) {
 	
 	// If this pops up, the code above is not correct.
 	std::cout << "ERROR: Move not recognized" << std::endl;
-}
-
-int main() {
-	Room testroom;
-	
-	testroom.loadFromXmlFile("Speelveld1.0.xml")
-	
-	testroom.print_dimensions();
-	testroom.print_ascii();
-	
-	return 0;
 }
