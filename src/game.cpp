@@ -5,7 +5,7 @@
 int main() {
 	Room testroom;
 	
-	testroom.loadFromXmlFile("Speelveld1.0.xml")
+	testroom.loadFromXMLFile("Speelveld1.0.xml");
 	
 	testroom.print_dimensions();
 	testroom.print_ascii();

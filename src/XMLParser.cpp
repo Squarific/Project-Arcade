@@ -21,7 +21,7 @@ bool Room::loadFromXMLFile (const char* filename) {
 	}
 
 	// Root element should be 'veld'
-	if (root->Value() !== "VELD") {
+	if (root->Value() != "VELD") {
 		cerr << "XML Error: Root element has to be called 'veld'" << endl;
 		return false;
 	}
@@ -37,7 +37,7 @@ bool Room::loadFromXMLFile (const char* filename) {
 			string str = text->Value();			
 			
 			if (elemName == "NAAM") this->set_name(str);
-			if (elemName == "LENGTE") this->set_length(stoi(str));
+			if (elemName == "LENGTE") this->set_height(stoi(str));
 			if (elemName == "BREEDTE") {
 				// After we set width we have to init the room
 				this->set_width(stoi(str));
@@ -59,12 +59,12 @@ bool Room::loadFromXMLFile (const char* filename) {
 				cout << "Ignoring unknown type " << str << "." << endl;
 			}
 
-			bool moveable;
-			string moveableString = elem->Attribute("beweegbaar");
-			if (mobeableString == "true") {
-				moveable = true;
+			bool movable;
+			string movableString = elem->Attribute("beweegbaar");
+			if (movableString == "true") {
+				movable = true;
 			} else {
-				moveable = false;
+				movable = false;
 			}
 
 			int x = 0;
@@ -75,7 +75,7 @@ bool Room::loadFromXMLFile (const char* filename) {
 
 			cout << x << y << endl;
 
-			this->set_instance(x, y, type, moveable);
+			this->set_instance(x, y, type, movable);
 		}
 
 		if (elemName == "SPELER") {
