@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Room.cpp"
+#include "./TinyXML/tinyxml.h"
 #include "XMLParser.cpp"
 
 int main() {
