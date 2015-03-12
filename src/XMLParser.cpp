@@ -37,7 +37,11 @@ bool Room::loadFromXMLFile (const char* filename) {
 			
 			if (elemName == "NAAM") this->set_name(str);
 			if (elemName == "LENGTE") this->set_length(stoi(str));
-			if (elemName == "BREEDTE") this->set_width(stoi(str));
+			if (elemName == "BREEDTE") {
+				// After we set width we have to init the room
+				this->set_width(stoi(str));
+				this->init();
+			}
 		}
 
 		if (elemName == "OBSTAKEL") {
@@ -74,6 +78,9 @@ bool Room::loadFromXMLFile (const char* filename) {
 		}
 
 		if (elemName == "SPELER") {
+			TiXmlNode* node = elem->FirstChild()->FirstChild();
+			TiXmlText* text = node->ToText();
+			string str = text->Value();
 
 			//this->set_instance_name(x, y, type, moveable);
 		}
