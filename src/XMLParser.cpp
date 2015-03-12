@@ -20,9 +20,9 @@ bool Room::loadFromXMLFile (const char* filename) {
 		return false;
 	}
 
-	// Root element should be 'veld'
-	if (root->Value() != "VELD") {
-		cerr << "XML Error: Root element has to be called 'veld'" << endl;
+	// Root element should be 'VELD'
+	if (string(root->Value()) != "VELD") {
+		cerr << "XML Error: Root element has to be called 'VELD' but was '" << root->Value() << "'" << endl;
 		return false;
 	}
 	
@@ -56,7 +56,7 @@ bool Room::loadFromXMLFile (const char* filename) {
 			} else if (str == "ton") {
 				type = 3;
 			} else {
-				cout << "Ignoring unknown type " << str << "." << endl;
+				cerr << "Ignoring unknown type " << str << "." << endl;
 			}
 
 			bool movable;
@@ -73,8 +73,6 @@ bool Room::loadFromXMLFile (const char* filename) {
 			elem->Attribute("x", &x);
 			elem->Attribute("y", &y);
 
-			cout << x << y << endl;
-
 			this->set_instance(x, y, type, movable);
 		}
 
@@ -89,8 +87,7 @@ bool Room::loadFromXMLFile (const char* filename) {
 			elem->Attribute("x", &x);
 			elem->Attribute("y", &y);
 
-			cout << x << y << endl;
-
+			this->set_instance(x, y, 1, false);
 			this->set_instance_name(x, y, name);
 		}
 	}

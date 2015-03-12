@@ -10,5 +10,5 @@ int main() {
 	testroom.print_dimensions();
 	testroom.print_ascii();
 	
-	return 0;
+	return 1;
 }
