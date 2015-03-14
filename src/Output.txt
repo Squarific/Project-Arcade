@@ -1,0 +1,13 @@
+Het huidige speelveld is Level 1
+Eigenschappen van dit veld:
+- Breedte: 10
+- Hoogte: 10
+
+Speler Chip bevindt zich in het speelveld op positie (4, 5).
+
+Er bevindt zich een ton op positie (5, 1).
+
+Er bevindt zich een ton op positie (5, 2).
+
+Er bevindt zich een ton op positie (3, 4).
+

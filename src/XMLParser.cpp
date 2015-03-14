@@ -37,10 +37,10 @@ bool Room::loadFromXMLFile (const char* filename) {
 			string str = text->Value();			
 			
 			if (elemName == "NAAM") this->set_name(str);
-			if (elemName == "LENGTE") this->set_height(stoi(str));
+			if (elemName == "LENGTE") this->set_height(atoi(str.c_str()));
 			if (elemName == "BREEDTE") {
 				// After we set width we have to init the room
-				this->set_width(stoi(str));
+				this->set_width(atoi(str.c_str()));
 				this->init();
 			}
 		}

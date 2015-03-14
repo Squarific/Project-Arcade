@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <string>
 #include "Move.cpp"
@@ -63,6 +64,9 @@ class Room {
 
 	// XML
 	bool loadFromXMLFile(const char* filename);
+	
+	// File Outpot
+	void writeToFile(const char* filename);
 };
 
 void Room::print_dimensions() {
@@ -211,4 +215,29 @@ void Room::execute_move(Move& move) {
 	
 	// If this pops up, the code above is not correct.
 	std::cout << "ERROR: Move not recognized" << std::endl;
+}
+
+void Room::writeToFile(const char* filename) {
+	std::ofstream file;
+	file.open(filename);
+	
+	// Room properties
+	file << "Het huidige speelveld is " << name << "\n";
+	file << "Eigenschappen van dit veld:\n- Breedte: " << width << "\n- Hoogte: " << height << "\n\n";
+	
+	// Player location
+	int player_x = get_player_width();
+	int player_y = get_player_height();
+	file << "Speler " << instances[player_y][player_x].get_name() << " bevindt zich in het speelveld op positie (" << player_x << ", " << player_y << ").\n\n";
+	
+	// Barrel locations
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			if (instances[i][j].get_type() == 3) {
+				file << "Er bevindt zich een ton op positie (" << j << ", " << i << ").\n\n";
+			}
+		}
+	}
+	
+	file.close();
 }

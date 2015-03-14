@@ -10,5 +10,7 @@ int main() {
 	testroom.print_dimensions();
 	testroom.print_ascii();
 	
+	testroom.writeToFile("Output.txt");
+	
 	return 1;
 }
