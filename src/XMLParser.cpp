@@ -128,14 +128,16 @@ bool Room::loadMovesFromXMLFile(const char* filename) {
 			TiXmlElement* playernameElem = elem->FirstChildElement();
 			TiXmlElement* directionElem = playernameElem->NextSiblingElement();
 
-			TiXmlNode* playernameNode = playernameElem->firstChild();
-			TiXmlNode* directionNode = directionElem->firstChild();
+			TiXmlNode* playernameNode = playernameElem->FirstChild();
+			TiXmlNode* directionNode = directionElem->FirstChild();
 
-			string playername = playernameNode->toText();
-			string direction = directionNode->toText();
+			TiXmlText* playernameText = playernameNode->ToText();
+			TiXmlText* directionText = directionNode->ToText();
+
+			string playername = playernameText->Value();
+			string direction = directionText->Value();
 
 			int directionint;
-
 			if (direction == "OMHOOG") {
 				directionint = 1;
 			} else if (direction == "OMLAAG") {
@@ -148,8 +150,7 @@ bool Room::loadMovesFromXMLFile(const char* filename) {
 				cerr << "XML ERROR: Move had wrong type, accepted: LINKS OMHOOG RECHTS OMLAAG" << endl;	
 			}
 
-			Move move = new Move(directionint, playername);
-			moves.push_back(move);
+			moves.push_back(Move(directionint, playername));
 		}
 	}
 }
