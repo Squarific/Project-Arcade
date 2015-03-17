@@ -18,25 +18,11 @@ class Move {
 		name = n;
 	}
 
+	// Get and set for direction
 	void set_direction(int d);
 	int get_direction();
 	
+	// Get and set for name
 	void set_name(std::string str);
 	std::string get_name();
 };
-
-void Move::set_direction(int d) {
-	direction = d;
-}
-
-int Move::get_direction() {
-	return direction;
-}
-
-void Move::set_name(std::string str) {
-	name = str;
-}
-
-std::string Move::get_name() {
-	return name;
-}

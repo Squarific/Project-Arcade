@@ -21,42 +21,18 @@ class Instance {
 		movable = m;
 	}
 	
+	// Get and set for the type
 	int get_type();
 	void set_type(int t);
 	
+	// Get and set for the name
 	std::string get_name();
 	void set_name(std::string n);
 	
+	// Get and set for moveable
 	bool get_movable();
 	void set_movable(bool m);
 	
+	// Prints basic information about the instance. To be used for testing purposes only.
 	void print_instance();
 };
-
-int Instance::get_type() {
-	return type;
-}
-
-void Instance::set_type(int t) {
-	type = t;
-}
-
-std::string Instance::get_name() {
-	return name;
-}
-
-void Instance::set_name(std::string n) {
-	name = n;
-}
-
-bool Instance::get_movable() {
-	return movable;
-}
-
-void Instance::set_movable(bool m) {
-	movable = m;
-}
-
-void Instance::print_instance() {
-	std::cout << "INSTANCE: Type: " << type << std::endl;
-}

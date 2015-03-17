@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Room.cpp"
+#include "Room.h"
 #include "XMLParser.cpp"
 
 int main() {

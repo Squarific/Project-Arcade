@@ -2,8 +2,8 @@
 #include <fstream>
 #include <vector>
 #include <string>
-#include "Move.cpp"
-#include "Instance.cpp"
+#include "Move.h"
+#include "Instance.h"
 
 class Room {
   private:
