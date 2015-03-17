@@ -27,7 +27,7 @@ class Room {
 		name = n;
 	}
 	
-	// Prints
+	// Printsint argc, char *argv[]
 	void print_dimensions();
 	void print_ascii();
 	
