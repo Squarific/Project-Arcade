@@ -126,6 +126,14 @@ bool Room::loadMovesFromXMLFile(const char* filename) {
 			TiXmlElement* playernameElem = elem->FirstChildElement();
 			TiXmlElement* directionElem = playernameElem->NextSiblingElement();
 
+			if (playernameElem == NULL || directionElem == NULL) {
+				cerr << "XML Error: BEWEGING tags need to contain 2 tags, the first is a playername, the second a direction"
+			}
+
+			if (string(playernameElem->Value()) != "SPELERNAAM" || string(directionElem->Value()) != "RICHTING") {
+
+			}
+
 			TiXmlNode* playernameNode = playernameElem->FirstChild();
 			TiXmlNode* directionNode = directionElem->FirstChild();
 
