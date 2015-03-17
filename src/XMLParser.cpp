@@ -1,5 +1,6 @@
 #include <iostream>
 #include "./TinyXML/tinyxml.h"
+#include "./Move.cpp"
 
 using namespace std;
 
@@ -93,4 +94,63 @@ bool Room::loadFromXMLFile (const char* filename) {
 	}
 
 	return true;
+}
+
+bool Room::loadMovesFromXMLFile(const char* filename) {
+	// Create xml dom
+	TiXmlDocument doc(filename);
+	
+	// Load the document
+	if (!doc.LoadFile()) {
+		cerr << "File " << filename << " not found" << endl;
+		return false;
+	}
+
+	// Get root element
+	TiXmlElement* root = doc.FirstChildElement();
+	if (root == NULL) {
+		cerr << "XML Error: No root element" << endl;
+		return false;
+	}
+
+	// Root element should be 'VELD'
+	if (string(root->Value()) != "BEWEGING") {
+		cerr << "XML Error: Root element has to be called 'VELD' but was '" << root->Value() << "'" << endl;
+		return false;
+	}
+
+	vector<Move> moves;
+
+	// Parse the tags 'BEWEGING'
+	for (TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
+		string elemName = elem->Value();
+		
+		if (elemName == "BEWEGING") {
+			TiXmlElement* playernameElem = elem.FirstChildElement();
+			TiXmlElement* directionElem = playername.NextSiblingElement();
+
+			TiXmlNode* playernameNode = playernameElem.firstChild();
+			TiXmlNode* directionNode = directionElem.firstChild();
+
+			string playername = playernameNode.toText();
+			string direction = directionNode.toText();
+
+			int directionint;
+
+			if (direction == "OMHOOG") {
+				directionint = 1;
+			} else if (direction == "OMLAAG") {
+				directionint = 3;
+			} else if (direction == "LINKS") {
+				directionint = 2;
+			} else if (direction == "RECHTS") {
+				directionint = 0;
+			} else {
+				cerr << "XML ERROR: Move had wrong type, accepted: LINKS OMHOOG RECHTS OMLAAG" << endl;	
+			}
+
+			Move move = new Move(directionint, playername);
+			moves.push_back(move);
+		}
+	}
 }
