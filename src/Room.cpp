@@ -64,6 +64,7 @@ class Room {
 
 	// XML
 	bool loadFromXMLFile(const char* filename);
+	bool loadMovesFromXMLFile(const char* filename);
 	
 	// File Outpot
 	void writeToFile(const char* filename);

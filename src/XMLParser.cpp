@@ -1,6 +1,5 @@
 #include <iostream>
 #include "./TinyXML/tinyxml.h"
-#include "./Move.cpp"
 
 using namespace std;
 
@@ -126,14 +125,14 @@ bool Room::loadMovesFromXMLFile(const char* filename) {
 		string elemName = elem->Value();
 		
 		if (elemName == "BEWEGING") {
-			TiXmlElement* playernameElem = elem.FirstChildElement();
-			TiXmlElement* directionElem = playername.NextSiblingElement();
+			TiXmlElement* playernameElem = elem->FirstChildElement();
+			TiXmlElement* directionElem = playernameElem->NextSiblingElement();
 
-			TiXmlNode* playernameNode = playernameElem.firstChild();
-			TiXmlNode* directionNode = directionElem.firstChild();
+			TiXmlNode* playernameNode = playernameElem->firstChild();
+			TiXmlNode* directionNode = directionElem->firstChild();
 
-			string playername = playernameNode.toText();
-			string direction = directionNode.toText();
+			string playername = playernameNode->toText();
+			string direction = directionNode->toText();
 
 			int directionint;
 
