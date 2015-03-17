@@ -118,8 +118,6 @@ bool Room::loadMovesFromXMLFile(const char* filename) {
 		return false;
 	}
 
-	vector<Move> moves;
-
 	// Parse the tags 'BEWEGING'
 	for (TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
 		string elemName = elem->Value();
@@ -150,7 +148,7 @@ bool Room::loadMovesFromXMLFile(const char* filename) {
 				cerr << "XML ERROR: Move had wrong type, accepted: LINKS OMHOOG RECHTS OMLAAG" << endl;	
 			}
 
-			moves.push_back(Move(directionint, playername));
+			this->moves.push_back(Move(directionint, playername));
 		}
 	}
 }
