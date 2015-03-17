@@ -57,7 +57,13 @@ class Room {
 	void move_instance(int from_width, int from_height, int to_width, int to_height);
 	
 	// Executes a move command, moving the player and other adjacent objects depending on their movable status.
-	void execute_move(Move& move);
+	// Returns true if the move was succesfully executed, otherwise returns false.
+	bool execute_move(Move& move);
+	
+	// Tries to execute all moves in the vector<move> moves.
+	// Should any of the moves return an error, the function will stop and write the room properties and remaining moves to an ascii file.
+	// If all moves are finished, the room properties will be written to an ascii file, as well as a file saying there are no remaining moves.
+	void executeAllMoves(const char* roomfilename, const char* movesfilename);
 
 	// Player Coordinates
 	int get_player_width();
@@ -69,6 +75,7 @@ class Room {
 	
 	// File Outpot
 	void writeToFile(const char* filename);
+	void writeMovesToFile(const char* filename);
 };
 
 void Room::print_dimensions() {
@@ -92,7 +99,7 @@ void Room::init() {
 	if ((width > 0) && (height > 0))
 		instances.resize(height, std::vector< Instance >(width, Instance(0, false)));
 	else
-		std::cout << "ERROR: height and width not correctly set." << std::endl;
+		std::cerr << "ERROR: height and width not correctly set." << std::endl;
 }
 
 void Room::set_height(int h) {
@@ -155,7 +162,7 @@ int Room::get_player_height() {
 	}
 }
 
-void Room::execute_move(Move& move) {
+bool Room::execute_move(Move& move) {
 	int player_x = this->get_player_width();
 	int player_y = this->get_player_height();
 	int direction = move.get_direction();
@@ -181,20 +188,20 @@ void Room::execute_move(Move& move) {
 	
 	// Destination out of bounds
 	if ((player_x + offset_x > width) || (player_x + offset_x < 0) || (player_y + offset_y > height) || (player_y + offset_y < 0)) {
-		std::cout << "ERROR: Destination is out of bounds" << std::endl;
-		return;
+		std::cerr << "ERROR: Destination is out of bounds" << std::endl;
+		return false;
 	}
 	
 	// Destination is air
 	if (instances[player_y + offset_y][player_x + offset_x].get_type() == 0) {
 		this->move_instance(player_x, player_y, player_x + offset_x, player_y + offset_y);
-		return;
+		return true;
 	}
 	
 	// Destination is a non-movable instance and is not air
 	if (instances[player_y + offset_y][player_x + offset_x].get_movable() == false) {
-		std::cout << "ERROR: Destination contains a non-movable instance" << std::endl;
-		return;
+		std::cerr << "ERROR: Destination contains a non-movable instance" << std::endl;
+		return false;
 	}
 	
 	// Destination is a moveable instance
@@ -202,21 +209,22 @@ void Room::execute_move(Move& move) {
 		// Object behind destination is out of bounds -> moveable object gets pushed off the platform
 		if ((player_x + 2 * offset_x > width) || (player_x + 2 * offset_x < 0) || (player_y + 2 * offset_y > height) || (player_y + 2 * offset_y < 0)) {
 			this->move_instance(player_x, player_y, player_x + offset_x, player_y + offset_y);
-			return;
+			return true;
 		}
 		// Object behind destination is not air -> cannot move in that direction
 		if (instances[player_y + 2 * offset_y][player_x + 2 * offset_x].get_type() != 0) {
-			std::cout << "ERROR: Second non-air instance located behind moveable instance" << std::endl;
-			return;
+			std::cerr << "ERROR: Second non-air instance located behind moveable instance" << std::endl;
+			return false;
 		}
 		// Object behind destination is air -> move both objects
 		this->move_instance(player_x + offset_x, player_y + offset_y, player_x + 2 * offset_x, player_y + 2 * offset_y);
 		this->move_instance(player_x, player_y, player_x + offset_x, player_y + offset_y);
-		return;
+		return true;
 	}
 	
 	// If this pops up, the code above is not correct.
-	std::cout << "ERROR: Move not recognized" << std::endl;
+	std::cerr << "ERROR: Move not recognized" << std::endl;
+	return false;
 }
 
 void Room::writeToFile(const char* filename) {
@@ -242,4 +250,52 @@ void Room::writeToFile(const char* filename) {
 	}
 	
 	file.close();
+}
+
+void Room::writeMovesToFile(const char* filename) {
+	std::string directionstr;
+	std::ofstream file;
+	file.open(filename);
+	
+	if (moves.size() == 0) {
+		file << "Geen resterende bewegingen.";
+	}
+	else {
+		for (std::vector< Move>::iterator it = moves.begin(); it != moves.end(); ++it) {
+			Move tempmove = *it;
+		
+			if (tempmove.get_direction() == 0) {
+				directionstr = "Rechts";
+			}
+			else if (tempmove.get_direction() == 1) {
+				directionstr = "Omhoog";
+			}
+			else if (tempmove.get_direction() == 2) {
+				directionstr = "Links";
+			}
+			else if (tempmove.get_direction() == 3) {
+				directionstr = "Omlaag";
+			}
+			file << "Speler " << tempmove.get_name() << " zal volgende beweging nog uitvoeren: \n" << directionstr << "\n\n";
+		}
+	}
+	
+	file.close();
+}
+
+void Room::executeAllMoves(const char* roomfilename, const char* movesfilename) {
+	while (moves.size() != 0) {
+		if (this->execute_move(*moves.begin())) {
+			moves.erase(moves.begin());
+		}
+		else {
+			std::cerr << "ERROR: Could not execute move. Writing current room state and remaining moves to ascii file." << std::endl;
+			break;
+		}
+	}
+	
+	this->writeToFile(roomfilename);
+	this->writeMovesToFile(movesfilename);
+	
+	return;
 }

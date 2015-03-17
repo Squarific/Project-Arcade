@@ -3,15 +3,12 @@
 #include "XMLParser.cpp"
 
 int main() {
-	Room testroom;
+	Room current_room;
 	
-	testroom.loadFromXMLFile("Speelveld1.0.xml");
-	testroom.loadMovesFromXMLFile("Bewegingen1.0.xml");
+	current_room.loadFromXMLFile("Speelveld1.0.xml");
+	current_room.loadMovesFromXMLFile("Bewegingen1.0.xml");
 	
-	testroom.print_dimensions();
-	testroom.print_ascii();
+	current_room.executeAllMoves("HuidigSpeelveld.txt", "ResterendeBewegingen.txt");
 	
-	testroom.writeToFile("Output.txt");
-	
-	return 1;
+	return 0;
 }
