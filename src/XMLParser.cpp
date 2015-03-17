@@ -113,8 +113,8 @@ bool Room::loadMovesFromXMLFile(const char* filename) {
 	}
 
 	// Root element should be 'VELD'
-	if (string(root->Value()) != "BEWEGING") {
-		cerr << "XML Error: Root element has to be called 'VELD' but was '" << root->Value() << "'" << endl;
+	if (string(root->Value()) != "BEWEGINGEN") {
+		cerr << "XML Error: Root element has to be called 'BEWEGINGEN' but was '" << root->Value() << "'" << endl;
 		return false;
 	}
 
