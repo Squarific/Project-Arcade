@@ -27,63 +27,114 @@ class Room {
 		name = n;
 	}
 	
-	// Prints the room's dimensions. Used for testing purposes only.
+	/**
+	 *	Prints the room's dimensions. Used for testing purposes only.
+	 */
 	void print_dimensions();
 	
-	// Prints an ascii representation of the room in the console. Used for testing purposes only.
+	/**
+	 *	Prints an ascii representation of the room in the console. Used for testing purposes only.
+	 */
 	void print_ascii();
 	
-	// Fills the room width empty instances. (type = 0, movable = false)
+	/**
+	 *	Fills the room width empty instances. (type = 0, movable = false)
+	 * 	This function is used during the XML Parsing, so that before any instances are added,
+	 *	every cell is set to 'empty'.
+	 *	The init() function will throw an error if the room's height and width have not been set yet,
+	 *	or when either of them are smaller than 1.
+	 */
 	void init();
 	
-	// Get and set for height
+	/**
+	 *	Get and set functions for the 'height' attribute.
+	 *	! Starts counting from 1. (so if the height = 10, the 'highest' accessible cell has a y value of 9.)
+	 */
 	void set_height(int h);
 	int get_height();
 	
-	// Get and set for width
+	/**
+	 *	Get and set functions for the 'width' attribute.
+	 *	! Starts counting from 1. (so if the width = 10, the 'furthest' accessible cell has an x value of 9.)
+	 */
 	void set_width(int w);
 	int get_width();
 	
-	// Get and set for name
+	/**
+	 *	Get and set functions for the 'name' attribute.
+	 *	This attribute is used when writing the room properties to an ascii file,
+	 *	to display the room's name. (e.g. 'Level 1')
+	 */
 	void set_name(std::string str);
 	std::string get_name();
 	
-	// Get and set for instances
+	/**
+	 *	Get and set functions for the instances located in the room.
+	 *	the width and height values should be between (0 ; width - 1) or (0 ; height - 1) respectively.
+	 *	Note that get_instance() returns a copy of the instance, so it CANNOT be used to modify the room and it's instances.
+	 *	instead, use set_instance().
+	 */
 	void set_instance(int width, int height, int type, bool movable);
 	Instance get_instance(int width, int height); // ! RETURNS A COPY !
 	
-	// Sets an instance's name at position (width, height)
+	/**
+	 *	Sets an instance's name at a given position.
+	 *	The name attribute is not specified in the set_instance() function, because it is only used for Player instances.
+	 *	For this reason, a seperate function set_instance_name() was added.
+	 */
 	void set_instance_name(int width, int height, std::string str);
 	
-	// Moves an instance from location 'from', to location 'to'
-	// The previous location will be filled with an empty instance.
+	/**
+	 *	Moves an instance from location 'from', to location 'to'
+	 *	The previous location will be filled with an empty instance.
+	 *	This function is used in execute_move(), and should probably not be used anywhere else.
+	 *	If you want to move the player, use execute_move().
+	 */
 	void move_instance(int from_width, int from_height, int to_width, int to_height);
 	
-	// Executes a move command, moving the player and other adjacent objects depending on their movable status.
-	// Returns true if the move was succesfully executed, otherwise returns false.
+	/**
+	 *	Executes a move command, moving the player and other adjacent objects depending on their movable status.
+	 *	Returns true if the move was succesfully executed, otherwise returns false.
+	 */
 	bool execute_move(Move& move);
 	
-	// Tries to execute all moves in the vector<move> moves.
-	// Should any of the moves return an error, the function will stop and write the room properties and remaining moves to an ascii file.
-	// If all moves are finished, the room properties will be written to an ascii file, as well as a file saying there are no remaining moves.
+	/**
+	 *	Tries to execute all moves in the vector<move> moves.
+	 *	If a move is succesful, it is removed from the vector.
+	 *	Should any of the moves return an error, the function will stop and write the room properties and remaining moves to an ascii file.
+	 *	If all moves are finished, the room properties will be written to an ascii file, as well as a file saying there are no remaining moves.
+	 */
 	void executeAllMoves(const char* roomfilename, const char* movesfilename);
 
-	// These functions are used to get the player's location on the field
-	// In later development stages, a name argument could be added to support multiple players
+	/**
+	 *	These functions are used to get the player's location on the field.
+	 *	In later development stages, a name argument could be added to support multiple players.
+	 */
 	int get_player_width();
 	int get_player_height();
 
-	// Load the contents of the room using an XML file as input.
-	// All non-specified cells in the room are automatically filled with "air" (nothing)
+	/**
+	 *	Load the contents of the room using an XML file as input.
+	 *	All non-specified cells in the room are automatically filled with "air" (nothing),
+	 *	(see: Room::init())
+	 */
 	bool loadFromXMLFile(const char* filename);
 	
-	// Load to-be-executed moves from an XML file into the vector<Move> moves
-	// Use executeAllMoves() to execute the loaded moves.
+	/**
+	 *	Load the to-be-executed moves from an XML file into the vector<Move> moves.
+	 *	Use executeAllMoves() to execute the loaded moves.
+	 */
 	bool loadMovesFromXMLFile(const char* filename);
 	
-	// Writes the current room state to a file
+	/**
+	 * 	Writes the current state of the room to an ascii file,
+	 *	including the name, width, height, location of the player and location(s) of barrels.
+	 */
 	void writeToFile(const char* filename);
 	
-	// Write the remaining moves to a file
+	/**
+	 *	Writes the remaining moves (the moves currently in vector<Move> moves) to an ascii file.
+	 *	If there are no moves in the vector, writes "Geen resterende bewegingen".
+	 */
 	void writeMovesToFile(const char* filename);
 };
