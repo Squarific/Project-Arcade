@@ -146,6 +146,7 @@ bool Room::loadMovesFromXMLFile(const char* filename) {
 				directionint = 0;
 			} else {
 				cerr << "XML ERROR: Move had wrong type, accepted: LINKS OMHOOG RECHTS OMLAAG" << endl;	
+				continue;
 			}
 
 			this->moves.push_back(Move(directionint, playername));
