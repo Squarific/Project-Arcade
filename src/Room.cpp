@@ -138,7 +138,7 @@ std::string Room::get_name() {
 }
 
 void Room::set_instance(int width, int height, int type, bool movable) {
-	REQUIRE(!is_initialized, "ERROR: Could not set instance because Room was not properly initialized.");
+	REQUIRE(is_initialized, "ERROR: Could not set instance because Room was not properly initialized.");
 	
 	instances[height][width].set_type(type);
 	instances[height][width].set_movable(movable);
