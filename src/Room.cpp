@@ -4,6 +4,7 @@
 #include <string>
 #include "Move.h"
 #include "Instance.h"
+#include "DesignByContract.h"
 
 class Room {
   private:
