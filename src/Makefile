@@ -84,8 +84,8 @@ gtest_main.a : gtest-all.o gtest_main.o
 #$(TINYXMLLIBS) $(USERLIBS)
 
 test:
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) tests/maintest.cpp -o testbinarys/maintest -LGoogletests/lib -lgtest -lgtest_main
-	./testbinarys/maintest
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) tests/maintest.cpp $(TINYXMLLIBS) $(USERLIBS) -o testbinarys/maintest -LGoogletests/lib -lgtest -lgtest_main
+	#./testbinarys/maintest
 
 sample1.o : $(USER_DIR)/sample1.cc $(USER_DIR)/sample1.h $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/sample1.cc

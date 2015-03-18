@@ -2,7 +2,6 @@
 #include "./TinyXML/tinyxml.h"
 
 using namespace std;
-
 bool Room::loadFromXMLFile (const char* filename) {
 	// Create xml dom
 	TiXmlDocument doc(filename);
@@ -157,7 +156,8 @@ bool Room::loadMovesFromXMLFile(const char* filename) {
 				continue;
 			}
 
-			this->moves.push_back(Move(directionint, playername));
+			this->moves.push_back(new Move(directionint, playername));
 		}
 	}
+	return true;
 }
