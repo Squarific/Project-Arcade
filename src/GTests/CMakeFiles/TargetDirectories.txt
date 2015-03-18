@@ -1,2 +1,0 @@
-/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/GTests/CMakeFiles/gtest.dir
-/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/GTests/CMakeFiles/gtest_main.dir

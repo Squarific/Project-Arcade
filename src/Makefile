@@ -14,15 +14,19 @@
 
 # Points to the root of Google Test, relative to where this file is.
 # Remember to tweak this if you move this file.
-GTEST_DIR = GTests
+GTEST_DIR = Googletests
 
 # Flags passed to the preprocessor.
 # Set Google Test's header directory as a system directory, such that
 # the compiler doesn't generate warnings in Google Test headers.
 CPPFLAGS += -isystem $(GTEST_DIR)/include
 
+#CXX =clang
+
+#INCL = ../lib/gtest/include
+
 # Flags passed to the C++ compiler.
-CXXFLAGS += -g -Wall -Wextra -pthread
+CXXFLAGS += -g -std=c++11 -Wall -Wextra -pthread #-I$(INCL)
 
 TINYXMLLIBS += ./TinyXML/tinyxml.cpp ./TinyXML/tinystr.cpp ./TinyXML/tinyxmlerror.cpp ./TinyXML/tinyxmlparser.cpp
 
@@ -79,9 +83,8 @@ gtest_main.a : gtest-all.o gtest_main.o
 
 #$(TINYXMLLIBS) $(USERLIBS)
 
-simpletest: $(GTEST_HEADERS)
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) tests/test.cpp -o simpletest
-
+simpletest:
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) tests/test.cpp -o simpletest -LGoogletests/lib -lgtest -lgtest_main
 
 sample1.o : $(USER_DIR)/sample1.cc $(USER_DIR)/sample1.h $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/sample1.cc

@@ -1,4 +1,5 @@
-#include "../GTests/include/gtest/gtest.h"
+#include <iostream>
+#include "../Googletests/include/gtest/gtest.h"
 
 TEST(simpletest, simpletestname) {
 	EXPECT_TRUE(true);

@@ -1,4 +1,4 @@
-# Install script for directory: /home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/GTests
+# Install script for directory: /home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/Googletests
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -38,7 +38,7 @@ ELSE(CMAKE_INSTALL_COMPONENT)
   SET(CMAKE_INSTALL_MANIFEST "install_manifest.txt")
 ENDIF(CMAKE_INSTALL_COMPONENT)
 
-FILE(WRITE "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/GTests/${CMAKE_INSTALL_MANIFEST}" "")
+FILE(WRITE "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/Googletests/${CMAKE_INSTALL_MANIFEST}" "")
 FOREACH(file ${CMAKE_INSTALL_MANIFEST_FILES})
-  FILE(APPEND "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/GTests/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
+  FILE(APPEND "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/Googletests/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
 ENDFOREACH(file)

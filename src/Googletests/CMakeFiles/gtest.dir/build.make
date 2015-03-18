@@ -35,10 +35,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/GTests"
+CMAKE_SOURCE_DIR = "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/Googletests"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/GTests"
+CMAKE_BINARY_DIR = "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/Googletests"
 
 # Include any dependencies generated for this target.
 include CMakeFiles/gtest.dir/depend.make
@@ -51,17 +51,17 @@ include CMakeFiles/gtest.dir/flags.make
 
 CMakeFiles/gtest.dir/src/gtest-all.cc.o: CMakeFiles/gtest.dir/flags.make
 CMakeFiles/gtest.dir/src/gtest-all.cc.o: src/gtest-all.cc
-	$(CMAKE_COMMAND) -E cmake_progress_report "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/GTests/CMakeFiles" $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/Googletests/CMakeFiles" $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/gtest.dir/src/gtest-all.cc.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gtest.dir/src/gtest-all.cc.o -c "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/GTests/src/gtest-all.cc"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gtest.dir/src/gtest-all.cc.o -c "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/Googletests/src/gtest-all.cc"
 
 CMakeFiles/gtest.dir/src/gtest-all.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gtest.dir/src/gtest-all.cc.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/GTests/src/gtest-all.cc" > CMakeFiles/gtest.dir/src/gtest-all.cc.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/Googletests/src/gtest-all.cc" > CMakeFiles/gtest.dir/src/gtest-all.cc.i
 
 CMakeFiles/gtest.dir/src/gtest-all.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gtest.dir/src/gtest-all.cc.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/GTests/src/gtest-all.cc" -o CMakeFiles/gtest.dir/src/gtest-all.cc.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/Googletests/src/gtest-all.cc" -o CMakeFiles/gtest.dir/src/gtest-all.cc.s
 
 CMakeFiles/gtest.dir/src/gtest-all.cc.o.requires:
 .PHONY : CMakeFiles/gtest.dir/src/gtest-all.cc.o.requires
@@ -98,6 +98,6 @@ CMakeFiles/gtest.dir/clean:
 .PHONY : CMakeFiles/gtest.dir/clean
 
 CMakeFiles/gtest.dir/depend:
-	cd "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/GTests" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/GTests" "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/GTests" "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/GTests" "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/GTests" "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/GTests/CMakeFiles/gtest.dir/DependInfo.cmake" --color=$(COLOR)
+	cd "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/Googletests" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/Googletests" "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/Googletests" "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/Googletests" "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/Googletests" "/home/urban/Desktop/documentenshared/universiteit antwerpen/Software Engineering/Project Arcade/src/Googletests/CMakeFiles/gtest.dir/DependInfo.cmake" --color=$(COLOR)
 .PHONY : CMakeFiles/gtest.dir/depend
 
