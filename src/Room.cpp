@@ -61,7 +61,7 @@ class Room {
 	
 	// Executes a move command, moving the player and other adjacent objects depending on their movable status.
 	// Returns true if the move was succesfully executed, otherwise returns false.
-	bool execute_move(Move& move);
+	bool execute_move(Move*& move);
 	
 	// Tries to execute all moves in the vector<move> moves.
 	// Should any of the moves return an error, the function will stop and write the room properties and remaining moves to an ascii file.
@@ -192,12 +192,12 @@ int Room::get_player_height() {
 	return 0;
 }
 
-bool Room::execute_move(Move& move) {
+bool Room::execute_move(Move*& move) {
 	REQUIRE(is_initialized, "ERROR: Could not execute move because Room was not properly initialized.");
 	
 	int player_x = this->get_player_width();
 	int player_y = this->get_player_height();
-	int direction = move.get_direction();
+	int direction = move->get_direction();
 	int offset_x, offset_y;
 	
 	// Get offset
@@ -297,7 +297,7 @@ void Room::writeMovesToFile(const char* filename) {
 		file << "Geen resterende bewegingen.";
 	}
 	else {
-		for (std::vector< Move>::iterator it = moves.begin(); it != moves.end(); ++it) {
+		for (std::vector< Move*>::iterator it = moves.begin(); it != moves.end(); ++it) {
 			Move* tempmove = *it;
 		
 			if (tempmove->get_direction() == 0) {
