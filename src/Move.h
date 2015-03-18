@@ -4,15 +4,22 @@ class Move {
   private:
 	std::string name;
 	int direction;
+	bool properly_init = false;
 
   public:
-	Move(){}
+	Move() {
+		properly_init = true;
+	}
 	Move(int d, std::string n) {
 		direction = d;
 		name = n;
+		properly_init = true;
 	}
 
 	/**
+	 *	PRE CONDITIONS:
+	 *		properly_init == true
+	 *
 	 *	Get and set functions for the 'direction' attribute.
 	 *	The integers representing the directions follow the goniometric circle:	
 	 *	0: Right
@@ -24,6 +31,9 @@ class Move {
 	int get_direction();
 	
 	/**
+	 *	PRE CONDITIONS:
+	 *		properly_init == true
+	 *
 	 *	Get and set functions for the 'name' attribute.
 	 *	The name attribute determines which player executes the move.
 	 *	It must have the same name as the player instance.

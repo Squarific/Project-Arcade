@@ -1,4 +1,5 @@
 #include <string>
+#include <iostream>
 
 class Move {
   private:
@@ -11,13 +12,18 @@ class Move {
 		2: Left
 		3: Down
 	*/
+	bool properly_init = false;
+
   public:
-	Move(){}
+	Move() {
+		properly_init = true;
+	}
 	Move(int d, std::string n) {
 		direction = d;
 		name = n;
+		properly_init = true;
 	}
-
+	
 	void set_direction(int d);
 	int get_direction();
 	
@@ -26,17 +32,29 @@ class Move {
 };
 
 void Move::set_direction(int d) {
-	direction = d;
+	if (properly_init)
+		direction = d;
+	else
+		std::cerr << "ERROR: Move was not properly initialized." << std::endl;
 }
 
 int Move::get_direction() {
-	return direction;
+	if (properly_init)
+		return direction;
+	else
+		std::cerr << "ERROR: Move was not properly initialized." << std::endl;
 }
 
 void Move::set_name(std::string str) {
-	name = str;
+	if (properly_init)
+		name = str;
+	else
+		std::cerr << "ERROR: Move was not properly initialized." << std::endl;
 }
 
 std::string Move::get_name() {
-	return name;
+	if (properly_init)
+		return name;
+	else
+		std::cerr << "ERROR: Move was not properly initialized." << std::endl;
 }

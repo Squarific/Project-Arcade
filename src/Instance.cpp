@@ -13,12 +13,16 @@ class Instance {
 		2: Wall
 		3: Barrel
 	*/
+	bool properly_init = false;
 	
   public:
-	Instance(){}
+	Instance() {
+		properly_init = true;
+	}
 	Instance(int t, bool m) {
 		type = t;
 		movable = m;
+		properly_init = true;
 	}
 	
 	int get_type();
@@ -34,27 +38,45 @@ class Instance {
 };
 
 int Instance::get_type() {
-	return type;
+	if (properly_init)
+		return type;
+	else
+		std::cerr << "ERROR: Instance was not properly initialized." << std::endl;
 }
 
 void Instance::set_type(int t) {
-	type = t;
+	if (properly_init)
+		type = t;
+	else
+		std::cerr << "ERROR: Instance was not properly initialized." << std::endl;
 }
 
 std::string Instance::get_name() {
-	return name;
+	if (properly_init)
+		return name;
+	else
+		std::cerr << "ERROR: Instance was not properly initialized." << std::endl;
 }
 
 void Instance::set_name(std::string n) {
-	name = n;
+	if (properly_init)
+		name = n;
+	else
+		std::cerr << "ERROR: Instance was not properly initialized." << std::endl;
 }
 
 bool Instance::get_movable() {
-	return movable;
+	if (properly_init)
+		return movable;
+	else
+		std::cerr << "ERROR: Instance was not properly initialized." << std::endl;
 }
 
 void Instance::set_movable(bool m) {
-	movable = m;
+	if (properly_init)
+		movable = m;
+	else
+		std::cerr << "ERROR: Instance was not properly initialized." << std::endl;
 }
 
 void Instance::print_instance() {

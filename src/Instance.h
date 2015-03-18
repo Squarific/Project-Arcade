@@ -6,15 +6,22 @@ class Instance {
 	int type;	 
 	bool movable;
 	std::string name;
+	bool properly_init = false;
 	
   public:
-	Instance(){}
+	Instance() {
+		properly_init = true;
+	}
 	Instance(int t, bool m) {
 		type = t;
 		movable = m;
+		properly_init = true;
 	}
 	
 	/**
+	 *	PRE CONDITIONS:
+	 *		properly_init == true
+	 *
 	 *	Get and set functions for the 'type' attribute.
 	 *	The following ints are used to define which type the instance is:
 	 *	0: Empty
@@ -26,6 +33,9 @@ class Instance {
 	void set_type(int t);
 	
 	/**
+	 *	PRE CONDITIONS:
+	 *		properly_init == true
+	 *
 	 *	Get and set for the 'name' attribute.
 	 *	This is currently only used for the player.
 	 * 	Barrels, Walls, ... do not use a name.
@@ -34,6 +44,9 @@ class Instance {
 	void set_name(std::string n);
 	
 	/** 
+	 *	PRE CONDITIONS:
+	 *		properly_init == true
+	 *
 	 *	Get and set for the 'moveable' attribute.
 	 *	Moveable objects are able to be pushed around by the player,
 	 *	as long as there is an empty space in the specified direction.
