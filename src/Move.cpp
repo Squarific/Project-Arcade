@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include "DesignByContract.h"
 
 class Move {
   private:
@@ -32,29 +33,25 @@ class Move {
 };
 
 void Move::set_direction(int d) {
-	if (properly_init)
-		direction = d;
-	else
-		std::cerr << "ERROR: Move was not properly initialized." << std::endl;
+	REQUIRE(properly_init, "ERROR: Move was not properly initialized.");
+	
+	direction = d;
 }
 
 int Move::get_direction() {
-	if (properly_init)
-		return direction;
-	else
-		std::cerr << "ERROR: Move was not properly initialized." << std::endl;
+	REQUIRE(properly_init, "ERROR: Move was not properly initialized.");
+	
+	return direction;
 }
 
 void Move::set_name(std::string str) {
-	if (properly_init)
-		name = str;
-	else
-		std::cerr << "ERROR: Move was not properly initialized." << std::endl;
+	REQUIRE(properly_init, "ERROR: Move was not properly initialized.");
+	
+	name = str;
 }
 
 std::string Move::get_name() {
-	if (properly_init)
-		return name;
-	else
-		std::cerr << "ERROR: Move was not properly initialized." << std::endl;
+	REQUIRE(properly_init, "ERROR: Move was not properly initialized.");
+	
+	return name;
 }

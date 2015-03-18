@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include "DesignByContract.h"
 
 class Instance {
   private:
@@ -38,45 +39,39 @@ class Instance {
 };
 
 int Instance::get_type() {
-	if (properly_init)
-		return type;
-	else
-		std::cerr << "ERROR: Instance was not properly initialized." << std::endl;
+	REQUIRE(properly_init, "ERROR: Instance was not properly initialized.");
+	
+	return type;
 }
 
 void Instance::set_type(int t) {
-	if (properly_init)
-		type = t;
-	else
-		std::cerr << "ERROR: Instance was not properly initialized." << std::endl;
+	REQUIRE(properly_init, "ERROR: Instance was not properly initialized.");
+	
+	type = t;
 }
 
 std::string Instance::get_name() {
-	if (properly_init)
-		return name;
-	else
-		std::cerr << "ERROR: Instance was not properly initialized." << std::endl;
+	REQUIRE(properly_init, "ERROR: Instance was not properly initialized.");
+	
+	return name;
 }
 
 void Instance::set_name(std::string n) {
-	if (properly_init)
-		name = n;
-	else
-		std::cerr << "ERROR: Instance was not properly initialized." << std::endl;
+	REQUIRE(properly_init, "ERROR: Instance was not properly initialized.");
+	
+	name = n;
 }
 
 bool Instance::get_movable() {
-	if (properly_init)
-		return movable;
-	else
-		std::cerr << "ERROR: Instance was not properly initialized." << std::endl;
+	REQUIRE(properly_init, "ERROR: Instance was not properly initialized.");
+	
+	return movable;
 }
 
 void Instance::set_movable(bool m) {
-	if (properly_init)
-		movable = m;
-	else
-		std::cerr << "ERROR: Instance was not properly initialized." << std::endl;
+	REQUIRE(properly_init, "ERROR: Instance was not properly initialized.");
+	
+	movable = m;
 }
 
 void Instance::print_instance() {

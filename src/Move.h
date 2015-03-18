@@ -1,4 +1,5 @@
 #include <string>
+#include "DesignByContract.h"
 
 class Move {
   private:
