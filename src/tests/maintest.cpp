@@ -1,9 +1,9 @@
 #include "../Googletests/include/gtest/gtest.h"
-#include "Room.h"
-#include "XMLParser.cpp"
+#include "../Room.h"
+#include "../XMLParser.cpp"
 
 #include "meta.cpp"
-#include "XMLParser.cpp"
+#include "XMLParserTests.cpp"
 #include "RoomTests.cpp"
 #include "MoveTests.cpp"
 

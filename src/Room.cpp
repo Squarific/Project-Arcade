@@ -15,7 +15,7 @@ class Room {
 	bool is_initialized;
 	
   public:
-	std::vector< Move> moves;
+	std::vector< Move*> moves;
 	
 	Room() {
 		width = 0;
@@ -175,6 +175,8 @@ int Room::get_player_width() {
 				return j;
 		}
 	}
+
+	return 0;
 }
 
 int Room::get_player_height() {
@@ -186,6 +188,8 @@ int Room::get_player_height() {
 				return i;
 		}
 	}
+
+	return 0;
 }
 
 bool Room::execute_move(Move& move) {
@@ -294,21 +298,21 @@ void Room::writeMovesToFile(const char* filename) {
 	}
 	else {
 		for (std::vector< Move>::iterator it = moves.begin(); it != moves.end(); ++it) {
-			Move tempmove = *it;
+			Move* tempmove = *it;
 		
-			if (tempmove.get_direction() == 0) {
+			if (tempmove->get_direction() == 0) {
 				directionstr = "Rechts";
 			}
-			else if (tempmove.get_direction() == 1) {
+			else if (tempmove->get_direction() == 1) {
 				directionstr = "Omhoog";
 			}
-			else if (tempmove.get_direction() == 2) {
+			else if (tempmove->get_direction() == 2) {
 				directionstr = "Links";
 			}
-			else if (tempmove.get_direction() == 3) {
+			else if (tempmove->get_direction() == 3) {
 				directionstr = "Omlaag";
 			}
-			file << "Speler " << tempmove.get_name() << " zal volgende beweging nog uitvoeren: \n" << directionstr << "\n\n";
+			file << "Speler " << tempmove->get_name() << " zal volgende beweging nog uitvoeren: \n" << directionstr << "\n\n";
 		}
 	}
 	
