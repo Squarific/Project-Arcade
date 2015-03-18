@@ -77,8 +77,10 @@ gtest_main.a : gtest-all.o gtest_main.o
 # gtest_main.a, depending on whether it defines its own main()
 # function.
 
+#$(TINYXMLLIBS) $(USERLIBS)
+
 simpletest: $(GTEST_HEADERS)
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) tests/test.cpp $(TINYXMLLIBS) $(USERLIBS) -o simpletest
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) tests/test.cpp -o simpletest
 
 
 sample1.o : $(USER_DIR)/sample1.cc $(USER_DIR)/sample1.h $(GTEST_HEADERS)
