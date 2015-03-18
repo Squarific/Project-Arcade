@@ -41,3 +41,10 @@ TEST(movetests, playermovecheck) {
 	EXPECT_EQ(testroom.get_player_width(), 2);
 	EXPECT_EQ(testroom.get_player_height(), 8);
 }
+
+// INDIVIDUAL MOVE CHECK 1
+TEST(movetests, movecheck1) {
+	Room testroom;
+	testroom.loadFromXMLFile("xmlfiles/Speelveld1.0.xml");
+	testroom.loadMovesFromXMLFile("xmlfiles/Bewegingen1.0.xml");
+}
