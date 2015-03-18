@@ -1,7 +1,7 @@
 #include "DesignByContract.h"
 
 bool returnTrue() {
-	return true;
+	return false;
 }
 
 int main() {

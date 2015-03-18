@@ -14,7 +14,10 @@
 
 # Points to the root of Google Test, relative to where this file is.
 # Remember to tweak this if you move this file.
-GTEST_DIR = GTests
+GTEST_DIR = ..
+
+# Where to find user code.
+USER_DIR = ../samples
 
 # Flags passed to the preprocessor.
 # Set Google Test's header directory as a system directory, such that
@@ -24,13 +27,9 @@ CPPFLAGS += -isystem $(GTEST_DIR)/include
 # Flags passed to the C++ compiler.
 CXXFLAGS += -g -Wall -Wextra -pthread
 
-TINYXMLLIBS += ./TinyXML/tinyxml.cpp ./TinyXML/tinystr.cpp ./TinyXML/tinyxmlerror.cpp ./TinyXML/tinyxmlparser.cpp
-
-USERLIBS += ./Instance.cpp ./Move.cpp ./Room.cpp
-
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = test_test
+TESTS = sample1_unittest
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -43,11 +42,6 @@ all : $(TESTS)
 
 clean :
 	rm -f $(TESTS) gtest.a gtest_main.a *.o
-
-# Build main program
-install : game.cpp ./TinyXML/tinyxml.cpp ./TinyXML/tinystr.cpp ./TinyXML/tinyxmlerror.cpp ./TinyXML/tinyxmlparser.cpp ./Instance.cpp ./Move.cpp ./Room.cpp
-	g++ game.cpp ./TinyXML/tinyxml.cpp ./TinyXML/tinystr.cpp ./TinyXML/tinyxmlerror.cpp ./TinyXML/tinyxmlparser.cpp ./Instance.cpp ./Move.cpp ./Room.cpp -o game --std=c++11
-
 
 # Builds gtest.a and gtest_main.a.
 
@@ -76,12 +70,6 @@ gtest_main.a : gtest-all.o gtest_main.o
 # Builds a sample test.  A test should link with either gtest.a or
 # gtest_main.a, depending on whether it defines its own main()
 # function.
-
-#$(TINYXMLLIBS) $(USERLIBS)
-
-simpletest: $(GTEST_HEADERS)
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) tests/test.cpp -o simpletest
-
 
 sample1.o : $(USER_DIR)/sample1.cc $(USER_DIR)/sample1.h $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/sample1.cc
