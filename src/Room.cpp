@@ -12,10 +12,10 @@ class Room {
 	int width;
 	int height;
 	std::vector< std::vector< Instance > > instances;
-	std::vector< Move> moves;
 	bool is_initialized;
 	
   public:
+	std::vector< Move> moves;
 	
 	Room() {
 		width = 0;
