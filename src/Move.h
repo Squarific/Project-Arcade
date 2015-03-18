@@ -5,21 +5,21 @@ class Move {
   private:
 	std::string name;
 	int direction;
-	bool properly_init = false;
+	Move* _initcheck;
 
   public:
-	Move() {
-		properly_init = true;
-	}
-	Move(int d, std::string n) {
-		direction = d;
-		name = n;
-		properly_init = true;
-	}
+	Move();
+	Move(int d, std::string n);
+
+	/*
+	 * Returns true if initialized using one of the constructors above
+	 */
+
+	bool properlyInitialized ();
 
 	/**
 	 *	PRE CONDITIONS:
-	 *		properly_init == true
+	 *		REQUIRE(this->properlyInitialized()):
 	 *
 	 *	Get and set functions for the 'direction' attribute.
 	 *	The integers representing the directions follow the goniometric circle:	
@@ -33,7 +33,7 @@ class Move {
 	
 	/**
 	 *	PRE CONDITIONS:
-	 *		properly_init == true
+	 *		REQUIRE(this->properlyInitialized()):
 	 *
 	 *	Get and set functions for the 'name' attribute.
 	 *	The name attribute determines which player executes the move.

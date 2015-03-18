@@ -1,57 +1,42 @@
 #include <string>
 #include <iostream>
 #include "DesignByContract.h"
+#include "Move.h"
 
-class Move {
-  private:
-	std::string name;
-	int direction;
-	/*
-		Directions follow the goniometric circle:	
-		0: Right
-		1: Up
-		2: Left
-		3: Down
-	*/
-	bool properly_init = false;
+Move::Move() {
+	_initcheck = this;
+}
 
-  public:
-	Move() {
-		properly_init = true;
-	}
-	Move(int d, std::string n) {
-		direction = d;
-		name = n;
-		properly_init = true;
-	}
-	
-	void set_direction(int d);
-	int get_direction();
-	
-	void set_name(std::string str);
-	std::string get_name();
-};
+Move::Move(int d, std::string n) {
+	_initcheck = this;
+	direction = d;
+	name = n;
+}
+
+bool Move::properlyInitialized() {
+	return _initcheck == this;
+}
 
 void Move::set_direction(int d) {
-	REQUIRE(properly_init, "ERROR: Move was not properly initialized.");
+	REQUIRE(this->properlyInitialized(), "ERROR: Move was not properly initialized.");
 	
 	direction = d;
 }
 
 int Move::get_direction() {
-	REQUIRE(properly_init, "ERROR: Move was not properly initialized.");
+	REQUIRE(this->properlyInitialized(), "ERROR: Move was not properly initialized.");
 	
 	return direction;
 }
 
 void Move::set_name(std::string str) {
-	REQUIRE(properly_init, "ERROR: Move was not properly initialized.");
+	REQUIRE(this->properlyInitialized(), "ERROR: Move was not properly initialized.");
 	
 	name = str;
 }
 
 std::string Move::get_name() {
-	REQUIRE(properly_init, "ERROR: Move was not properly initialized.");
+	REQUIRE(this->properlyInitialized(), "ERROR: Move was not properly initialized.");
 	
 	return name;
 }

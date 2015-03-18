@@ -34,7 +34,7 @@ USERLIBS += ./Instance.cpp ./Move.cpp ./Room.cpp
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = test_test
+TESTS = testbinarys/maintest
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -83,8 +83,9 @@ gtest_main.a : gtest-all.o gtest_main.o
 
 #$(TINYXMLLIBS) $(USERLIBS)
 
-simpletest:
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) tests/test.cpp -o simpletest -LGoogletests/lib -lgtest -lgtest_main
+test:
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) tests/maintest.cpp -o testbinarys/maintest -LGoogletests/lib -lgtest -lgtest_main
+	./testbinarys/maintest
 
 sample1.o : $(USER_DIR)/sample1.cc $(USER_DIR)/sample1.h $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/sample1.cc
