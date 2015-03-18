@@ -45,8 +45,8 @@ TEST(roomtests, xmlinstancecheck3) {
 	Room testroom;
 	testroom.loadFromXMLFile("xmlfiles/Speelveld1.0.xml");
 	
-	EXPECT_FALSE(testroom.get_moveable(0, 0).get_movable());
-	EXPECT_TRUE(testroom.get_moveable(3, 4).get_movable());
+	EXPECT_FALSE(testroom.get_instance(0, 0).get_movable());
+	EXPECT_TRUE(testroom.get_instance(3, 4).get_movable());
 }
 
 // PLAYER LOCATION TEST

@@ -31,7 +31,7 @@ TEST(movetests, namecheck) {
 }
 
 // EXECUTE MOVES - CHECK PLAYER LOCATION
-TEST(movetests, movecheck) {
+TEST(movetests, playermovecheck) {
 	Room testroom;
 	testroom.loadFromXMLFile("xmlfiles/Speelveld1.0.xml");
 	testroom.loadMovesFromXMLFile("xmlfiles/Bewegingen1.0.xml");
