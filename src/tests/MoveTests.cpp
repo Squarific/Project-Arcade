@@ -26,7 +26,7 @@ TEST(movetests, namecheck) {
 	testroom.loadMovesFromXMLFile("xmlfiles/Bewegingen1.0.xml");
 	
 	for (int i = 0; i < 7; i++) {
-		EXPECT_EQ(testroom.moves[0].get_name(), "Chip")
+		EXPECT_EQ(testroom.moves[0].get_name(), "Chip");
 	}
 }
 
