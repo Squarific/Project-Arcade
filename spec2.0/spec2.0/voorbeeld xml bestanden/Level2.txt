@@ -1,0 +1,13 @@
+levelname,Level 2 (with water)
+playername,Chip
+width,11
+height,9
+W,W,W,W,W,W,W,W,W,W,W
+W,~,~,~,~,X,~,~,~,~,W
+W,~,~,~,~,~,~,~,~,~,W
+W,~,~,~,~,~,~,~,~,~,W
+W, , , , ,O, , , , ,W
+W, , , ,O, ,O, , , ,W
+W, , , , , , , , , ,W
+W, , , , ,Y, , , , ,W
+W,W,W,W,W,W,W,W,W,W,W

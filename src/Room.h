@@ -93,11 +93,12 @@ class Room {
 	 *
 	 *	Get and set functions for the instances located in the room.
 	 *	the width and height values should be between (0 ; width - 1) or (0 ; height - 1) respectively.
-	 *	Note that get_instance() returns a copy of the instance, so it CANNOT be used to modify the room and it's instances.
-	 *	instead, use set_instance().
+	 *	Note that get_instance() returns a pointer to the instance.
+	 *	Since the set_instance() function creates a new object using the new operator,
+	 *	it should only be used when parsing the .xml files, not to modify an instance.
 	 */
 	void set_instance(int width, int height, int type, bool movable);
-	Instance get_instance(int width, int height); // ! RETURNS A COPY !
+	Instance* get_instance(int width, int height); // ! RETURNS A COPY !
 	
 	/**
 	 *	PRE CONDITIONS:

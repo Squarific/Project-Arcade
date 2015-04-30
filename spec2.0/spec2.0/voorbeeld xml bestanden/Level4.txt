@@ -1,0 +1,20 @@
+levelname,Level 4 (Maze with boobytraps)
+playername,Chip
+width,12
+height,16
+W,W,W,W,W,W,W,W,W,W,W,W
+W,X, , ,W, , ,#, , , ,W
+W,W,W,_gate1,W, ,W,W,W,W, ,W
+W, , , ,W, , , , ,W, ,W
+W, ,W, ,W, ,W,W, ,W, ,W
+W, ,W, , , ,W, , , , ,W
+W, ,W,W,W,W,W, ,W,W,W,W
+W,#, , , , , , , , , ,W
+W,W,W,W, ,W,W,W,W, , ,W
+W, , , , ,W, , ,W, , ,W
+W,W,W,W, ,W, , ,W, , ,W
+W, , , , ,#, ,W,W,W, ,W
+W, , ,W, ,W, , , , , ,W
+W,W,W,W, ,W, ,W,W,W, ,W
+W,.gate1, ,O, ,W, ,W, ,Y, ,W
+W,W,W,W,W,W,W,W,W,W,W,W

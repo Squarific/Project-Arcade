@@ -1,0 +1,14 @@
+levelname,Level 1
+playername,Chip
+width,6
+height,10
+W,W,W,W,W,W
+W,W,X,W,W,W
+W,W,_,W,W,W
+W,W, ,W,W,W
+W,.,O, , ,W
+W,W,W,W, ,W
+W,W,W,W, ,W
+W,W,W,W, ,W
+W,W,Y, , ,W
+W,W,W,W,W,W

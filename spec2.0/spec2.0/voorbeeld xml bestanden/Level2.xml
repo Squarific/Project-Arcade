@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VELD>
+    <NAAM>
+        Level 2 (with water)
+    </NAAM>
+    <SPELER x="5" y="1">
+        <NAAM>
+            Chip
+        </NAAM>
+    </SPELER>
+    <BREEDTE>
+        11
+    </BREEDTE>
+    <LENGTE>
+        9
+    </LENGTE>
+    <MUUR beweegbaar="false" x="0" y="8"/>
+    <MUUR beweegbaar="false" x="1" y="8"/>
+    <MUUR beweegbaar="false" x="2" y="8"/>
+    <MUUR beweegbaar="false" x="3" y="8"/>
+    <MUUR beweegbaar="false" x="4" y="8"/>
+    <MUUR beweegbaar="false" x="5" y="8"/>
+    <MUUR beweegbaar="false" x="6" y="8"/>
+    <MUUR beweegbaar="false" x="7" y="8"/>
+    <MUUR beweegbaar="false" x="8" y="8"/>
+    <MUUR beweegbaar="false" x="9" y="8"/>
+    <MUUR beweegbaar="false" x="10" y="8"/>
+    <MUUR beweegbaar="false" x="0" y="7"/>
+    <WATER beweegbaar="false" x="1" y="7"/>
+    <WATER beweegbaar="false" x="2" y="7"/>
+    <WATER beweegbaar="false" x="3" y="7"/>
+    <WATER beweegbaar="false" x="4" y="7"/>
+    <DOEL x="5" y="7"/>
+    <WATER beweegbaar="false" x="6" y="7"/>
+    <WATER beweegbaar="false" x="7" y="7"/>
+    <WATER beweegbaar="false" x="8" y="7"/>
+    <WATER beweegbaar="false" x="9" y="7"/>
+    <MUUR beweegbaar="false" x="10" y="7"/>
+    <MUUR beweegbaar="false" x="0" y="6"/>
+    <WATER beweegbaar="false" x="1" y="6"/>
+    <WATER beweegbaar="false" x="2" y="6"/>
+    <WATER beweegbaar="false" x="3" y="6"/>
+    <WATER beweegbaar="false" x="4" y="6"/>
+    <WATER beweegbaar="false" x="5" y="6"/>
+    <WATER beweegbaar="false" x="6" y="6"/>
+    <WATER beweegbaar="false" x="7" y="6"/>
+    <WATER beweegbaar="false" x="8" y="6"/>
+    <WATER beweegbaar="false" x="9" y="6"/>
+    <MUUR beweegbaar="false" x="10" y="6"/>
+    <MUUR beweegbaar="false" x="0" y="5"/>
+    <WATER beweegbaar="false" x="1" y="5"/>
+    <WATER beweegbaar="false" x="2" y="5"/>
+    <WATER beweegbaar="false" x="3" y="5"/>
+    <WATER beweegbaar="false" x="4" y="5"/>
+    <WATER beweegbaar="false" x="5" y="5"/>
+    <WATER beweegbaar="false" x="6" y="5"/>
+    <WATER beweegbaar="false" x="7" y="5"/>
+    <WATER beweegbaar="false" x="8" y="5"/>
+    <WATER beweegbaar="false" x="9" y="5"/>
+    <MUUR beweegbaar="false" x="10" y="5"/>
+    <MUUR beweegbaar="false" x="0" y="4"/>
+    <TON beweegbaar="true" x="5" y="4"/>
+    <MUUR beweegbaar="false" x="10" y="4"/>
+    <MUUR beweegbaar="false" x="0" y="3"/>
+    <TON beweegbaar="true" x="4" y="3"/>
+    <TON beweegbaar="true" x="6" y="3"/>
+    <MUUR beweegbaar="false" x="10" y="3"/>
+    <MUUR beweegbaar="false" x="0" y="2"/>
+    <MUUR beweegbaar="false" x="10" y="2"/>
+    <MUUR beweegbaar="false" x="0" y="1"/>
+    <MUUR beweegbaar="false" x="10" y="1"/>
+    <MUUR beweegbaar="false" x="0" y="0"/>
+    <MUUR beweegbaar="false" x="1" y="0"/>
+    <MUUR beweegbaar="false" x="2" y="0"/>
+    <MUUR beweegbaar="false" x="3" y="0"/>
+    <MUUR beweegbaar="false" x="4" y="0"/>
+    <MUUR beweegbaar="false" x="5" y="0"/>
+    <MUUR beweegbaar="false" x="6" y="0"/>
+    <MUUR beweegbaar="false" x="7" y="0"/>
+    <MUUR beweegbaar="false" x="8" y="0"/>
+    <MUUR beweegbaar="false" x="9" y="0"/>
+    <MUUR beweegbaar="false" x="10" y="0"/>
+</VELD>

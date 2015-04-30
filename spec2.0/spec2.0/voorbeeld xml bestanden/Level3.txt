@@ -1,0 +1,14 @@
+levelname,Level 3 (With a monster)
+playername,Chip
+width,10
+height,10
+W,W,W,W,W,W,W,W,W,W
+W, ,Mmonster1, ,W,X,W, ,.gate1,W
+W, ,O, ,W,_gate1,W, , ,W
+W, ,W, , , , ,W, ,W
+W, ,W, ,W,W, ,W, ,W
+W, , , , , , , , ,W
+W, ,W, ,W,W, ,W, ,W
+W, ,W, ,W,W, ,W, ,W
+W, , , , ,Y, , , ,W
+W,W,W,W,W,W,W,W,W,W

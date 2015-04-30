@@ -11,7 +11,7 @@ class Room {
 	std::string name;
 	int width;
 	int height;
-	std::vector< std::vector< Instance > > instances;
+	std::vector< std::vector< Instance*> > instances;
 	bool is_initialized;
 	
   public:
@@ -52,7 +52,7 @@ class Room {
 	
 	// Instances
 	void set_instance(int width, int height, int type, bool movable);
-	Instance get_instance(int width, int height); // RETURNS A COPY!
+	Instance* get_instance(int width, int height);
 	void set_instance_name(int width, int height, std::string str);
 	
 	// Moves an instance from location 'from', to location 'to'
@@ -91,7 +91,12 @@ void Room::print_ascii() {
 
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
-			std::cout << "|" << instances[height - 1 - i][j].get_type();
+			if (instances[height - 1 - i][j] == NULL) {
+				std::cout << "| ";
+			}
+			else {
+				std::cout << "|" << instances[height - 1 - i][j]->get_type();
+			}
 		}
 		std::cout << "|" << std::endl;
 		std::cout << std::string(2 * width + 1, '-') << std::endl;
@@ -102,7 +107,7 @@ void Room::init() {
 	REQUIRE(!is_initialized, "ERROR: Room was already initialized.");
 	
 	if ((width > 0) && (height > 0)) {
-		instances.resize(height, std::vector< Instance >(width, Instance(0, false)));
+		instances.resize(height, std::vector< Instance*>(width, NULL));
 		is_initialized = true;
 	}
 	else
@@ -140,30 +145,31 @@ std::string Room::get_name() {
 void Room::set_instance(int width, int height, int type, bool movable) {
 	REQUIRE(is_initialized, "ERROR: Could not set instance because Room was not properly initialized.");
 	
-	instances[height][width].set_type(type);
-	instances[height][width].set_movable(movable);
+	Instance* instance = new Instance(type, movable);
+
+	instances[height][width] = instance;
 }
 
-Instance Room::get_instance(int width, int height) {
+Instance* Room::get_instance(int width, int height) {
 	REQUIRE(is_initialized, "ERROR: Could not get_instance() because Room was not properly initialized. Returning empty instance.");
 	
 	if (is_initialized)
 		return instances[height][width];
 	else
-		return Instance(0, false);
+		return NULL;
 }
 
 void Room::set_instance_name(int width, int height, std::string str) {
 	REQUIRE(is_initialized, "ERROR: Could not set_instance_name() because Room was not properly initialized.");
 	
-	instances[height][width].set_name(str);
+	instances[height][width]->set_name(str);
 }
 
 void Room::move_instance(int from_width, int from_height, int to_width, int to_height) {
 	REQUIRE(is_initialized, "ERROR: Could not move_instance() because Room was not properly initialized.");
 	
-	this->set_instance(to_width, to_height, instances[from_height][from_width].get_type(), instances[from_height][from_width].get_movable());
-	this->set_instance(from_width, from_height, 0, false);
+	instances[to_height][to_width] = instances[from_height][from_width];
+	instances[from_height][from_width] = NULL;
 }
 
 int Room::get_player_width() {
@@ -171,7 +177,7 @@ int Room::get_player_width() {
 	
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
-			if (instances[i][j].get_type() == 1)
+			if (instances[i][j]->get_type() == 1)
 				return j;
 		}
 	}
@@ -184,7 +190,7 @@ int Room::get_player_height() {
 	
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
-			if (instances[i][j].get_type() == 1)
+			if (instances[i][j]->get_type() == 1)
 				return i;
 		}
 	}
@@ -225,26 +231,26 @@ bool Room::execute_move(Move*& move) {
 	}
 	
 	// Destination is air
-	if (instances[player_y + offset_y][player_x + offset_x].get_type() == 0) {
+	if (instances[player_y + offset_y][player_x + offset_x]->get_type() == 0) {
 		this->move_instance(player_x, player_y, player_x + offset_x, player_y + offset_y);
 		return true;
 	}
 	
 	// Destination is a non-movable instance and is not air
-	if (instances[player_y + offset_y][player_x + offset_x].get_movable() == false) {
+	if (instances[player_y + offset_y][player_x + offset_x]->get_movable() == false) {
 		std::cerr << "ERROR: Destination contains a non-movable instance" << std::endl;
 		return false;
 	}
 	
 	// Destination is a moveable instance
-	if (instances[player_y + offset_y][player_x + offset_x].get_movable()) {
+	if (instances[player_y + offset_y][player_x + offset_x]->get_movable()) {
 		// Object behind destination is out of bounds -> moveable object gets pushed off the platform
 		if ((player_x + 2 * offset_x > width) || (player_x + 2 * offset_x < 0) || (player_y + 2 * offset_y > height) || (player_y + 2 * offset_y < 0)) {
 			this->move_instance(player_x, player_y, player_x + offset_x, player_y + offset_y);
 			return true;
 		}
 		// Object behind destination is not air -> cannot move in that direction
-		if (instances[player_y + 2 * offset_y][player_x + 2 * offset_x].get_type() != 0) {
+		if (instances[player_y + 2 * offset_y][player_x + 2 * offset_x]->get_type() != 0) {
 			std::cerr << "ERROR: Second non-air instance located behind moveable instance" << std::endl;
 			return false;
 		}
@@ -272,12 +278,12 @@ void Room::writeToFile(const char* filename) {
 	// Player location
 	int player_x = get_player_width();
 	int player_y = get_player_height();
-	file << "Speler " << instances[player_y][player_x].get_name() << " bevindt zich in het speelveld op positie (" << player_x << ", " << player_y << ").\n\n";
+	file << "Speler " << instances[player_y][player_x]->get_name() << " bevindt zich in het speelveld op positie (" << player_x << ", " << player_y << ").\n\n";
 	
 	// Barrel locations
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
-			if (instances[i][j].get_type() == 3) {
+			if (instances[i][j]->get_type() == 3) {
 				file << "Er bevindt zich een ton op positie (" << j << ", " << i << ").\n\n";
 			}
 		}
