@@ -12,6 +12,9 @@ int main(int argc, char *argv[]) {
 			current_room.set_height(10);
 			current_room.set_width(10);
 			current_room.init();
+
+			current_room.set_instance(3, 3, 0);
+
 			current_room.print_ascii();
 
 			std::cout << "Leaving developer testing grounds!\nCYA" << std::endl;

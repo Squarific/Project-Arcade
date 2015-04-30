@@ -3,13 +3,17 @@
 #include "DesignByContract.h"
 
 class Instance {
-  private:
+  protected:
 	int type;	 
 	bool movable;
 	std::string name;
 	bool properly_init = false;
 	
   public:
+  	/**
+  	 *	 Although these constructors can be used for 'custom' objects, it is not advised to use this.
+  	 *	 You should only use the subclasses' constructors.
+  	 */
 	Instance() {
 		properly_init = true;
 	}
@@ -62,4 +66,45 @@ class Instance {
 	void print_instance();
 
 	~Instance();
+};
+
+
+/**
+ *	SUBCLASSES
+ */
+
+class Player: public Instance {
+  public:
+  	Player(){
+  		movable = false;
+  		type = 0;
+  		properly_init = true;
+  	}
+  	Player(std::string n) {
+  		movable = false;
+  		type = 0;
+  		properly_init = true;
+  		name = n;
+  	}
+  	~Player();
+};
+
+class Wall: public Instance {
+  public:
+  	Wall(){
+  		movable = false;
+  		type = 1;
+  		properly_init = true;
+  	}
+  	~Wall();
+};
+
+class Barrel: public Instance {
+  public:
+  	Barrel(){
+  		movable = true;
+  		type = 2;
+  		properly_init = true;
+  	}
+  	~Barrel();
 };

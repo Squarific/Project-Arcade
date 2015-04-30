@@ -51,9 +51,9 @@ bool Room::loadFromXMLFile (const char* filename) {
 
 			int type = 0;
 			if (str == "muur") {
-				type = 2;
+				type = 1;
 			} else if (str == "ton") {
-				type = 3;
+				type = 2;
 			} else {
 				cerr << "Ignoring unknown type " << str << "." << endl;
 			}
@@ -72,7 +72,7 @@ bool Room::loadFromXMLFile (const char* filename) {
 			elem->Attribute("x", &x);
 			elem->Attribute("y", &y);
 
-			this->set_instance(x, y, type, movable);
+			this->set_instance(x, y, type);
 		}
 
 		if (elemName == "SPELER") {
@@ -86,7 +86,7 @@ bool Room::loadFromXMLFile (const char* filename) {
 			elem->Attribute("x", &x);
 			elem->Attribute("y", &y);
 
-			this->set_instance(x, y, 1, false);
+			this->set_instance(x, y, 0);
 			this->set_instance_name(x, y, name);
 		}
 	}

@@ -53,7 +53,7 @@ class Room {
 	std::string get_name();
 	
 	// Instances
-	void set_instance(int width, int height, int type, bool movable);
+	bool set_instance(int width, int height, int type);
 	Instance* get_instance(int width, int height);
 	void set_instance_name(int width, int height, std::string str);
 	
@@ -147,12 +147,28 @@ std::string Room::get_name() {
 	return name;
 }
 
-void Room::set_instance(int width, int height, int type, bool movable) {
+bool Room::set_instance(int width, int height, int type) {
 	REQUIRE(is_initialized, "ERROR: Could not set instance because Room was not properly initialized.");
+	REQUIRE(type >= 0, "ERROR: Instance type should be at least 0. Please refer to the header files to see which value represents which instance.")
+	REQUIRE(type < 4, "ERROR: Instance type should be less than 4. Please refer to the header files to see which value represents which instance.")
 	
-	Instance* instance = new Instance(type, movable);
-
-	instances[height][width] = instance;
+	if (type == 0) {
+		Player* instance = new Player();
+		instances[height][width] = instance;
+		return true;
+	}
+	else if (type == 1) {
+		Wall* instance = new Wall();
+		instances[height][width] = instance;
+		return true;
+	}
+	else if (type == 2) {
+		Barrel* instance = new Barrel();
+		instances[height][width] = instance;
+		return true;
+	}
+	else
+		return false;
 }
 
 Instance* Room::get_instance(int width, int height) {
@@ -184,7 +200,7 @@ int Room::get_player_width() {
 		for (int j = 0; j < width; j++) {
 			if (instances[i][j] == NULL)
 				continue;
-			if (instances[i][j]->get_type() == 1)
+			if (instances[i][j]->get_type() == 0)
 				return j;
 		}
 	}
@@ -199,7 +215,7 @@ int Room::get_player_height() {
 		for (int j = 0; j < width; j++) {
 			if (instances[i][j] == NULL)
 				continue;
-			if (instances[i][j]->get_type() == 1)
+			if (instances[i][j]->get_type() == 0)
 				return i;
 		}
 	}
@@ -246,7 +262,7 @@ bool Room::execute_move(Move*& move) {
 	}
 	
 	// Destination is a non-movable instance and is not air
-	if (instances[player_y + offset_y][player_x + offset_x]->get_movable() == false) {
+	if (! instances[player_y + offset_y][player_x + offset_x]->get_movable()) {
 		std::cerr << "ERROR: Destination contains a non-movable instance" << std::endl;
 		return false;
 	}
@@ -259,7 +275,7 @@ bool Room::execute_move(Move*& move) {
 			return true;
 		}
 		// Object behind destination is not air -> cannot move in that direction
-		if (instances[player_y + 2 * offset_y][player_x + 2 * offset_x]->get_type() != 0) {
+		if (instances[player_y + 2 * offset_y][player_x + 2 * offset_x] != NULL) {
 			std::cerr << "ERROR: Second non-air instance located behind moveable instance" << std::endl;
 			return false;
 		}
@@ -294,7 +310,7 @@ void Room::writeToFile(const char* filename) {
 		for (int j = 0; j < width; j++) {
 			if (instances[i][j] == NULL)
 				continue;
-			if (instances[i][j]->get_type() == 3) {
+			if (instances[i][j]->get_type() == 2) {
 				file << "Er bevindt zich een ton op positie (" << j << ", " << i << ").\n\n";
 			}
 		}

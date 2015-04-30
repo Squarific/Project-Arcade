@@ -97,8 +97,8 @@ class Room {
 	 *	Since the set_instance() function creates a new object using the new operator,
 	 *	it should only be used when parsing the .xml files, not to modify an instance.
 	 */
-	void set_instance(int width, int height, int type, bool movable);
-	Instance* get_instance(int width, int height); // ! RETURNS A COPY !
+	bool set_instance(int width, int height, int type);
+	Instance* get_instance(int width, int height);
 	
 	/**
 	 *	PRE CONDITIONS:

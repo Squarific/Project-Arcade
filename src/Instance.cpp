@@ -3,16 +3,15 @@
 #include "DesignByContract.h"
 
 class Instance {
-  private:
+  protected:
 	int type;
 	bool movable;
 	std::string name;
 	/*
 		The following ints are used to define which type the instance is:
-		0: Empty
-		1: Player
-		2: Wall
-		3: Barrel
+		0: Player
+		1: Wall
+		2: Barrel
 	*/
 	bool properly_init = false;
 	
@@ -37,6 +36,42 @@ class Instance {
 	void set_movable(bool m);
 	
 	void print_instance();
+};
+
+class Player: public Instance {
+  public:
+  	Player(){
+  		movable = false;
+  		type = 0;
+  		properly_init = true;
+  	}
+  	Player(std::string n) {
+  		movable = false;
+  		type = 0;
+  		properly_init = true;
+  		name = n;
+  	}
+  	~Player();
+};
+
+class Wall: public Instance {
+  public:
+  	Wall(){
+  		movable = false;
+  		type = 1;
+  		properly_init = true;
+  	}
+  	~Wall();
+};
+
+class Barrel: public Instance {
+  public:
+  	Barrel(){
+  		movable = true;
+  		type = 2;
+  		properly_init = true;
+  	}
+  	~Barrel();
 };
 
 int Instance::get_type() {
@@ -80,3 +115,9 @@ void Instance::print_instance() {
 }
 
 Instance::~Instance(){}
+
+Player::~Player(){}
+
+Wall::~Wall(){}
+
+Barrel::~Barrel(){}
