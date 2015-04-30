@@ -1,1 +1,1 @@
-game xmlfiles/Speeldveld1.0.xml xmlfiles/Bewegingen1.0.xml
+game xmlfiles/Speelveld1.0.xml xmlfiles/Bewegingen1.0.xml

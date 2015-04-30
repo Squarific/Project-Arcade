@@ -184,4 +184,6 @@ class Room {
 	 *	If there are no moves in the vector, writes "Geen resterende bewegingen".
 	 */
 	void writeMovesToFile(const char* filename);
+
+	~Room();
 };

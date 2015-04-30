@@ -29,6 +29,8 @@ class Room {
 		name = n;
 		is_initialized = false;
 	}
+
+	~Room();
 	
 	// Printsint argc, char *argv[]
 	void print_dimensions();
@@ -79,6 +81,9 @@ class Room {
 	// File Outpot
 	void writeToFile(const char* filename);
 	void writeMovesToFile(const char* filename);
+
+	// Delete Instances
+	void deleteInstances();
 };
 
 void Room::print_dimensions() {
@@ -105,7 +110,7 @@ void Room::print_ascii() {
 
 void Room::init() {
 	REQUIRE(!is_initialized, "ERROR: Room was already initialized.");
-	
+
 	if ((width > 0) && (height > 0)) {
 		instances.resize(height, std::vector< Instance*>(width, NULL));
 		is_initialized = true;
@@ -177,6 +182,8 @@ int Room::get_player_width() {
 	
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
+			if (instances[i][j] == NULL)
+				continue;
 			if (instances[i][j]->get_type() == 1)
 				return j;
 		}
@@ -190,6 +197,8 @@ int Room::get_player_height() {
 	
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
+			if (instances[i][j] == NULL)
+				continue;
 			if (instances[i][j]->get_type() == 1)
 				return i;
 		}
@@ -231,7 +240,7 @@ bool Room::execute_move(Move*& move) {
 	}
 	
 	// Destination is air
-	if (instances[player_y + offset_y][player_x + offset_x]->get_type() == 0) {
+	if (instances[player_y + offset_y][player_x + offset_x] == NULL) {
 		this->move_instance(player_x, player_y, player_x + offset_x, player_y + offset_y);
 		return true;
 	}
@@ -283,6 +292,8 @@ void Room::writeToFile(const char* filename) {
 	// Barrel locations
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
+			if (instances[i][j] == NULL)
+				continue;
 			if (instances[i][j]->get_type() == 3) {
 				file << "Er bevindt zich een ton op positie (" << j << ", " << i << ").\n\n";
 			}
@@ -343,3 +354,5 @@ void Room::executeAllMoves(const char* roomfilename, const char* movesfilename) 
 	
 	return;
 }
+
+Room::~Room() {}

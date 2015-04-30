@@ -60,4 +60,6 @@ class Instance {
 	 *	Prints basic information about the instance. To be used for testing purposes only.
 	 */
 	void print_instance();
+
+	~Instance();
 };

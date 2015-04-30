@@ -25,6 +25,7 @@ class Instance {
 		movable = m;
 		properly_init = true;
 	}
+	~Instance();
 	
 	int get_type();
 	void set_type(int t);
@@ -77,3 +78,5 @@ void Instance::set_movable(bool m) {
 void Instance::print_instance() {
 	std::cout << "INSTANCE: Type: " << type << std::endl;
 }
+
+Instance::~Instance(){}
