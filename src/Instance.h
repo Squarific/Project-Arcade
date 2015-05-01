@@ -29,10 +29,11 @@ class Instance {
 	 *
 	 *	Get and set functions for the 'type' attribute.
 	 *	The following ints are used to define which type the instance is:
-	 *	0: Empty
-	 *	1: Player
-	 *	2: Wall
-	 *	3: Barrel
+	 *	0: Player
+	 *	1: Wall
+	 *	2: Barrel
+	 *	3: Monster
+	 *	4: Water
 	 */
 	int get_type();
 	void set_type(int t);
@@ -107,4 +108,24 @@ class Barrel: public Instance {
   		properly_init = true;
   	}
   	~Barrel();
+};
+
+class Monster: public Instance {
+  public:
+  	Monster(){
+  		movable = false;
+  		type = 3;
+  		properly_init = true;
+  	}
+  	~Monster();
+};
+
+class Water: public Instance {
+  public:
+  	Water(){
+  		movable = false;
+  		type = 4;
+  		properly_init = true;
+  	}
+  	~Water();
 };

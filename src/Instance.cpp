@@ -12,6 +12,8 @@ class Instance {
 		0: Player
 		1: Wall
 		2: Barrel
+		3: Monster
+		4: Water
 	*/
 	bool properly_init = false;
 	
@@ -74,6 +76,26 @@ class Barrel: public Instance {
   	~Barrel();
 };
 
+class Monster: public Instance {
+  public:
+  	Monster(){
+  		movable = false;
+  		type = 3;
+  		properly_init = true;
+  	}
+  	~Monster();
+};
+
+class Water: public Instance {
+  public:
+  	Water(){
+  		movable = false;
+  		type = 4;
+  		properly_init = true;
+  	}
+  	~Water();
+};
+
 int Instance::get_type() {
 	REQUIRE(properly_init, "ERROR: Instance was not properly initialized.");
 	
@@ -121,3 +143,7 @@ Player::~Player(){}
 Wall::~Wall(){}
 
 Barrel::~Barrel(){}
+
+Monster::~Monster(){}
+
+Water::~Water(){}

@@ -167,6 +167,16 @@ bool Room::set_instance(int width, int height, int type) {
 		instances[height][width] = instance;
 		return true;
 	}
+	else if (type == 3) {
+		Monster* instance = new Monster();
+		instances[height][width] = instance;
+		return true;
+	}
+	else if (type == 4) {
+		Water* instance = new Water();
+		instances[height][width] = instance;
+		return true;
+	}
 	else
 		return false;
 }
