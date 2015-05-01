@@ -32,10 +32,11 @@ class Room {
 
 	~Room();
 	
-	// Printsint argc, char *argv[]
+	// Prints
 	void print_dimensions();
 	void print_ascii();
-	
+	void printRoom();
+
 	// Init
 	// Fills the room width empty instances. (type = 0, movable = false)
 	void init();
@@ -108,6 +109,20 @@ void Room::print_ascii() {
 	}
 }
 
+void Room::printRoom() {
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			if (instances[height - 1 - i][j] == NULL) {
+				std::cout << " ";
+			}
+			else {
+				std::cout << instances[height - 1 - i][j]->getSymbol();
+			}
+		}
+		std::cout << std::endl;
+	}
+}
+
 void Room::init() {
 	REQUIRE(!is_initialized, "ERROR: Room was already initialized.");
 
@@ -150,7 +165,7 @@ std::string Room::get_name() {
 bool Room::set_instance(int width, int height, int type) {
 	REQUIRE(is_initialized, "ERROR: Could not set instance because Room was not properly initialized.");
 	REQUIRE(type >= 0, "ERROR: Instance type should be at least 0. Please refer to the header files to see which value represents which instance.")
-	REQUIRE(type < 4, "ERROR: Instance type should be less than 4. Please refer to the header files to see which value represents which instance.")
+	REQUIRE(type < 7, "ERROR: Instance type should be less than 7. Please refer to the header files to see which value represents which instance.")
 	
 	if (type == 0) {
 		Player* instance = new Player();
@@ -174,6 +189,21 @@ bool Room::set_instance(int width, int height, int type) {
 	}
 	else if (type == 4) {
 		Water* instance = new Water();
+		instances[height][width] = instance;
+		return true;
+	}
+	else if (type == 5) {
+		Gate* instance = new Gate();
+		instances[height][width] = instance;
+		return true;
+	}
+	else if (type == 6) {
+		Button* instance = new Button();
+		instances[height][width] = instance;
+		return true;
+	}
+	else if (type == 7) {
+		Target* instance = new Target();
 		instances[height][width] = instance;
 		return true;
 	}

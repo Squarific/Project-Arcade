@@ -37,8 +37,14 @@ class Room {
 	
 	/**
 	 *	Prints an ascii representation of the room in the console. Used for testing purposes only.
+	 *	If you want to print out the room for use in the UI, please use printRoom().
 	 */
 	void print_ascii();
+
+	/**
+	 *	Prints an ascii representation of the room in the console.
+	 */	
+	void printRoom();
 	
 	/**
 	 *	PRE CONDITIONS:

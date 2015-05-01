@@ -7,14 +7,17 @@ class Instance {
 	int type;
 	bool movable;
 	std::string name;
-	/*
-		The following ints are used to define which type the instance is:
-		0: Player
-		1: Wall
-		2: Barrel
-		3: Monster
-		4: Water
-	*/
+	/**
+	 *	The following ints are used to define which type the instance is:
+	 *	0: Player
+	 *	1: Wall
+	 *	2: Barrel
+	 *	3: Monster
+	 *	4: Water
+	 *	5: Gate
+	 *	6: Button
+	 *	7: Target
+	 */
 	bool properly_init = false;
 	
   public:
@@ -36,6 +39,8 @@ class Instance {
 	
 	bool get_movable();
 	void set_movable(bool m);
+
+	std::string getSymbol();
 	
 	void print_instance();
 };
@@ -96,6 +101,36 @@ class Water: public Instance {
   	~Water();
 };
 
+class Gate: public Instance {
+  public:
+  	Gate(){
+  		movable = false;
+  		type = 5;
+  		properly_init = true;
+  	}
+  	~Gate();
+};
+
+class Button: public Instance {
+  public:
+  	Button(){
+  		movable = false;
+  		type = 6;
+  		properly_init = true;
+  	}
+  	~Button();
+};
+
+class Target: public Instance {
+  public:
+  	Target(){
+  		movable = false;
+  		type = 7;
+  		properly_init = true;
+  	}
+  	~Target();
+};
+
 int Instance::get_type() {
 	REQUIRE(properly_init, "ERROR: Instance was not properly initialized.");
 	
@@ -112,6 +147,27 @@ std::string Instance::get_name() {
 	REQUIRE(properly_init, "ERROR: Instance was not properly initialized.");
 	
 	return name;
+}
+
+std::string Instance::getSymbol() {
+	REQUIRE(properly_init, "ERROR: Instance was not properly initialized.");
+	
+	if (type == 0)
+		return "Y";
+	if (type == 1)
+		return "#";
+	if (type == 2)
+		return "O";
+	if (type == 3)
+		return "&";
+	if (type == 4)
+		return "~";
+	if (type == 5)
+		return "=";
+	if (type == 6)
+		return ".";
+	if (type == 7)
+		return "X";
 }
 
 void Instance::set_name(std::string n) {
@@ -147,3 +203,9 @@ Barrel::~Barrel(){}
 Monster::~Monster(){}
 
 Water::~Water(){}
+
+Gate::~Gate(){}
+
+Button::~Button(){}
+
+Target::~Target(){}

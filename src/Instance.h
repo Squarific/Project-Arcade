@@ -34,6 +34,9 @@ class Instance {
 	 *	2: Barrel
 	 *	3: Monster
 	 *	4: Water
+	 *	5: Gate
+	 *	6: Button
+	 *	7: Target
 	 */
 	int get_type();
 	void set_type(int t);
@@ -48,6 +51,14 @@ class Instance {
 	 */
 	std::string get_name();
 	void set_name(std::string n);
+
+	/**
+	 *	PRE CONDITIONS:
+	 *		properly_init == true
+	 *
+	 *	Returns the symbol used in the printRoom() function.
+	 */
+	std::string getSymbol();
 	
 	/** 
 	 *	PRE CONDITIONS:
@@ -128,4 +139,34 @@ class Water: public Instance {
   		properly_init = true;
   	}
   	~Water();
+};
+
+class Gate: public Instance {
+  public:
+  	Gate(){
+  		movable = false;
+  		type = 5;
+  		properly_init = true;
+  	}
+  	~Gate();
+};
+
+class Button: public Instance {
+  public:
+  	Button(){
+  		movable = false;
+  		type = 6;
+  		properly_init = true;
+  	}
+  	~Button();
+};
+
+class Target: public Instance {
+  public:
+  	Target(){
+  		movable = false;
+  		type = 7;
+  		properly_init = true;
+  	}
+  	~Target();
 };
