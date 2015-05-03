@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VELD>
+    <NAAM>
+        Level 1
+    </NAAM>
+    <SPELER x="2" y="1">
+        <NAAM>
+            Chip
+        </NAAM>
+    </SPELER>
+    <BREEDTE>
+        6
+    </BREEDTE>
+    <LENGTE>
+        10
+    </LENGTE>
+    <MUUR beweegbaar="false" x="0" y="9"/>
+    <MUUR beweegbaar="false" x="1" y="9"/>
+    <MUUR beweegbaar="false" x="2" y="9"/>
+    <MUUR beweegbaar="false" x="3" y="9"/>
+    <MUUR beweegbaar="false" x="4" y="9"/>
+    <MUUR beweegbaar="false" x="5" y="9"/>
+    <MUUR beweegbaar="false" x="0" y="8"/>
+    <MUUR beweegbaar="false" x="1" y="8"/>
+    <DOEL x="2" y="8"/>
+    <MUUR beweegbaar="false" x="3" y="8"/>
+    <MUUR beweegbaar="false" x="4" y="8"/>
+    <MUUR beweegbaar="false" x="5" y="8"/>
+    <MUUR beweegbaar="false" x="0" y="7"/>
+    <MUUR beweegbaar="false" x="1" y="7"/>
+    <POORT beweegbaar="false" x="2" y="7">
+        <ID>
+        </ID>
+    </POORT>
+    <MUUR beweegbaar="false" x="3" y="7"/>
+    <MUUR beweegbaar="false" x="4" y="7"/>
+    <MUUR beweegbaar="false" x="5" y="7"/>
+    <MUUR beweegbaar="false" x="0" y="6"/>
+    <MUUR beweegbaar="false" x="1" y="6"/>
+    <MUUR beweegbaar="false" x="3" y="6"/>
+    <MUUR beweegbaar="false" x="4" y="6"/>
+    <MUUR beweegbaar="false" x="5" y="6"/>
+    <MUUR beweegbaar="false" x="0" y="5"/>
+    <KNOP id="" x="1" y="5"/>
+    <TON beweegbaar="true" x="2" y="5"/>
+    <MUUR beweegbaar="false" x="5" y="5"/>
+    <MUUR beweegbaar="false" x="0" y="4"/>
+    <MUUR beweegbaar="false" x="1" y="4"/>
+    <MUUR beweegbaar="false" x="2" y="4"/>
+    <MUUR beweegbaar="false" x="3" y="4"/>
+    <MUUR beweegbaar="false" x="5" y="4"/>
+    <MUUR beweegbaar="false" x="0" y="3"/>
+    <MUUR beweegbaar="false" x="1" y="3"/>
+    <MUUR beweegbaar="false" x="2" y="3"/>
+    <MUUR beweegbaar="false" x="3" y="3"/>
+    <MUUR beweegbaar="false" x="5" y="3"/>
+    <MUUR beweegbaar="false" x="0" y="2"/>
+    <MUUR beweegbaar="false" x="1" y="2"/>
+    <MUUR beweegbaar="false" x="2" y="2"/>
+    <MUUR beweegbaar="false" x="3" y="2"/>
+    <MUUR beweegbaar="false" x="5" y="2"/>
+    <MUUR beweegbaar="false" x="0" y="1"/>
+    <MUUR beweegbaar="false" x="1" y="1"/>
+    <MUUR beweegbaar="false" x="5" y="1"/>
+    <MUUR beweegbaar="false" x="0" y="0"/>
+    <MUUR beweegbaar="false" x="1" y="0"/>
+    <MUUR beweegbaar="false" x="2" y="0"/>
+    <MUUR beweegbaar="false" x="3" y="0"/>
+    <MUUR beweegbaar="false" x="4" y="0"/>
+    <MUUR beweegbaar="false" x="5" y="0"/>
+</VELD>
