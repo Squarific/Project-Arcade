@@ -5,6 +5,7 @@
 #include "Move.h"
 #include "Instance.h"
 #include "DesignByContract.h"
+#include "./TinyXML/tinyxml.h"
 
 class Room {
   private:
@@ -166,6 +167,32 @@ class Room {
 	 *		is_initialized = true;
 	 */
 	bool loadFromXMLFile(const char* filename);
+
+	// Add contract
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// Add Contract
+	void parseRoomInfo (TiXmlElement* elem);
+	void parseInstance (TiXmlElement* elem);
+	void parsePlayer (TiXmlElement* elem);
 	
 	/**
 	 *	Load the to-be-executed moves from an XML file into the vector<Move> moves.

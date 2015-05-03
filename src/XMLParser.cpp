@@ -1,4 +1,5 @@
 #include <iostream>
+#include <map>
 #include "./TinyXML/tinyxml.h"
 
 using namespace std;
