@@ -2,5 +2,20 @@ Speler Chip zal volgende beweging nog uitvoeren:
 Omhoog
 
 Speler Chip zal volgende beweging nog uitvoeren: 
+Omhoog
+
+Speler Chip zal volgende beweging nog uitvoeren: 
+Links
+
+Speler Chip zal volgende beweging nog uitvoeren: 
+Omhoog
+
+Speler Chip zal volgende beweging nog uitvoeren: 
+Links
+
+Speler Chip zal volgende beweging nog uitvoeren: 
+Omhoog
+
+Speler Chip zal volgende beweging nog uitvoeren: 
 Rechts
 

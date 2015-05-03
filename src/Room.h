@@ -103,8 +103,10 @@ class Room {
 	 *	Note that get_instance() returns a pointer to the instance.
 	 *	Since the set_instance() function creates a new object using the new operator,
 	 *	it should only be used when parsing the .xml files, not to modify an instance.
+	 * 	With set_instance, an optional string id can be included for instances that have an id (Player, Monster, Gate, Button).
 	 */
 	bool set_instance(int width, int height, int type);
+	bool set_instance(int width, int height, int type, std::string id);
 	Instance* get_instance(int width, int height);
 	
 	/**

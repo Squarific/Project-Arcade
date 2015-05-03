@@ -55,6 +55,7 @@ class Room {
 	
 	// Instances
 	bool set_instance(int width, int height, int type);
+	bool set_instance(int width, int height, int type, std::string id);
 	Instance* get_instance(int width, int height);
 	void set_instance_name(int width, int height, std::string str);
 	
@@ -209,6 +210,39 @@ bool Room::set_instance(int width, int height, int type) {
 	}
 	else
 		return false;
+}
+
+bool Room::set_instance(int width, int height, int type, std::string id) {
+	REQUIRE(is_initialized, "ERROR: Could not set instance because Room was not properly initialized.");
+	REQUIRE(type >= 0, "ERROR: Instance type should be at least 0. Please refer to the header files to see which value represents which instance.")
+	REQUIRE(type < 8, "ERROR: Instance type should be less than 8. Please refer to the header files to see which value represents which instance.")
+	REQUIRE(type != 1, "ERROR: Instance: Wall does not have an id. Please use set_instance(width, height, type).")
+	REQUIRE(type != 2, "ERROR: Instance: Barrel does not have an id. Please use set_instance(width, height, type).")
+	REQUIRE(type != 4, "ERROR: Instance: Water does not have an id. Please use set_instance(width, height, type).")
+	REQUIRE(type != 7, "ERROR: Instance: Target does not have an id. Please use set_instance(width, height, type).")
+
+	if (type == 0) {
+		Player* instance = new Player(id);
+		instances[height][width] = instance;
+		return true;
+	}
+	else if (type == 3) {
+		Monster* instance = new Monster(id);
+		instances[height][width] = instance;
+		return true;
+	}
+	else if (type == 5) {
+		Gate* instance = new Gate(id);
+		instances[height][width] = instance;
+		return true;
+	}
+	else if (type == 6) {
+		Button* instance = new Button(id);
+		instances[height][width] = instance;
+		return true;
+	}
+	else
+		return false;	
 }
 
 Instance* Room::get_instance(int width, int height) {

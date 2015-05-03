@@ -9,7 +9,7 @@ int main(int argc, char *argv[]) {
 		if (argc == 1) {
 			std::cout << "No arguments given. Entering the developer testing grounds..." << std::endl;
 
-			current_room.loadFromXMLFile("xmlfiles/Level2.xml");
+			current_room.loadFromXMLFile("xmlfiles/Level3.xml");
 			current_room.loadMovesFromXMLFile("xmlfiles/Bewegingen1.0.xml");
 
 			current_room.set_instance(2, 8, 7);

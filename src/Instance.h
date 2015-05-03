@@ -87,86 +87,104 @@ class Instance {
 
 class Player: public Instance {
   public:
-  	Player(){
-  		movable = false;
-  		type = 0;
-  		properly_init = true;
-  	}
-  	Player(std::string n) {
-  		movable = false;
-  		type = 0;
-  		properly_init = true;
-  		name = n;
-  	}
-  	~Player();
+    Player() {
+      movable = false;
+      type = 0;
+      properly_init = true;
+    }
+    Player(std::string n) {
+      movable = false;
+      type = 0;
+      properly_init = true;
+      name = n;
+    }
+    ~Player();
 };
 
 class Wall: public Instance {
   public:
-  	Wall(){
-  		movable = false;
-  		type = 1;
-  		properly_init = true;
-  	}
-  	~Wall();
+    Wall() {
+      movable = false;
+      type = 1;
+      properly_init = true;
+    }
+    ~Wall();
 };
 
 class Barrel: public Instance {
   public:
-  	Barrel(){
-  		movable = true;
-  		type = 2;
-  		properly_init = true;
-  	}
-  	~Barrel();
+    Barrel() {
+      movable = true;
+      type = 2;
+      properly_init = true;
+    }
+    ~Barrel();
 };
 
 class Monster: public Instance {
   public:
-  	Monster(){
-  		movable = false;
-  		type = 3;
-  		properly_init = true;
-  	}
-  	~Monster();
+    Monster() {
+      movable = false;
+      type = 3;
+      properly_init = true;
+    }
+    Monster(std::string n) {
+      movable = false;
+      type = 3;
+      properly_init = true;
+      name = n;
+    }
+    ~Monster();
 };
 
 class Water: public Instance {
   public:
-  	Water(){
-  		movable = false;
-  		type = 4;
-  		properly_init = true;
-  	}
-  	~Water();
+    Water() {
+      movable = false;
+      type = 4;
+      properly_init = true;
+    }
+    ~Water();
 };
 
 class Gate: public Instance {
   public:
-  	Gate(){
-  		movable = false;
-  		type = 5;
-  		properly_init = true;
-  	}
-  	~Gate();
+    Gate() {
+      movable = false;
+      type = 5;
+      properly_init = true;
+    }
+    Gate(std::string n) {
+      movable = false;
+      type = 5;
+      properly_init = true;
+      name = n;
+    }
+    ~Gate();
 };
 
 class Button: public Instance {
   public:
-  	Button(){
-  		movable = false;
-  		type = 6;
-  		properly_init = true;
-  	}
-  	~Button();
+    Button() {
+      movable = false;
+      type = 6;
+      properly_init = true;
+    }
+    Button(std::string n) {
+      movable = false;
+      type = 6;
+      properly_init = true;
+      name = n;
+    }
+    ~Button();
 };
 
 class Target: public Instance {
   public:
-  	Target(){
-  		movable = false;
-  		type = 7;
-  		properly_init = true;
-  	}
-  	~Target();
+    Target() {
+      movable = false;
+      type = 7;
+      properly_init = true;
+    }
+    ~Target();
 };
