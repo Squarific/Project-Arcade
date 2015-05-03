@@ -1,4 +1,6 @@
 #include <iostream>
+#include <vector>
+#include <tuple>
 #include <map>
 #include "./TinyXML/tinyxml.h"
 
@@ -27,15 +29,30 @@ bool Room::loadFromXMLFile (const char* filename) {
 	if (string(root->Value()) != "VELD") {
 		cerr << "XML Error: Root element has to be called 'VELD' but was '" << root->Value() << "'" << endl;
 		return false;
-	}	
+	}
+
+	vector < vector <int>> instances;
+	vector < tuple <int, int, string>> players;
 	
 	// Parse all tags under the root
 	for (TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
 		string elemName = elem->Value();
 
 		if (elemName == "NAAM" || elemName == "LENGTE" || elemName == "BREEDTE") this->parseRoomInfo(elem);
-		if (elemName == "SPELER") this->parsePlayer(elem);
-		if (instanceTypes.count(elemName) == 1) this->parseInstance(elem);
+		if (elemName == "SPELER") players.push_back(this->parsePlayer(elem));
+		if (instanceTypes.count(elemName) == 1) instances.push_back(this->parseInstance(elem));
+	}
+
+	// The room settings have been parsed, init room and add instances and players
+	this->init();
+
+	for (auto instance : instances) {
+		this->set_instance(instance[0], instance[1], instance[2]);
+	}
+
+	for (auto player : players) {
+		this->set_instance(get<0>(player), get<1>(player), 0);
+		this->set_instance_name(get<0>(player), get<1>(player), get<2>(player));
 	}
 
 	return true;
@@ -51,19 +68,16 @@ void Room::parseRoomInfo (TiXmlElement* elem) {
 	
 	if (elemName == "NAAM") this->set_name(str);
 	if (elemName == "LENGTE") this->set_height(atoi(str.c_str()));
-	if (elemName == "BREEDTE") {
-		// After we set width we have to init the room
-		this->set_width(atoi(str.c_str()));
-		this->init();
-	}
+	if (elemName == "BREEDTE") this->set_width(atoi(str.c_str()));
 }
 
-void Room::parseInstance (TiXmlElement* elem) { 
+vector <int> Room::parseInstance (TiXmlElement* elem) { 
 	string elemName = elem->Value();
+	vector <int> instance;
 
 	if (instanceTypes.count(elemName) == 0) {
-		cerr << "PARSE ERROR: Invalid instance type. Type was: " << elemName << "." << endl;
-		return;
+		cerr << "PARSE ERROR: Invalid instance type. Type was: " << elemName << endl;
+		return instance;
 	}
 
 	int x = 0;
@@ -72,10 +86,14 @@ void Room::parseInstance (TiXmlElement* elem) {
 	elem->Attribute("x", &x);
 	elem->Attribute("y", &y);
 
-	this->set_instance(x, y, instanceTypes[elemName]);
+	instance.push_back(x);
+	instance.push_back(y);
+	instance.push_back(instanceTypes[elemName]);
+
+	return instance;
 }
 
-void Room::parsePlayer (TiXmlElement* elem) {
+tuple <int, int, string> Room::parsePlayer (TiXmlElement* elem) {
 	TiXmlNode* node = elem->FirstChild()->FirstChild();
 	TiXmlText* text = node->ToText();
 	string name = text->Value();
@@ -86,8 +104,8 @@ void Room::parsePlayer (TiXmlElement* elem) {
 	elem->Attribute("x", &x);
 	elem->Attribute("y", &y);
 
-	this->set_instance(x, y, 0);
-	this->set_instance_name(x, y, name);
+	tuple <int, int, string> player (x, y, name);
+	return player;
 }
 
 bool Room::loadMovesFromXMLFile(const char* filename) {
