@@ -3,11 +3,13 @@ Eigenschappen van dit veld:
 - Breedte: 10
 - Hoogte: 10
 
-Speler Chip bevindt zich in het speelveld op positie (2, 8).
+Speler Chip bevindt zich in het speelveld op positie (3, 8).
 
 Er bevindt zich een ton op positie (5, 1).
 
 Er bevindt zich een ton op positie (5, 2).
 
 Er bevindt zich een ton op positie (3, 4).
+
+Er bevindt zich een doel op positie (2, 8).
 

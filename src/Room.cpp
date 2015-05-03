@@ -300,7 +300,19 @@ bool Room::execute_move(Move*& move) {
 		this->move_instance(player_x, player_y, player_x + offset_x, player_y + offset_y);
 		return true;
 	}
-	
+
+	// Destination is water
+	if (instances[player_y + offset_y][player_x + offset_x]->get_type() == 4) {
+		std::cerr << "GAME OVER: Destination contains water. You died!" << std::endl;
+		return false;
+	}
+
+	// Destination is the target
+	if (instances[player_y + offset_y][player_x + offset_x]->get_type() == 7) {
+		std::cerr << "YOU WIN: You have reached the target. Good job!" << std::endl;
+		return false;
+	}
+
 	// Destination is a non-movable instance and is not air
 	if (! instances[player_y + offset_y][player_x + offset_x]->get_movable()) {
 		std::cerr << "ERROR: Destination contains a non-movable instance" << std::endl;
@@ -350,8 +362,35 @@ void Room::writeToFile(const char* filename) {
 		for (int j = 0; j < width; j++) {
 			if (instances[i][j] == NULL)
 				continue;
+
+			// Barrel
 			if (instances[i][j]->get_type() == 2) {
 				file << "Er bevindt zich een ton op positie (" << j << ", " << i << ").\n\n";
+			}
+
+			// Monster
+			if (instances[i][j]->get_type() == 3) {
+				file << "Er bevindt zich een monster op positie (" << j << ", " << i << ").\n\n";
+			}
+
+			// Water
+			if (instances[i][j]->get_type() == 4) {
+				file << "Er bevindt zich water op positie (" << j << ", " << i << ").\n\n";
+			}
+
+			// Gate
+			if (instances[i][j]->get_type() == 5) {
+				file << "Er bevindt zich een poort op positie (" << j << ", " << i << ").\n\n";
+			}
+
+			// Button
+			if (instances[i][j]->get_type() == 6) {
+				file << "Er bevindt zich een knop op positie (" << j << ", " << i << ").\n\n";
+			}
+
+			// Target
+			if (instances[i][j]->get_type() == 7) {
+				file << "Er bevindt zich een doel op positie (" << j << ", " << i << ").\n\n";
 			}
 		}
 	}
