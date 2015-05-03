@@ -16,7 +16,7 @@ class Room {
 	
   public:
 	std::vector< Move*> moves;
-	
+
 	Room() {
 		width = 0;
 		height = 0;
