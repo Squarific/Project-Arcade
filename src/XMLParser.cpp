@@ -1,7 +1,11 @@
 #include <iostream>
+#include <map>
 #include "./TinyXML/tinyxml.h"
 
 using namespace std;
+
+map <string, int> instanceTypes = {{"MUUR", 1}, {"TON", 2}, {"MONSTER", 3}, {"WATER", 4}, {"POORT", 5}, {"KNOP", 6}, {"DOEL", 7}};
+
 bool Room::loadFromXMLFile (const char* filename) {
 	// Create xml dom
 	TiXmlDocument doc(filename);
@@ -23,75 +27,67 @@ bool Room::loadFromXMLFile (const char* filename) {
 	if (string(root->Value()) != "VELD") {
 		cerr << "XML Error: Root element has to be called 'VELD' but was '" << root->Value() << "'" << endl;
 		return false;
-	}
+	}	
 	
-	// Parse the tags 'NAAM', 'LENGTE', 'BREEDTE', 'SPELER', 'OBSTAKEL'
+	// Parse all tags under the root
 	for (TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
 		string elemName = elem->Value();
-		
-		if (elemName == "NAAM" || elemName == "LENGTE" || elemName == "BREEDTE") {
-			// Get the text between the name, length and width tags
-			TiXmlNode* node = elem->FirstChild();
-			TiXmlText* text = node->ToText();
-			string str = text->Value();			
-			
-			if (elemName == "NAAM") this->set_name(str);
-			if (elemName == "LENGTE") this->set_height(atoi(str.c_str()));
-			if (elemName == "BREEDTE") {
-				// After we set width we have to init the room
-				this->set_width(atoi(str.c_str()));
-				this->init();
-			}
-		}
 
-		if (elemName == "OBSTAKEL") {
-			TiXmlNode* node = elem->FirstChild()->FirstChild();
-			TiXmlText* text = node->ToText();
-			string str = text->Value();
-
-			int type = 0;
-			if (str == "muur") {
-				type = 1;
-			} else if (str == "ton") {
-				type = 2;
-			} else {
-				cerr << "Ignoring unknown type " << str << "." << endl;
-			}
-
-			bool movable;
-			string movableString = elem->Attribute("beweegbaar");
-			if (movableString == "true") {
-				movable = true;
-			} else {
-				movable = false;
-			}
-
-			int x = 0;
-			int y = 0;
-
-			elem->Attribute("x", &x);
-			elem->Attribute("y", &y);
-
-			this->set_instance(x, y, type);
-		}
-
-		if (elemName == "SPELER") {
-			TiXmlNode* node = elem->FirstChild()->FirstChild();
-			TiXmlText* text = node->ToText();
-			string name = text->Value();
-
-			int x = 0;
-			int y = 0;
-
-			elem->Attribute("x", &x);
-			elem->Attribute("y", &y);
-
-			this->set_instance(x, y, 0);
-			this->set_instance_name(x, y, name);
-		}
+		if (elemName == "NAAM" || elemName == "LENGTE" || elemName == "BREEDTE") this->parseRoomInfo(elem);
+		if (elemName == "SPELER") this->parsePlayer(elem);
+		if (instanceTypes.count(elemName) == 1) this->parseInstance(elem);
 	}
 
 	return true;
+}
+
+void Room::parseRoomInfo (TiXmlElement* elem) {
+	// Get the text between the name, length and width tags
+	TiXmlNode* node = elem->FirstChild();
+	TiXmlText* text = node->ToText();
+
+	string str = text->Value();
+	string elemName = elem->Value();
+	
+	if (elemName == "NAAM") this->set_name(str);
+	if (elemName == "LENGTE") this->set_height(atoi(str.c_str()));
+	if (elemName == "BREEDTE") {
+		// After we set width we have to init the room
+		this->set_width(atoi(str.c_str()));
+		this->init();
+	}
+}
+
+void Room::parseInstance (TiXmlElement* elem) { 
+	string elemName = elem->Value();
+
+	if (instanceTypes.count(elemName) == 1) {
+		cerr << "PARSE ERROR: Invalid instance type. Type was: " << elemName << endl;
+		return;
+	}
+
+	int x = 0;
+	int y = 0;
+
+	elem->Attribute("x", &x);
+	elem->Attribute("y", &y);
+
+	this->set_instance(x, y, instanceTypes[elemName]);
+}
+
+void Room::parsePlayer (TiXmlElement* elem) {
+	TiXmlNode* node = elem->FirstChild()->FirstChild();
+	TiXmlText* text = node->ToText();
+	string name = text->Value();
+
+	int x = 0;
+	int y = 0;
+
+	elem->Attribute("x", &x);
+	elem->Attribute("y", &y);
+
+	this->set_instance(x, y, 0);
+	this->set_instance_name(x, y, name);
 }
 
 bool Room::loadMovesFromXMLFile(const char* filename) {
