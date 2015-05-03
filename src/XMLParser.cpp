@@ -61,8 +61,8 @@ void Room::parseRoomInfo (TiXmlElement* elem) {
 void Room::parseInstance (TiXmlElement* elem) { 
 	string elemName = elem->Value();
 
-	if (instanceTypes.count(elemName) == 1) {
-		cerr << "PARSE ERROR: Invalid instance type. Type was: " << elemName << endl;
+	if (instanceTypes.count(elemName) == 0) {
+		cerr << "PARSE ERROR: Invalid instance type. Type was: " << elemName << "." << endl;
 		return;
 	}
 

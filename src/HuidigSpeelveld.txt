@@ -1,15 +1,69 @@
-Het huidige speelveld is Level 1
+Het huidige speelveld is Level 2 (with water)
 Eigenschappen van dit veld:
-- Breedte: 10
-- Hoogte: 10
+- Breedte: 11
+- Hoogte: 9
 
-Speler Chip bevindt zich in het speelveld op positie (3, 8).
+Speler Chip bevindt zich in het speelveld op positie (3, 4).
 
-Er bevindt zich een ton op positie (5, 1).
+Er bevindt zich een ton op positie (3, 3).
 
-Er bevindt zich een ton op positie (5, 2).
+Er bevindt zich een ton op positie (6, 3).
 
-Er bevindt zich een ton op positie (3, 4).
+Er bevindt zich een ton op positie (5, 4).
+
+Er bevindt zich water op positie (1, 5).
+
+Er bevindt zich water op positie (2, 5).
+
+Er bevindt zich water op positie (3, 5).
+
+Er bevindt zich water op positie (4, 5).
+
+Er bevindt zich water op positie (5, 5).
+
+Er bevindt zich water op positie (6, 5).
+
+Er bevindt zich water op positie (7, 5).
+
+Er bevindt zich water op positie (8, 5).
+
+Er bevindt zich water op positie (9, 5).
+
+Er bevindt zich water op positie (1, 6).
+
+Er bevindt zich water op positie (2, 6).
+
+Er bevindt zich water op positie (3, 6).
+
+Er bevindt zich water op positie (4, 6).
+
+Er bevindt zich water op positie (5, 6).
+
+Er bevindt zich water op positie (6, 6).
+
+Er bevindt zich water op positie (7, 6).
+
+Er bevindt zich water op positie (8, 6).
+
+Er bevindt zich water op positie (9, 6).
+
+Er bevindt zich water op positie (1, 7).
+
+Er bevindt zich water op positie (2, 7).
+
+Er bevindt zich water op positie (3, 7).
+
+Er bevindt zich water op positie (4, 7).
+
+Er bevindt zich een doel op positie (5, 7).
+
+Er bevindt zich water op positie (6, 7).
+
+Er bevindt zich water op positie (7, 7).
+
+Er bevindt zich water op positie (8, 7).
+
+Er bevindt zich water op positie (9, 7).
 
 Er bevindt zich een doel op positie (2, 8).
 
