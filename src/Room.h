@@ -1,11 +1,14 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <tuple>
 #include <string>
 #include "Move.h"
 #include "Instance.h"
 #include "DesignByContract.h"
 #include "./TinyXML/tinyxml.h"
+
+using namespace std;
 
 class Room {
   private:
@@ -191,8 +194,8 @@ class Room {
 
 	// Add Contract
 	void parseRoomInfo (TiXmlElement* elem);
-	void parseInstance (TiXmlElement* elem);
-	void parsePlayer (TiXmlElement* elem);
+	vector <int> parseInstance (TiXmlElement* elem);
+	tuple <int, int, string> parsePlayer (TiXmlElement* elem);
 	
 	/**
 	 *	Load the to-be-executed moves from an XML file into the vector<Move> moves.
