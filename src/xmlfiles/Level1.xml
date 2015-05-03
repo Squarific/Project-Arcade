@@ -3,17 +3,17 @@
     <NAAM>
         Level 1
     </NAAM>
+    <LENGTE>
+        10
+    </LENGTE>
+    <BREEDTE>
+        6
+    </BREEDTE>
     <SPELER x="2" y="1">
         <NAAM>
             Chip
         </NAAM>
     </SPELER>
-    <BREEDTE>
-        6
-    </BREEDTE>
-    <LENGTE>
-        10
-    </LENGTE>
     <MUUR beweegbaar="false" x="0" y="9"/>
     <MUUR beweegbaar="false" x="1" y="9"/>
     <MUUR beweegbaar="false" x="2" y="9"/>
