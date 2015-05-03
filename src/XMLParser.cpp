@@ -75,7 +75,7 @@ vector <int> Room::parseInstance (TiXmlElement* elem) {
 	string elemName = elem->Value();
 	vector <int> instance;
 
-	if (instanceTypes.count(elemName) != 1) {
+	if (instanceTypes.count(elemName) == 0) {
 		cerr << "PARSE ERROR: Invalid instance type. Type was: " << elemName << endl;
 		return instance;
 	}

@@ -55,6 +55,7 @@ class Room {
 	
 	// Instances
 	bool set_instance(int width, int height, int type);
+	bool set_instance(int width, int height, int type, std::string id);
 	Instance* get_instance(int width, int height);
 	void set_instance_name(int width, int height, std::string str);
 	
@@ -211,6 +212,39 @@ bool Room::set_instance(int width, int height, int type) {
 		return false;
 }
 
+bool Room::set_instance(int width, int height, int type, std::string id) {
+	REQUIRE(is_initialized, "ERROR: Could not set instance because Room was not properly initialized.");
+	REQUIRE(type >= 0, "ERROR: Instance type should be at least 0. Please refer to the header files to see which value represents which instance.")
+	REQUIRE(type < 8, "ERROR: Instance type should be less than 8. Please refer to the header files to see which value represents which instance.")
+	REQUIRE(type != 1, "ERROR: Instance: Wall does not have an id. Please use set_instance(width, height, type).")
+	REQUIRE(type != 2, "ERROR: Instance: Barrel does not have an id. Please use set_instance(width, height, type).")
+	REQUIRE(type != 4, "ERROR: Instance: Water does not have an id. Please use set_instance(width, height, type).")
+	REQUIRE(type != 7, "ERROR: Instance: Target does not have an id. Please use set_instance(width, height, type).")
+
+	if (type == 0) {
+		Player* instance = new Player(id);
+		instances[height][width] = instance;
+		return true;
+	}
+	else if (type == 3) {
+		Monster* instance = new Monster(id);
+		instances[height][width] = instance;
+		return true;
+	}
+	else if (type == 5) {
+		Gate* instance = new Gate(id);
+		instances[height][width] = instance;
+		return true;
+	}
+	else if (type == 6) {
+		Button* instance = new Button(id);
+		instances[height][width] = instance;
+		return true;
+	}
+	else
+		return false;	
+}
+
 Instance* Room::get_instance(int width, int height) {
 	REQUIRE(is_initialized, "ERROR: Could not get_instance() because Room was not properly initialized. Returning empty instance.");
 	
@@ -300,7 +334,19 @@ bool Room::execute_move(Move*& move) {
 		this->move_instance(player_x, player_y, player_x + offset_x, player_y + offset_y);
 		return true;
 	}
-	
+
+	// Destination is water
+	if (instances[player_y + offset_y][player_x + offset_x]->get_type() == 4) {
+		std::cerr << "GAME OVER: Destination contains water. You died!" << std::endl;
+		return false;
+	}
+
+	// Destination is the target
+	if (instances[player_y + offset_y][player_x + offset_x]->get_type() == 7) {
+		std::cerr << "YOU WIN: You have reached the target. Good job!" << std::endl;
+		return false;
+	}
+
 	// Destination is a non-movable instance and is not air
 	if (! instances[player_y + offset_y][player_x + offset_x]->get_movable()) {
 		std::cerr << "ERROR: Destination contains a non-movable instance" << std::endl;
@@ -350,8 +396,35 @@ void Room::writeToFile(const char* filename) {
 		for (int j = 0; j < width; j++) {
 			if (instances[i][j] == NULL)
 				continue;
+
+			// Barrel
 			if (instances[i][j]->get_type() == 2) {
 				file << "Er bevindt zich een ton op positie (" << j << ", " << i << ").\n\n";
+			}
+
+			// Monster
+			if (instances[i][j]->get_type() == 3) {
+				file << "Er bevindt zich een monster op positie (" << j << ", " << i << ").\n\n";
+			}
+
+			// Water
+			if (instances[i][j]->get_type() == 4) {
+				file << "Er bevindt zich water op positie (" << j << ", " << i << ").\n\n";
+			}
+
+			// Gate
+			if (instances[i][j]->get_type() == 5) {
+				file << "Er bevindt zich een poort op positie (" << j << ", " << i << ").\n\n";
+			}
+
+			// Button
+			if (instances[i][j]->get_type() == 6) {
+				file << "Er bevindt zich een knop op positie (" << j << ", " << i << ").\n\n";
+			}
+
+			// Target
+			if (instances[i][j]->get_type() == 7) {
+				file << "Er bevindt zich een doel op positie (" << j << ", " << i << ").\n\n";
 			}
 		}
 	}
