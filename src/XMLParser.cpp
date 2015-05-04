@@ -94,14 +94,23 @@ vector <int> Room::parseInstance (TiXmlElement* elem) {
 }
 
 tuple <int, int, int, string> Room::parseInstanceWithId (TiXmlElement* elem) {
-	TiXmlNode* node = elem->FirstChild()->FirstChild();
-	TiXmlText* text = node->ToText();
-	string name = text->Value();
 	string elemName = elem->Value();
-	
-	string id = elem->Attribute("beweegbaarr");
-	cout << "Here id: " << id;
+	const char *id = elem->Attribute("id");
 
+	if (id != NULL) {
+		string name = string(id);
+	} else {
+		TiXmlNode* node = elem->FirstChild();
+		if (node == NULL) {
+			cerr << "PARSE ERROR: No id in attribute or in tags for element " << elemName << endl;
+			string name = "MISSING_ID";
+		} else {
+			node = node->FirstChild();
+			TiXmlText* text = node->ToText();
+			string name = text->Value();
+		}
+	}
+	
 	int x = 0;
 	int y = 0;
 
