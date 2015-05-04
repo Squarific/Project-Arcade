@@ -6,7 +6,8 @@
 
 using namespace std;
 
-map <string, int> instanceTypes = {{"MUUR", 1}, {"TON", 2}, {"MONSTER", 3}, {"WATER", 4}, {"POORT", 5}, {"KNOP", 6}, {"DOEL", 7}};
+map <string, int> instanceTypes = {{"MUUR", 1}, {"TON", 2}, {"WATER", 4}, {"DOEL", 7}};
+map <string, int> instanceTypesWithId = {{"SPELER", 0}, {"MONSTER", 1}, {"POORT", 2}, {"KNOP", 4}};
 
 bool Room::loadFromXMLFile (const char* filename) {
 	// Create xml dom
@@ -32,15 +33,15 @@ bool Room::loadFromXMLFile (const char* filename) {
 	}
 
 	vector < vector <int>> instances;
-	vector < tuple <int, int, string>> players;
+	vector < tuple <int, int, int, string>> instancesWithId;
 	
 	// Parse all tags under the root
 	for (TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
 		string elemName = elem->Value();
 
 		if (elemName == "NAAM" || elemName == "LENGTE" || elemName == "BREEDTE") this->parseRoomInfo(elem);
-		if (elemName == "SPELER") players.push_back(this->parsePlayer(elem));
 		if (instanceTypes.count(elemName) == 1) instances.push_back(this->parseInstance(elem));
+		if (instanceTypesWithId.count(elemName) == 1) instancesWithId.push_back(this->parseInstanceWithId(elem));
 	}
 
 	// The room settings have been parsed, init room and add instances and players
@@ -50,9 +51,8 @@ bool Room::loadFromXMLFile (const char* filename) {
 		this->set_instance(instance[0], instance[1], instance[2]);
 	}
 
-	for (auto player : players) {
-		this->set_instance(get<0>(player), get<1>(player), 0);
-		this->set_instance_name(get<0>(player), get<1>(player), get<2>(player));
+	for (auto instance : instancesWithId) {
+		this->set_instance(get<0>(instance), get<1>(instance), get<2>(instance), get<3>(instance));
 	}
 
 	return true;
@@ -93,10 +93,14 @@ vector <int> Room::parseInstance (TiXmlElement* elem) {
 	return instance;
 }
 
-tuple <int, int, string> Room::parsePlayer (TiXmlElement* elem) {
+tuple <int, int, int, string> Room::parseInstanceWithId (TiXmlElement* elem) {
 	TiXmlNode* node = elem->FirstChild()->FirstChild();
 	TiXmlText* text = node->ToText();
 	string name = text->Value();
+	string elemName = elem->Value();
+	
+	string id = elem->Attribute("beweegbaarr");
+	cout << "Here id: " << id;
 
 	int x = 0;
 	int y = 0;
@@ -104,7 +108,7 @@ tuple <int, int, string> Room::parsePlayer (TiXmlElement* elem) {
 	elem->Attribute("x", &x);
 	elem->Attribute("y", &y);
 
-	tuple <int, int, string> player (x, y, name);
+	tuple <int, int, int, string> player (x, y, instanceTypesWithId[elemName], name);
 	return player;
 }
 

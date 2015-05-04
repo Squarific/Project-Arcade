@@ -197,7 +197,7 @@ class Room {
 	// Add Contract
 	void parseRoomInfo (TiXmlElement* elem);
 	vector <int> parseInstance (TiXmlElement* elem);
-	tuple <int, int, string> parsePlayer (TiXmlElement* elem);
+	tuple <int, int, int, string> parseInstanceWithId (TiXmlElement* elem);
 	
 	/**
 	 *	Load the to-be-executed moves from an XML file into the vector<Move> moves.

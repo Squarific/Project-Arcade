@@ -1,0 +1,9 @@
+Het huidige speelveld is Level 3 (With a monster)
+Eigenschappen van dit veld:
+- Breedte: 10
+- Hoogte: 10
+
+Speler Chip bevindt zich in het speelveld op positie (7, 1).
+
+Er bevindt zich een ton op positie (2, 7).
+
