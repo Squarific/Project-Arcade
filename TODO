@@ -3,5 +3,3 @@ Makefile
 Tests (file compare)
 Split room into cpp and h
 Move xmlparser out game.cpp
-ACTIES VS BEWEGINGEN ROOT ELEMENT
-Parse aanval
