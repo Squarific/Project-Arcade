@@ -3,9 +3,7 @@ Eigenschappen van dit veld:
 - Breedte: 10
 - Hoogte: 10
 
-Speler Chip bevindt zich in het speelveld op positie (1, 3).
-
-Er bevindt zich een monster op positie (1, 4).
+Speler Chip bevindt zich in het speelveld op positie (1, 7).
 
 Er bevindt zich een ton op positie (2, 7).
 

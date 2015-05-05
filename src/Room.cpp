@@ -342,13 +342,13 @@ int Room::get_instance_height(std::string id) {
 }
 
 bool Room::executeAttack(Move*& move, int offset_x, int offset_y) {
+
 	int instance_x = this->get_instance_width(move->get_name());
 	int instance_y = this->get_instance_height(move->get_name());
 
 	// Destination is a monster
 	if (get_instance(instance_x + offset_x, instance_y + offset_y)->get_type() == 3)
-		instances[instance_x + offset_x][instance_y + offset_y] = NULL;
-
+		instances[instance_y + offset_y][instance_x + offset_x] = NULL;
 	return true;
 }
 
