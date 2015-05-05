@@ -3,14 +3,15 @@ Eigenschappen van dit veld:
 - Breedte: 10
 - Hoogte: 10
 
-Speler Chip bevindt zich in het speelveld op positie (5, 1).
+Speler Level 3 (With a monster) bevindt zich in het speelveld op positie (5, 1).
 
 Er bevindt zich een ton op positie (2, 7).
 
-Er bevindt zich een poort (met id ) op positie (5, 7).
+Er bevindt zich een poort (met id Level 3 (With a monster)) op positie (5, 7).
 
 Er bevindt zich een doel op positie (2, 8).
 
 Er bevindt zich een doel op positie (5, 8).
 
-Er bevindt zich een knop (gelinkt aan poort) op positie (8, 8).
+Er bevindt zich een knop (gelinkt aan poortLevel 3 (With a monster)) op positie (8, 8).
+

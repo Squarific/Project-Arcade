@@ -1,5 +1,5 @@
 #include <iostream>
-#include "UserInterface.h"
+// #include "UserInterface.h"
 #include "Room.h"
 #include "XMLParser.cpp"
 
@@ -10,20 +10,20 @@ int main(int argc, char *argv[]) {
 		if (argc == 1) {
 			std::cout << "No arguments given. Entering the developer testing grounds..." << std::endl;
 
-			// current_room.loadFromXMLFile("xmlfiles/Level3.xml");
-			// current_room.loadMovesFromXMLFile("xmlfiles/Bewegingen1.0.xml");
+			current_room.loadFromXMLFile("xmlfiles/Level3.xml");
+			current_room.loadMovesFromXMLFile("xmlfiles/Bewegingen1.0.xml");
 
-			// current_room.set_instance(2, 8, 7);
+			current_room.set_instance(2, 8, 7);
 
-			// current_room.printRoom();
+			current_room.printRoom();
 
-			// current_room.executeAllMoves("HuidigSpeelveld.txt", "ResterendeBewegingen.txt");
+			current_room.executeAllMoves("HuidigSpeelveld.txt", "ResterendeBewegingen.txt");
 
-			// current_room.printRoom();
+			current_room.printRoom();
 
-			UserInterface ui;
+			// UserInterface ui;
 
-			ui.enterMenu(cin, cout);
+			// ui.enterMenu(cin, cout);
 
 			std::cout << "Leaving developer testing grounds!\nCYA" << std::endl;
 
