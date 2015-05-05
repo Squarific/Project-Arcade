@@ -66,7 +66,10 @@ void Room::parseRoomInfo (TiXmlElement* elem) {
 	string str = text->Value();
 	string elemName = elem->Value();
 	
-	if (elemName == "NAAM") this->set_name(str);
+	if (elemName == "NAAM") {
+		this->set_name(str);
+	}
+	
 	if (elemName == "LENGTE") this->set_height(atoi(str.c_str()));
 	if (elemName == "BREEDTE") this->set_width(atoi(str.c_str()));
 }
