@@ -26,7 +26,7 @@ CPPFLAGS += -isystem $(GTEST_DIR)/include
 #INCL = ../lib/gtest/include
 
 # Flags passed to the C++ compiler.
-CXXFLAGS += -g -std=c++11 -Wall -Wextra -pthread #-I$(INCL)
+CXXFLAGS += -g -std=c++11 -pthread #-Wall -Wextra  #-I$(INCL)
 
 TINYXMLLIBS += ./TinyXML/tinyxml.cpp ./TinyXML/tinystr.cpp ./TinyXML/tinyxmlerror.cpp ./TinyXML/tinyxmlparser.cpp
 
