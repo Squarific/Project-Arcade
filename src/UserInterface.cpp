@@ -20,7 +20,23 @@ void UserInterface::enterMenu (istream& in, ostream& out) {
 };
 
 void UserInterface::parseCommand (ostream& out, string command) {
-	out << "Test" << endl;
+	string actual_command;
+	istringstream iss(command, istringstream::in);
+
+	// Extract the first word
+	iss >> actual_command;
+
+	out << "You executed: " << actual_command << endl;
+
+	if (actual_command == "help") {
+		printHelp(out);
+	} else if (actual_command == "") {
+		
+	}
+	// Split the word on spaces
+	while( iss >> word ) {
+
+	}
 };
 
 void UserInterface::printHelp (ostream& out) {
