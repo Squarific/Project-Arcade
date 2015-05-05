@@ -15,7 +15,6 @@ class Room {
 	int height;
 	std::vector< std::vector< Instance*> > instances;
 	bool is_initialized;
-	bool win;
 	
   public:
 	std::vector< Move*> moves;
@@ -24,7 +23,6 @@ class Room {
 		width = 0;
 		height = 0;
 		is_initialized = false;
-		win = false;
 	}
 	
 	Room(int w, int h, std::string n) {
@@ -32,7 +30,6 @@ class Room {
 		height = h;
 		name = n;
 		is_initialized = false;
-		win = false;
 	}
 
 	~Room();
@@ -133,6 +130,8 @@ void Room::print_ascii(ostream& out) {
 }
 
 void Room::printRoom(ostream& out) {
+	REQUIRE(is_initialized, "ERROR: Room was not yet initialized.");
+
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
 			if (get_instance(j, height - 1 -i) == NULL) {
@@ -161,6 +160,8 @@ void Room::set_height(int h) {
 	REQUIRE(!is_initialized, "ERROR: Room was already initialized. Cannot change dimensions after initializing the room.");
 	
 	height = h;
+
+	ENSURE(this->get_height() == h, "ERROR: set_height() did not work correctly.");
 }
 
 int Room::get_height() {
@@ -171,6 +172,8 @@ void Room::set_width(int w) {
 	REQUIRE(!is_initialized, "ERROR: Room was already initialized. Cannot change dimensions after initializing the room.");
 
 	width = w;
+
+	ENSURE(this->get_width() == w, "ERROR: set_width() did not work correctly.");
 }
 
 int Room::get_width() {
@@ -189,7 +192,11 @@ bool Room::set_instance(int width, int height, int type) {
 	REQUIRE(is_initialized, "ERROR: Could not set instance because Room was not properly initialized.");
 	REQUIRE(type >= 0, "ERROR: Instance type should be at least 0. Please refer to the header files to see which value represents which instance.")
 	REQUIRE(type < 7, "ERROR: Instance type should be less than 7. Please refer to the header files to see which value represents which instance.")
-	
+	REQUIRE(width >= 0, "ERROR: set_instance() coordinates out of bounds.");
+	REQUIRE(height >= 0, "ERROR: set_instance() coordinates out of bounds.");
+	REQUIRE(width < this->get_width(), "ERROR: set_instance() coordinates out of bounds.");
+	REQUIRE(width < this->get_height(), "ERROR: set_instance() coordinates out of bounds.");
+
 	if (type == 0) {
 		Player* instance = new Player();
 		instances[height][width] = instance;
@@ -232,6 +239,8 @@ bool Room::set_instance(int width, int height, int type) {
 	}
 	else
 		return false;
+
+	ENSURE(this->get_instance(width, height) != NULL, "ERROR: set_instance did not work correctly.")
 }
 
 bool Room::set_instance(int width, int height, int type, std::string id) {
@@ -242,6 +251,10 @@ bool Room::set_instance(int width, int height, int type, std::string id) {
 	REQUIRE(type != 2, "ERROR: Instance: Barrel does not have an id. Please use set_instance(width, height, type).")
 	REQUIRE(type != 4, "ERROR: Instance: Water does not have an id. Please use set_instance(width, height, type).")
 	REQUIRE(type != 7, "ERROR: Instance: Target does not have an id. Please use set_instance(width, height, type).")
+	REQUIRE(width >= 0, "ERROR: set_instance() coordinates out of bounds.");
+	REQUIRE(height >= 0, "ERROR: set_instance() coordinates out of bounds.");
+	REQUIRE(width < this->get_width(), "ERROR: set_instance() coordinates out of bounds.");
+	REQUIRE(width < this->get_height(), "ERROR: set_instance() coordinates out of bounds.");
 
 	if (type == 0) {
 		Player* instance = new Player(id);
@@ -264,7 +277,9 @@ bool Room::set_instance(int width, int height, int type, std::string id) {
 		return true;
 	}
 	else
-		return false;	
+		return false;
+
+	ENSURE(this->get_instance(width, height) != NULL, "ERROR: set_instance() did not work correctly.");
 }
 
 Instance* Room::get_instance(int width, int height) {
@@ -277,6 +292,8 @@ void Room::set_instance_name(int width, int height, std::string str) {
 	REQUIRE(is_initialized, "ERROR: Could not set_instance_name() because Room was not properly initialized.");
 	
 	get_instance(width, height)->set_name(str);
+
+	ENSURE(this->get_instance(width, height)->get_name() == str, "ERROR: set_instance_name() did not work correctly.");
 }
 
 void Room::move_instance(int from_width, int from_height, int to_width, int to_height) {
@@ -284,6 +301,9 @@ void Room::move_instance(int from_width, int from_height, int to_width, int to_h
 	
 	instances[to_height][to_width] = instances[from_height][from_width];
 	instances[from_height][from_width] = NULL;
+
+	ENSURE(this->get_instance(from_width, from_height) == NULL, "ERROR: move_instance() did not work correctly.");
+	ENSURE(this->get_instance(to_width, to_height) != NULL, "ERROR: move_instance() did not work correctly.");
 }
 
 int Room::get_player_width() {
@@ -349,6 +369,8 @@ int Room::get_instance_height(std::string id) {
 }
 
 bool Room::executeAttack(Move*& move, int offset_x, int offset_y) {
+	REQUIRE(is_initialized, "ERROR: Could not execute move because Room was not properly initialized.");
+	REQUIRE(move->isAttack, "ERROR: Tried to executeAttack on non-attack move.");
 
 	int instance_x = this->get_instance_width(move->get_name());
 	int instance_y = this->get_instance_height(move->get_name());
@@ -362,7 +384,9 @@ bool Room::executeAttack(Move*& move, int offset_x, int offset_y) {
 
 bool Room::execute_move(Move*& move) {
 	REQUIRE(is_initialized, "ERROR: Could not execute move because Room was not properly initialized.");
-	
+	REQUIRE(move->get_direction() >= 0, "ERROR: Move direction out of bounds.");
+	REQUIRE(move->get_direction() < 4, "ERROR: Move direction out of bounds.");
+
 	int instance_x = this->get_instance_width(move->get_name());
 	int instance_y = this->get_instance_height(move->get_name());
 	int direction = move->get_direction();
@@ -418,7 +442,6 @@ bool Room::execute_move(Move*& move) {
 	if (get_instance(instance_x + offset_x, instance_y + offset_y)->get_type() == 7) {
 		if (get_instance(instance_x, instance_y)->get_type() == 0) {
 			std::cerr << "YOU WIN: You have reached the target. Good job!" << std::endl;
-			win = true;
 		}
 		else {
 			std::cerr << "YOU LOSE: A monster has reached the target before you did :(" << std::endl;
@@ -670,7 +693,11 @@ void Room::writeMovesToFile(const char* filename) {
 			else if (tempmove->get_direction() == 3) {
 				directionstr = "Omlaag";
 			}
-			file << tempmove->get_name() << " zal volgende beweging nog uitvoeren: \n" << directionstr << "\n\n";
+
+			if (tempmove->isAttack)
+				file << tempmove->get_name() << " zal volgende aanval nog uitvoeren: \n" << directionstr << "\n\n";
+			else
+				file << tempmove->get_name() << " zal volgende beweging nog uitvoeren: \n" << directionstr << "\n\n";
 		}
 	}
 	
@@ -684,7 +711,7 @@ void Room::executeMoves(const char* roomfilename, const char* movesfilename, int
 		this->executeAllMoves(roomfilename, movesfilename);
 	}
 	else {
-		while (n > 0) {
+		while (n-- > 0) {
 			if (this->execute_move(*moves.begin())) {
 				moves.erase(moves.begin());
 			}
@@ -692,7 +719,6 @@ void Room::executeMoves(const char* roomfilename, const char* movesfilename, int
 				std::cerr << "ERROR: Could not execute move. Writing current room state and remaining moves to ascii file." << std::endl;
 				break;
 			}
-			n--;
 		}
 	}	
 }
@@ -705,24 +731,20 @@ void Room::executeAllMoves(const char* roomfilename, const char* movesfilename) 
 			moves.erase(moves.begin());
 		}
 		else {
-			if (win)
-				std::cerr << "Congratulations!" << std::endl;
-			else
-				std::cerr << "ERROR: Could not execute move. Writing current room state and remaining moves to ascii file." << std::endl;
+			std::cerr << "END OF GAME: Writing remaining moves and room state to .txt files." << std::endl;
 			break;
 		}
 	}
-	
+
 	this->writeToFile(roomfilename);
-	if (! win)
-		this->writeMovesToFile(movesfilename);
+	this->writeMovesToFile(movesfilename);
 	
 	return;
 }
 
 Instance* Room::getLinkedGate(int width, int height) {
 	REQUIRE(is_initialized, "ERROR: Could not execute any moves because Room was not initialized.");
-	REQUIRE( this->get_instance(width, height)->get_type() == 6, "ERROR: That instance is not a button.");	
+	REQUIRE(this->get_instance(width, height)->get_type() == 6, "ERROR: That instance is not a button.");	
 
 	std::string buttonName = this->get_instance(width, height)->get_name();
 
@@ -740,6 +762,8 @@ Instance* Room::getLinkedGate(int width, int height) {
 }
 
 void Room::removeInstance(Instance* instance) {
+	REQUIRE(is_initialized, "ERROR: Could not execute any moves because Room was not initialized.");
+	
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
 			if (get_instance(j, i) == instance) {
@@ -747,7 +771,7 @@ void Room::removeInstance(Instance* instance) {
 				break;
 			}
 		}
-	}	
+	}
 }
 
 Room::~Room() {}

@@ -22,6 +22,8 @@ void Move::set_direction(int d) {
 	REQUIRE(this->properlyInitialized(), "ERROR: Move was not properly initialized.");
 	
 	direction = d;
+
+	ENSURE(this->get_direction() == d, "ERROR: set_direction() did not work correctly.");
 }
 
 int Move::get_direction() {
@@ -34,6 +36,8 @@ void Move::set_name(std::string str) {
 	REQUIRE(this->properlyInitialized(), "ERROR: Move was not properly initialized.");
 	
 	name = str;
+
+	ENSURE(this->get_name() == str, "ERROR: set_name() did not work correctly.");
 }
 
 std::string Move::get_name() {

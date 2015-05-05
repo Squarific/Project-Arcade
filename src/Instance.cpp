@@ -159,6 +159,8 @@ void Instance::set_type(int t) {
 	REQUIRE(properly_init, "ERROR: Instance was not properly initialized.");
 	
 	type = t;
+
+	ENSURE(this->get_type() == t, "ERROR: set_type() did not work correctly.");
 }
 
 std::string Instance::get_name() {
@@ -194,6 +196,8 @@ void Instance::set_name(std::string n) {
 	REQUIRE(properly_init, "ERROR: Instance was not properly initialized.");
 	
 	name = n;
+
+	ENSURE(this->get_name() == n, "ERROR: set_name() did not work correctly.");
 }
 
 bool Instance::get_movable() {
@@ -206,11 +210,18 @@ void Instance::set_movable(bool m) {
 	REQUIRE(properly_init, "ERROR: Instance was not properly initialized.");
 	
 	movable = m;
+
+	ENSURE(this->get_movable() == m, "ERROR: set_movable() did not work correctly.");
 }
 
 void Instance::print_instance() {
 	std::cout << "INSTANCE: Type: " << type << std::endl;
 }
+
+
+/**
+ * Destructors
+ */ 
 
 Instance::~Instance(){}
 

@@ -22,7 +22,6 @@ class Room {
 	bool is_initialized;
 	
   public:
-	
 	std::vector< Move*> moves;
 	
 	Room() {
@@ -282,7 +281,12 @@ class Room {
 	 */
 	Instance* getLinkedGate(int width, int height);
 
-	// Removing instances
+	/**
+	 *	PRE CONDITIONS:
+	 *		is_initialized == true
+	 *		
+	 *	Removes the instance pointed to by pointer instance
+	 */
 	void removeInstance(Instance* instance);
 
 	~Room();

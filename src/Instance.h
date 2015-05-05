@@ -86,9 +86,14 @@ class Instance {
 
 
 /**
+ *
  *	SUBCLASSES
+ *
  */
 
+/**
+ *  Player
+ */
 class Player: public Instance {
   public:
     Player() {
@@ -105,6 +110,10 @@ class Player: public Instance {
     ~Player();
 };
 
+
+/**
+ *  Wall
+ */
 class Wall: public Instance {
   public:
     Wall() {
@@ -115,6 +124,10 @@ class Wall: public Instance {
     ~Wall();
 };
 
+
+/**
+ *  Barrel
+ */
 class Barrel: public Instance {
   public:
     Barrel() {
@@ -125,6 +138,10 @@ class Barrel: public Instance {
     ~Barrel();
 };
 
+
+/**
+ *  Monster
+ */
 class Monster: public Instance {
   public:
     Monster() {
@@ -141,6 +158,10 @@ class Monster: public Instance {
     ~Monster();
 };
 
+
+/**
+ *  Water
+ */
 class Water: public Instance {
   public:
     Water() {
@@ -151,6 +172,10 @@ class Water: public Instance {
     ~Water();
 };
 
+
+/**
+ *  Gate
+ */
 class Gate: public Instance {
   public:
     Gate() {
@@ -167,6 +192,10 @@ class Gate: public Instance {
     ~Gate();
 };
 
+
+/**
+ *  Button
+ */
 class Button: public Instance {
   public:
     Button() {
@@ -183,6 +212,10 @@ class Button: public Instance {
     ~Button();
 };
 
+
+/**
+ *  Target
+ */
 class Target: public Instance {
   public:
     Target() {
