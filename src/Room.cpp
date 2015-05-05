@@ -663,8 +663,11 @@ void Room::executeMoves(const char* roomfilename, const char* movesfilename, int
 void Room::executeAllMoves(const char* roomfilename, const char* movesfilename) {
 	REQUIRE(is_initialized, "ERROR: Could not execute any moves because Room was not initialized.");
 	
+	int i = 0;
+
 	while (moves.size() != 0) {
 		if (this->execute_move(*moves.begin())) {
+			std::cout << i++ << std::endl;
 			moves.erase(moves.begin());
 		}
 		else {
