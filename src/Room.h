@@ -155,6 +155,8 @@ class Room {
 	 *	If all moves are finished, the room properties will be written to an ascii file, as well as a file saying there are no remaining moves.
 	 */
 	void executeAllMoves(const char* roomfilename, const char* movesfilename);
+	// Executes n moves, or all moves if there are not enough moves.
+	void executeMoves(const char* roomfilename, const char* movesfilename, int n);
 
 	/**
 	 *	PRE CONDITIONS:

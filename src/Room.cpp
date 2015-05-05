@@ -71,6 +71,9 @@ class Room {
 	// Should any of the moves return an error, the function will stop and write the room properties and remaining moves to an ascii file.
 	// If all moves are finished, the room properties will be written to an ascii file, as well as a file saying there are no remaining moves.
 	void executeAllMoves(const char* roomfilename, const char* movesfilename);
+	// Executes n moves, or all moves if there are not enough moves.
+	void executeMoves(const char* roomfilename, const char* movesfilename, int n);
+
 
 	// Player Coordinates
 	int get_player_width();
@@ -416,7 +419,7 @@ void Room::writeToFile(const char* filename) {
 
 			// Button
 			if (get_instance(j, i)->get_type() == 6) {
-				file << "Er bevindt zich een knop (gelinkt aan poort" << get_instance(j, i)->get_name() << ") op positie (" << j << ", " << i << ").\n\n";
+				file << "Er bevindt zich een knop (gelinkt aan poort " << get_instance(j, i)->get_name() << ") op positie (" << j << ", " << i << ").\n\n";
 			}
 
 			// Target
@@ -460,6 +463,27 @@ void Room::writeMovesToFile(const char* filename) {
 	}
 	
 	file.close();
+}
+
+void Room::executeMoves(const char* roomfilename, const char* movesfilename, int n) {
+	REQUIRE(is_initialized, "ERROR: Could not execute any moves because Room was not initialized.");
+
+	if (moves.size() <= n) {
+		std::cout << "ALL" << std::endl;
+		this->executeAllMoves(roomfilename, movesfilename);
+	}
+	else {
+		while (n > 0) {
+			if (this->execute_move(*moves.begin())) {
+				moves.erase(moves.begin());
+			}
+			else {
+				std::cerr << "ERROR: Could not execute move. Writing current room state and remaining moves to ascii file." << std::endl;
+				break;
+			}
+			n--;
+		}
+	}	
 }
 
 void Room::executeAllMoves(const char* roomfilename, const char* movesfilename) {
