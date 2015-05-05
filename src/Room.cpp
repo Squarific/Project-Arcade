@@ -190,8 +190,8 @@ std::string Room::get_name() {
 
 bool Room::set_instance(int width, int height, int type) {
 	REQUIRE(is_initialized, "ERROR: Could not set instance because Room was not properly initialized.");
-	REQUIRE(type >= 0, "ERROR: Instance type should be at least 0. Please refer to the header files to see which value represents which instance.")
-	REQUIRE(type < 7, "ERROR: Instance type should be less than 7. Please refer to the header files to see which value represents which instance.")
+	REQUIRE(type >= 0, "ERROR: Instance type should be at least 0. Please refer to the header files to see which value represents which instance.");
+	REQUIRE(type <= 7, "ERROR: Instance type should be less than or equal 7. Please refer to the header files to see which value represents which instance.");
 	REQUIRE(width >= 0, "ERROR: set_instance() coordinates out of bounds.");
 	REQUIRE(height >= 0, "ERROR: set_instance() coordinates out of bounds.");
 	REQUIRE(width < this->get_width(), "ERROR: set_instance() coordinates out of bounds.");
@@ -240,17 +240,17 @@ bool Room::set_instance(int width, int height, int type) {
 	else
 		return false;
 
-	ENSURE(this->get_instance(width, height) != NULL, "ERROR: set_instance did not work correctly.")
+	ENSURE(this->get_instance(width, height) != NULL, "ERROR: set_instance did not work correctly.");
 }
 
 bool Room::set_instance(int width, int height, int type, std::string id) {
 	REQUIRE(is_initialized, "ERROR: Could not set instance because Room was not properly initialized.");
-	REQUIRE(type >= 0, "ERROR: Instance type should be at least 0. Please refer to the header files to see which value represents which instance.")
-	REQUIRE(type < 8, "ERROR: Instance type should be less than 8. Please refer to the header files to see which value represents which instance.")
-	REQUIRE(type != 1, "ERROR: Instance: Wall does not have an id. Please use set_instance(width, height, type).")
-	REQUIRE(type != 2, "ERROR: Instance: Barrel does not have an id. Please use set_instance(width, height, type).")
-	REQUIRE(type != 4, "ERROR: Instance: Water does not have an id. Please use set_instance(width, height, type).")
-	REQUIRE(type != 7, "ERROR: Instance: Target does not have an id. Please use set_instance(width, height, type).")
+	REQUIRE(type >= 0, "ERROR: Instance type should be at least 0. Please refer to the header files to see which value represents which instance.");
+	REQUIRE(type < 8, "ERROR: Instance type should be less than 8. Please refer to the header files to see which value represents which instance.");
+	REQUIRE(type != 1, "ERROR: Instance: Wall does not have an id. Please use set_instance(width, height, type).");
+	REQUIRE(type != 2, "ERROR: Instance: Barrel does not have an id. Please use set_instance(width, height, type).");
+	REQUIRE(type != 4, "ERROR: Instance: Water does not have an id. Please use set_instance(width, height, type).");
+	REQUIRE(type != 7, "ERROR: Instance: Target does not have an id. Please use set_instance(width, height, type).");
 	REQUIRE(width >= 0, "ERROR: set_instance() coordinates out of bounds.");
 	REQUIRE(height >= 0, "ERROR: set_instance() coordinates out of bounds.");
 	REQUIRE(width < this->get_width(), "ERROR: set_instance() coordinates out of bounds.");
