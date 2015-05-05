@@ -18,33 +18,33 @@ TEST(movetests, wrongxml1) {
 }
 
 // XML's that do no exist 2
-TEST(movetests, wrongxml1) {
+TEST(movetests, wrongxml2) {
 	Room testroom;
 	EXPECT_TRUE(testroom.loadFromXMLFile("xmlfiles/Speelveld1.0.xml"));
 	EXPECT_FALSE(testroom.loadMovesFromXMLFile("xmlfiles/NeitherdoI.xml"));
 }
 
 // Wrong ROOT 1
-TEST(movetests, wrongxml2) {
+TEST(movetests, wrongxml3) {
 	Room testroom;
 	EXPECT_FALSE(testroom.loadFromXMLFile("xmlfiles/Speelveld1.0_incorrect_root.xml"));
 }
 
 // Wrong ROOT 2
-TEST(movetests, wrongxml3) {
+TEST(movetests, wrongxml4) {
 	Room testroom;
 	EXPECT_TRUE(testroom.loadFromXMLFile("xmlfiles/Speelveld1.0.xml"));
 	EXPECT_FALSE(testroom.loadMovesFromXMLFile("xmlfiles/Bewegingen1.0_incorrect_root.xml"));
 }
 
 // No ROOT 1
-TEST(movetests, wrongxml2) {
+TEST(movetests, wrongxml5) {
 	Room testroom;
 	EXPECT_FALSE(testroom.loadFromXMLFile("xmlfiles/Speelveld1.0_no_root.xml"));
 }
 
 // No ROOT 2
-TEST(movetests, wrongxml3) {
+TEST(movetests, wrongxml6) {
 	Room testroom;
 	EXPECT_TRUE(testroom.loadFromXMLFile("xmlfiles/Speelveld1.0.xml"));
 	EXPECT_FALSE(testroom.loadMovesFromXMLFile("xmlfiles/Bewegingen1.0_no_root.xml"));
