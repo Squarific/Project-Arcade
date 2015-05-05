@@ -30,6 +30,7 @@
     <MUUR beweegbaar="false" x="1" y="7"/>
     <POORT beweegbaar="false" x="2" y="7">
         <ID>
+            sterf
         </ID>
     </POORT>
     <MUUR beweegbaar="false" x="3" y="7"/>
@@ -41,7 +42,7 @@
     <MUUR beweegbaar="false" x="4" y="6"/>
     <MUUR beweegbaar="false" x="5" y="6"/>
     <MUUR beweegbaar="false" x="0" y="5"/>
-    <KNOP id="" x="1" y="5"/>
+    <KNOP id="sterf" x="1" y="5"/>
     <TON beweegbaar="true" x="2" y="5"/>
     <MUUR beweegbaar="false" x="5" y="5"/>
     <MUUR beweegbaar="false" x="0" y="4"/>
