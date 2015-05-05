@@ -1,3 +1,6 @@
+#ifndef INSTANCE_H
+#define INSTANCE_H
+
 #include <string>
 #include <iostream>
 #include "DesignByContract.h"
@@ -8,6 +11,7 @@ class Instance {
 	bool movable;
 	std::string name;
 	bool properly_init = false;
+	bool isOpen;
 	
   public:
   	/**
@@ -16,11 +20,13 @@ class Instance {
   	 */
 	Instance() {
 		properly_init = true;
+		isOpen = false;
 	}
 	Instance(int t, bool m) {
 		type = t;
 		movable = m;
 		properly_init = true;
+		isOpen = false;
 	}
 	
 	/**
@@ -91,12 +97,14 @@ class Player: public Instance {
       movable = false;
       type = 0;
       properly_init = true;
+      isOpen = false;
     }
     Player(std::string n) {
       movable = false;
       type = 0;
       properly_init = true;
       name = n;
+      isOpen = false;
     }
     ~Player();
 };
@@ -107,6 +115,7 @@ class Wall: public Instance {
       movable = false;
       type = 1;
       properly_init = true;
+      isOpen = false;
     }
     ~Wall();
 };
@@ -117,6 +126,7 @@ class Barrel: public Instance {
       movable = true;
       type = 2;
       properly_init = true;
+      isOpen = false;
     }
     ~Barrel();
 };
@@ -127,12 +137,14 @@ class Monster: public Instance {
       movable = false;
       type = 3;
       properly_init = true;
+      isOpen = false;
     }
     Monster(std::string n) {
       movable = false;
       type = 3;
       properly_init = true;
       name = n;
+      isOpen = false;
     }
     ~Monster();
 };
@@ -143,6 +155,7 @@ class Water: public Instance {
       movable = false;
       type = 4;
       properly_init = true;
+      isOpen = false;
     }
     ~Water();
 };
@@ -150,15 +163,19 @@ class Water: public Instance {
 class Gate: public Instance {
   public:
     Gate() {
-      movable = false;
-      type = 5;
-      properly_init = true;
+    	isOpen = false;
+		movable = false;
+		type = 5;
+		properly_init = true;
+		isOpen = false;
     }
     Gate(std::string n) {
-      movable = false;
-      type = 5;
-      properly_init = true;
-      name = n;
+    	isOpen = false;
+		movable = false;
+		type = 5;
+		properly_init = true;
+		name = n;
+		isOpen = false;
     }
     ~Gate();
 };
@@ -169,12 +186,14 @@ class Button: public Instance {
       movable = false;
       type = 6;
       properly_init = true;
+      isOpen = false;
     }
     Button(std::string n) {
       movable = false;
       type = 6;
       properly_init = true;
       name = n;
+      isOpen = false;
     }
     ~Button();
 };
@@ -185,6 +204,9 @@ class Target: public Instance {
       movable = false;
       type = 7;
       properly_init = true;
+      isOpen = false;
     }
     ~Target();
 };
+
+#endif

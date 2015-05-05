@@ -89,6 +89,9 @@ class Room {
 
 	// Delete Instances
 	void deleteInstances();
+
+	// Linked gates
+	Instance* getLinkedGate(int width, int height);
 };
 
 void Room::print_dimensions() {
@@ -503,6 +506,25 @@ void Room::executeAllMoves(const char* roomfilename, const char* movesfilename) 
 	this->writeMovesToFile(movesfilename);
 	
 	return;
+}
+
+Instance* Room::getLinkedGate(int width, int height) {
+	REQUIRE(is_initialized, "ERROR: Could not execute any moves because Room was not initialized.");
+	REQUIRE( this->get_instance(width, height)->get_type() == 6, "ERROR: That instance is not a button.");	
+
+	std::string buttonName = this->get_instance(width, height)->get_name();
+
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			if (get_instance(j, i) == NULL)
+				continue;
+			if (get_instance(j, i)->get_type() == 5) {
+				if (get_instance(j, i)->get_name() == buttonName) {
+					return get_instance(j, i);
+				}
+			}
+		}
+	}	
 }
 
 Room::~Room() {}

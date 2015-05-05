@@ -235,6 +235,15 @@ class Room {
 	 */
 	void writeMovesToFile(const char* filename);
 
+	/**
+	 *	PRE CONDITIONS:
+	 *		is_initialized == true
+	 *		get_instance(width, height)->get_type == 6
+	 *
+	 *	Returns a pointer to the gate that is linked to the given button.
+	 */
+	Instance* getLinkedGate(int width, int height);
+
 	~Room();
 };
 
