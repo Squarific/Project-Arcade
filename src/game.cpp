@@ -20,7 +20,6 @@ int main(int argc, char *argv[]) {
 			current_room.printRoom(std::cout);
 
 			// UserInterface ui;
-
 			// ui.enterMenu(cin, cout);
 
 			std::cout << "Leaving developer testing grounds!\nCYA" << std::endl;

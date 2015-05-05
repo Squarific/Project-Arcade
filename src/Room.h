@@ -224,18 +224,18 @@ class Room {
 	/**
 	 *	PRE CONDITIONS
 	 * 		is_initialized == true
-	 *
+	 *	Saves the current level to an xml file
 	 */
 
-	void saveToXMLFile (const char* filename);
+	void saveToXMLFile (ostream& file);
 
 	/**
 	 *	PRE CONDITIONS
 	 * 		is_initialized == true
-	 *
+	 *	Saves the current moves to an xml file
 	 */
 
-	void saveMovesToXMLFile (const char* filename);
+	void saveMovesToXMLFile (ostream& file);
 
 	
 	/**
