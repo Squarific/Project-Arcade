@@ -6,9 +6,9 @@ class Move {
 	std::string name;
 	int direction;
 	Move* _initcheck;
-	bool isAttack;
 
   public:
+  	bool isAttack;
 	Move();
 	Move(int d, std::string n, bool a);
 

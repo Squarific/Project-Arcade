@@ -144,6 +144,7 @@ class Room {
 	 *	Returns true if the move was succesfully executed, otherwise returns false.
 	 */
 	bool execute_move(Move& move);
+	bool executeAttack(Move*& move, int offset_x, int offset_y);
 	
 	/**
 	 *	PRE CONDITIONS:

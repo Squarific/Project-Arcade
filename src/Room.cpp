@@ -68,6 +68,7 @@ class Room {
 	// Executes a move command, moving the player and other adjacent objects depending on their movable status.
 	// Returns true if the move was succesfully executed, otherwise returns false.
 	bool execute_move(Move*& move);
+	bool executeAttack(Move*& move, int offset_x, int offset_y);
 	
 	// Tries to execute all moves in the vector<move> moves.
 	// Should any of the moves return an error, the function will stop and write the room properties and remaining moves to an ascii file.
@@ -246,7 +247,6 @@ bool Room::set_instance(int width, int height, int type, std::string id) {
 		return true;
 	}
 	else if (type == 5) {
-		std::cout << "CREATING GATE" << std::endl;
 		Gate* instance = new Gate(id);
 		instances[height][width] = instance;
 		return true;
@@ -341,6 +341,17 @@ int Room::get_instance_height(std::string id) {
 	return 0;
 }
 
+bool Room::executeAttack(Move*& move, int offset_x, int offset_y) {
+	int instance_x = this->get_instance_width(move->get_name());
+	int instance_y = this->get_instance_height(move->get_name());
+
+	// Destination is a monster
+	if (get_instance(instance_x + offset_x, instance_y + offset_y)->get_type() == 3)
+		instances[instance_x + offset_x][instance_y + offset_y] = NULL;
+
+	return true;
+}
+
 
 bool Room::execute_move(Move*& move) {
 	REQUIRE(is_initialized, "ERROR: Could not execute move because Room was not properly initialized.");
@@ -349,10 +360,6 @@ bool Room::execute_move(Move*& move) {
 	int instance_y = this->get_instance_height(move->get_name());
 	int direction = move->get_direction();
 	int offset_x, offset_y;
-
-	std::cout << "Move direction: " << move->get_direction() << std::endl;
-	std::cout << "Move id: " << move->get_name() << std::endl;
-	std::cout << "Instance_x: " << instance_x << "  Instance_y: " << instance_y << std::endl;
 	
 	// Get offset
 	if (direction == 0) {
@@ -377,6 +384,9 @@ bool Room::execute_move(Move*& move) {
 		std::cerr << "ERROR: Destination is out of bounds" << std::endl;
 		return false;
 	}
+
+	if (move->isAttack)
+		return this->executeAttack(move, offset_x, offset_y);
 	
 	// Destination is air
 	if (get_instance(instance_x + offset_x, instance_y + offset_y) == NULL) {
