@@ -8,11 +8,6 @@ using namespace std;
 void UserInterface::enterMenu (istream& in, ostream& out) {
 	bool quit = false;
 
-
-	cout << "REMOVE THIS" << endl;
-	this->room.loadFromXMLFile("xmlfiles/Level3.xml");
-	this->room.loadMovesFromXMLFile("xmlfiles/Bewegingen1.0.xml");
-
 	this->printHelp(out);
 
 	while (!quit) {
