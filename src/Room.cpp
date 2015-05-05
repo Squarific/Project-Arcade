@@ -411,12 +411,12 @@ void Room::writeToFile(const char* filename) {
 
 			// Gate
 			if (get_instance(j, i)->get_type() == 5) {
-				file << "Er bevindt zich een poort op positie (" << j << ", " << i << ").\n\n";
+				file << "Er bevindt zich een poort (met id " << get_instance(j, i)->get_name() << ") op positie (" << j << ", " << i << ").\n\n";
 			}
 
 			// Button
 			if (get_instance(j, i)->get_type() == 6) {
-				file << "Er bevindt zich een knop op positie (" << j << ", " << i << ").\n\n";
+				file << "Er bevindt zich een knop (gelinkt aan poort" << get_instance(j, i)->get_name() << ") op positie (" << j << ", " << i << ").\n\n";
 			}
 
 			// Target
