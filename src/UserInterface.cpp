@@ -55,7 +55,7 @@ void UserInterface::enterMenu (istream& in, ostream& out) {
 	else if (actual_command == "printtofile") {
 		string filename;
 		iss >> filename;
-		filename = "game_board_" + filename;
+		filename = "game_board_" + filename + ".txt";
 
 		out << "Printing to file '" << filename << "'" << endl;
 
@@ -68,7 +68,7 @@ void UserInterface::enterMenu (istream& in, ostream& out) {
 	else if (actual_command == "printtoxmlfile") {
 		string filename;
 		iss >> filename;
-		filename = "xml_game_board_" + filename;
+		filename = "xml_game_board_" + filename + ".xml";
 
 		out << "Printing to file '" << filename << "'" << endl;
 
@@ -81,7 +81,7 @@ void UserInterface::enterMenu (istream& in, ostream& out) {
 	else if (actual_command == "printmovestoxmlfile") {
 		string filename;
 		iss >> filename;
-		filename = "xml_moves_" + filename;
+		filename = "xml_moves_" + filename + ".xml";
 
 		out << "Printing to file '" << filename << "'" << endl;
 
@@ -90,11 +90,28 @@ void UserInterface::enterMenu (istream& in, ostream& out) {
 
 		this->room.saveMovesToXMLFile(file);
 	}
+
+	else if (actual_command == "printtohtmlfile") {
+		string filename;
+		iss >> filename;
+		filename = filename + ".html";
+
+		out << "Printing to file '" << filename << "'" << endl;
+
+		std::ofstream file;
+		file.open(filename);
+
+		this->room.saveToHTMLFile(file);
+	}
 	
 	else if (actual_command == "run") {
 		string moves;
 		iss >> moves;
 		this->room.executeMoves("HuidigSpeelveld.txt", "ResterendeBewegingen.txt", atoi(moves.c_str()));
+	}
+
+	else if (actual_command == "runall") {
+		this->room.executeAllMoves("HuidigSpeelveld.txt", "ResterendeBewegingen.txt");
 	}
 }
 
@@ -114,13 +131,16 @@ void UserInterface::printHelp (ostream& out) {
 	out << "\t Prints the current room" << endl << endl;
 
 	out << "- printToFile [filename]" << endl;
-	out << "\t Prints the current room to a file called game_board_[filename]" << endl << endl;
+	out << "\t Prints the current room to a file called game_board_[filename].txt" << endl << endl;
 
 	out << "- printToXMLFile [filename]" << endl;
-	out << "\t Prints the current room to a file called game_board_[filename]" << endl << endl;
+	out << "\t Prints the current room to a file called xml_game_board_[filename].xml" << endl << endl;
 
 	out << "- printMovesToXMLFile [filename]" << endl;
-	out << "\t Prints the currently left moves to a file called game_board_[filename]" << endl << endl;
+	out << "\t Prints the currently left moves to a file called xml_moves_[filename].xml" << endl << endl;
+
+	out << "- printToHTMLFile [filename]" << endl;
+	out << "\t Prints the current room to a file called [filename].html" << endl << endl;
 
 	out << "- run [maxsteps]" << endl;
 	out << "\t Runs the simulation untill the end" << endl;
