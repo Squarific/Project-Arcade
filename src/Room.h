@@ -164,39 +164,46 @@ class Room {
 	int get_player_height();
 
 	/**
+	 *	PRE CONDITIONS:
+	 *		REQUIRE(doc.LoadFile(), "File " + filename + " not found");
+	 *		REQUIRE(doc.FirstChildElement() != NULL, "XML Error: No root element");
+	 *		REQUIRE(string(doc.FirstChildElement()->Value()) == "VELD", "XML Error: Root element has to be called 'VELD' but was '" + root->Value() + "'");	
+	 *
 	 *	Load the contents of the room using an XML file as input.
 	 *	All non-specified cells in the room are automatically filled with "air" (nothing),
 	 *	(see: Room::init())
 	 *
 	 *	POST CONDITIONS:
+	 *		Room::init() is called
 	 *		is_initialized = true;
 	 */
 	bool loadFromXMLFile(const char* filename);
 
-	// Add contract
+	/**
+	 *	PRE CONDITIONS:
+	 *		elem->Value() == "NAAM" || elem->Value() == "LENGTE" || elem->Value() == "BREEDTE"
+	 *	
+	 *	Parses room info. And calls Room::set_name() or Room::set_height() or Room::set_width()
+	 */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	// Add Contract
 	void parseRoomInfo (TiXmlElement* elem);
+
+	/**
+	 *	PRE CONDITIONS:
+	 *		instanceTypes.count(elem->Value()) != 0
+	 *
+	 *	Returns a vector <int> (width, height, type) of the parsed element
+	 */
+
 	vector <int> parseInstance (TiXmlElement* elem);
+
+	/**
+	 *	PRE CONDITIONS:
+	 *		instanceTypesWithId.count(elem->Value()) != 0
+	 *
+	 *	Returns a tuple <int, int, int, string> (width, height, type, id/name) of the parsed element
+	 */
+
 	tuple <int, int, int, string> parseInstanceWithId (TiXmlElement* elem);
 	
 	/**

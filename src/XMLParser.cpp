@@ -12,25 +12,14 @@ map <string, int> instanceTypesWithId = {{"SPELER", 0}, {"MONSTER", 1}, {"POORT"
 bool Room::loadFromXMLFile (const char* filename) {
 	// Create xml dom
 	TiXmlDocument doc(filename);
-	
-	// Load the document
-	if (!doc.LoadFile()) {
-		cerr << "File " << filename << " not found" << endl;
-		return false;
-	}
+
+	REQUIRE(doc.LoadFile(), "File " + filename + " not found");
 
 	// Get root element
 	TiXmlElement* root = doc.FirstChildElement();
-	if (root == NULL) {
-		cerr << "XML Error: No root element" << endl;
-		return false;
-	}
 
-	// Root element should be 'VELD'
-	if (string(root->Value()) != "VELD") {
-		cerr << "XML Error: Root element has to be called 'VELD' but was '" << root->Value() << "'" << endl;
-		return false;
-	}
+	REQUIRE(root != NULL, "XML Error: No root element");
+	REQUIRE(string(root->Value()) == "VELD", "XML Error: Root element has to be called 'VELD' but was '" + root->Value() + "'");
 
 	vector < vector <int>> instances;
 	vector < tuple <int, int, int, string>> instancesWithId;
@@ -65,20 +54,19 @@ void Room::parseRoomInfo (TiXmlElement* elem) {
 
 	string str = text->Value();
 	string elemName = elem->Value();
+
+	REQUIRE(elemName == "NAAM" || elemName == "LENGTE" || elemName == "BREEDTE", "PARSE ERROR: room info element has to be NAAM, LENGTE OR BREEDTE but was: " + elemName);
 	
 	if (elemName == "NAAM") this->set_name(str);
 	if (elemName == "LENGTE") this->set_height(atoi(str.c_str()));
 	if (elemName == "BREEDTE") this->set_width(atoi(str.c_str()));
 }
 
-vector <int> Room::parseInstance (TiXmlElement* elem) { 
+vector <int> Room::parseInstance (TiXmlElement* elem) {
 	string elemName = elem->Value();
 	vector <int> instance;
 
-	if (instanceTypes.count(elemName) == 0) {
-		cerr << "PARSE ERROR: Invalid instance type. Type was: " << elemName << endl;
-		return instance;
-	}
+	REQUIRE(instanceTypes.count(elemName) == 1, "PARSE ERROR: Invalid instance type. Type was: " + elemName);
 
 	int x = 0;
 	int y = 0;
@@ -96,19 +84,17 @@ vector <int> Room::parseInstance (TiXmlElement* elem) {
 tuple <int, int, int, string> Room::parseInstanceWithId (TiXmlElement* elem) {
 	string elemName = elem->Value();
 	const char *id = elem->Attribute("id");
+	TiXmlNode* node = elem->FirstChild();
+
+	REQUIRE(instanceTypesWithId.count(elemName) == 1, "PARSE ERROR: Invalid instance type. Type was: " + elemName);
+	REQUIRE(id != NULL || node != NULL, "PARSE ERROR: No id in attribute or in tags for element " + elemName);
 
 	if (id != NULL) {
 		string name = string(id);
 	} else {
-		TiXmlNode* node = elem->FirstChild();
-		if (node == NULL) {
-			cerr << "PARSE ERROR: No id in attribute or in tags for element " << elemName << endl;
-			string name = "MISSING_ID";
-		} else {
-			node = node->FirstChild();
-			TiXmlText* text = node->ToText();
-			string name = text->Value();
-		}
+		node = node->FirstChild();
+		TiXmlText* text = node->ToText();
+		string name = text->Value();
 	}
 	
 	int x = 0;
