@@ -89,11 +89,12 @@ class Room {
 	int get_instance_width(std::string id);
 	int get_instance_height(std::string id);
 
-	// XML
+	// (X)(HT)ML
 	bool loadFromXMLFile(const char* filename);
 	bool loadMovesFromXMLFile(const char* filename);
 	void saveToXMLFile (ostream& file);
 	void saveMovesToXMLFile (ostream& file);
+	void saveToHTMLFile (ostream& file);
 	
 	// File Outpot
 	void writeToFile(const char* filename);
@@ -624,6 +625,24 @@ void Room::saveMovesToXMLFile (ostream& file) {
 
 	file << "</BEWEGINGEN>" << endl;
 }
+
+void Room::saveToHTMLFile (ostream& file) {
+	file << "<html>\n\t<head>\n\t\t<title>Project Arcade</title>\n\t</head>\n\t<body>" << endl;
+
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			if (get_instance(j, i) == NULL) {
+				file << "<img style=\"float:left;\" src=\"images/html/air.png\">" << endl;
+				continue;
+			}
+
+			file << "<img style=\"float:left;\" src=\"images/html/type_" << get_instance(j, i)->get_type() << ".png\">" << endl;
+		}
+		file << "<br style=\"clear:both;\"/>\n";
+	}
+
+	file << "\t</body>\n</html>" << endl;
+};
 
 void Room::writeMovesToFile(const char* filename) {
 	REQUIRE(is_initialized, "ERROR: Could not write remaining moves to file because Room was not properly initialized.");

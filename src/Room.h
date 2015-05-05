@@ -238,6 +238,14 @@ class Room {
 
 	void saveMovesToXMLFile (ostream& file);
 
+	/**
+	 *	PRE CONDITIONS
+	 * 		is_initialized == true
+	 *	Saves the current level to an html file
+	 */
+
+	void saveToHTMLFile (ostream& file);
+
 	
 	/**
 	 *	Load the to-be-executed moves from an XML file into the vector<Move> moves.
