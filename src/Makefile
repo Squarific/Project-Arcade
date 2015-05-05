@@ -30,7 +30,7 @@ CXXFLAGS += -g -std=c++11 -Wall -Wextra -pthread #-I$(INCL)
 
 TINYXMLLIBS += ./TinyXML/tinyxml.cpp ./TinyXML/tinystr.cpp ./TinyXML/tinyxmlerror.cpp ./TinyXML/tinyxmlparser.cpp
 
-USERLIBS += ./Instance.cpp ./Move.cpp ./Room.cpp
+USERLIBS += ./Instance.cpp ./Move.cpp ./Room.cpp ./UserInterface.cpp
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
@@ -50,7 +50,7 @@ clean :
 
 # Build main program
 install : game.cpp ./TinyXML/tinyxml.cpp ./TinyXML/tinystr.cpp ./TinyXML/tinyxmlerror.cpp ./TinyXML/tinyxmlparser.cpp ./Instance.cpp ./Move.cpp ./Room.cpp
-	g++ game.cpp ./TinyXML/tinyxml.cpp ./TinyXML/tinystr.cpp ./TinyXML/tinyxmlerror.cpp ./TinyXML/tinyxmlparser.cpp ./Instance.cpp ./Move.cpp ./Room.cpp -o game --std=c++11
+	g++ game.cpp ./TinyXML/tinyxml.cpp ./TinyXML/tinystr.cpp ./TinyXML/tinyxmlerror.cpp ./TinyXML/tinyxmlparser.cpp ./Instance.cpp ./Move.cpp ./Room.cpp ./UserInterface.cpp -o game.out --std=c++11
 
 
 # Builds gtest.a and gtest_main.a.

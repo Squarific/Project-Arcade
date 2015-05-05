@@ -564,51 +564,51 @@ void Room::saveToXMLFile (ostream& file) {
 
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
-			if (get_instance(j, i) == NULL)
+			if (get_instance(j, height - 1 -i) == NULL)
 				continue;
 
-			if (get_instance(j, i)->get_type() == 0) {
-				file << "    <SPELER x=\"" << j << "\" y=\"" << i << "\">"<< endl;
-				file << "        <NAAM>" << get_instance(j, i)->get_name()  << "</NAAM>"<< endl;
+			if (get_instance(j, height - 1 -i)->get_type() == 0) {
+				file << "    <SPELER x=\"" << j << "\" y=\"" << height - 1 -i << "\">"<< endl;
+				file << "        <NAAM>" << get_instance(j, height - 1 -i)->get_name()  << "</NAAM>"<< endl;
 				file << "    </SPELER>"<< endl;
 			}
 
-			if (get_instance(j, i)->get_type() == 1) {
-				file << "    <MUUR beweegbaar=\"false\" x=\"" << j << "\" y=\"" << i << "\"/>"<< endl;
+			if (get_instance(j, height - 1 -i)->get_type() == 1) {
+				file << "    <MUUR beweegbaar=\"false\" x=\"" << j << "\" y=\"" << height - 1 -i << "\"/>"<< endl;
 			}
 
 			// Barrel
-			if (get_instance(j, i)->get_type() == 2) {
-				file << "    <TON beweegbaar=\"true\" x=\"" << j << "\" y=\"" << i << "\"/>"<< endl;
+			if (get_instance(j, height - 1 -i)->get_type() == 2) {
+				file << "    <TON beweegbaar=\"true\" x=\"" << j << "\" y=\"" << height - 1 -i << "\"/>"<< endl;
 			}
 
 			// Monster
-			if (get_instance(j, i)->get_type() == 3) {
-				file << "    <MONSTER x=\"" << j << "\" y=\"" << i << "\">"<< endl;
-				file << "        <NAAM>" << get_instance(j, i)->get_name()  << "</NAAM>"<< endl;
+			if (get_instance(j, height - 1 -i)->get_type() == 3) {
+				file << "    <MONSTER x=\"" << j << "\" y=\"" << height - 1 -i << "\">"<< endl;
+				file << "        <NAAM>" << get_instance(j, height - 1 -i)->get_name()  << "</NAAM>"<< endl;
 				file << "    </MONSTER>"<< endl;
 			}
 
 			// Water
-			if (get_instance(j, i)->get_type() == 4) {
-				file << "    <WATER beweegbaar=\"false\" x=\"" << j << "\" y=\"" << i << "\"/>"<< endl;
+			if (get_instance(j, height - 1 -i)->get_type() == 4) {
+				file << "    <WATER beweegbaar=\"false\" x=\"" << j << "\" y=\"" << height - 1 -i << "\"/>"<< endl;
 			}
 
 			// Gate
-			if (get_instance(j, i)->get_type() == 5) {
-				file << "    <POORT x=\"" << j << "\" y=\"" << i << "\">"<< endl;
-				file << "        <NAAM>" << get_instance(j, i)->get_name()  << "</NAAM>"<< endl;
+			if (get_instance(j, height - 1 -i)->get_type() == 5) {
+				file << "    <POORT x=\"" << j << "\" y=\"" << height - 1 -i << "\">"<< endl;
+				file << "        <NAAM>" << get_instance(j, height - 1 -i)->get_name()  << "</NAAM>"<< endl;
 				file << "    </POORT>"<< endl;
 			}
 
 			// Button
-			if (get_instance(j, i)->get_type() == 6) {
-				file << "    <KNOP id=\"" << get_instance(j, i)->get_name() << "\" beweegbaar=\"false\" x=\"" << j << "\" y=\"" << i << "\"/>"<< endl;
+			if (get_instance(j, height - 1 -i)->get_type() == 6) {
+				file << "    <KNOP id=\"" << get_instance(j, height - 1 -i)->get_name() << "\" beweegbaar=\"false\" x=\"" << j << "\" y=\"" << i << "\"/>"<< endl;
 			}
 
 			// Target
-			if (get_instance(j, i)->get_type() == 7) {
-				file << "    <DOEL beweegbaar=\"false\" x=\"" << j << "\" y=\"" << i << "\"/>"<< endl;
+			if (get_instance(j, height - 1 -i)->get_type() == 7) {
+				file << "    <DOEL beweegbaar=\"false\" x=\"" << j << "\" y=\"" << height - 1 -i << "\"/>"<< endl;
 			}
 		}
 	}
@@ -654,12 +654,12 @@ void Room::saveToHTMLFile (ostream& file) {
 
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
-			if (get_instance(j, i) == NULL) {
+			if (get_instance(j, height - 1 -i) == NULL) {
 				file << "<img style=\"float:left;\" src=\"images/html/air.png\">" << endl;
 				continue;
 			}
 
-			file << "<img style=\"float:left;\" src=\"images/html/type_" << get_instance(j, i)->get_type() << ".png\">" << endl;
+			file << "<img style=\"float:left;\" src=\"images/html/type_" << get_instance(j, height - 1 -i)->get_type() << ".png\">" << endl;
 		}
 		file << "<br style=\"clear:both;\"/>\n";
 	}
