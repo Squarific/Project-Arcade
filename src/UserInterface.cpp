@@ -18,7 +18,7 @@ void UserInterface::enterMenu (istream& in, ostream& out) {
 
 		this->parseCommand(out, command);
 	}
-};
+}
 
  void UserInterface::parseCommand (ostream& out, string command) {
 	string actual_command;
@@ -68,7 +68,7 @@ void UserInterface::enterMenu (istream& in, ostream& out) {
 		iss >> moves;
 		this->room.executeMoves("HuidigSpeelveld.txt", "ResterendeBewegingen.txt", atoi(moves.c_str()));
 	}
- };
+}
 
 void UserInterface::printHelp (ostream& out) {
 	out << "The following commands are available:" << endl << endl;
@@ -91,4 +91,4 @@ void UserInterface::printHelp (ostream& out) {
 	out << "- run [maxsteps]" << endl;
 	out << "\t Runs the simulation untill the end" << endl;
 	out << "\t If maxsteps is a positive number the simulation is run till the end or till maxsteps steps have been executed whichever comes first." << endl << endl;
-};
+}
