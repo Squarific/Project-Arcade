@@ -9,17 +9,17 @@ int main(int argc, char *argv[]) {
 	if (argc < 3) {
 		if (argc == 1) {
 			std::cout << "No arguments given. Entering the developer testing grounds..." << std::endl;
-
+/*
 			current_room.loadFromXMLFile("xmlfiles/Level3.xml");
 			current_room.loadMovesFromXMLFile("xmlfiles/Level3Acties.xml");
 
 			current_room.executeAllMoves("HuidigSpeelveld.txt", "ResterendeBewegingen.txt");
 
 			current_room.printRoom(std::cout);
-/*
+*/
 			UserInterface ui;
 			ui.enterMenu(cin, cout);
-*/
+
 			std::cout << "Leaving developer testing grounds!\nCYA" << std::endl;
 
 			return 0;

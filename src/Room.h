@@ -274,6 +274,9 @@ class Room {
 	 */
 	Instance* getLinkedGate(int width, int height);
 
+	// Removing instances
+	void removeInstance(Instance* instance);
+
 	~Room();
 };
 

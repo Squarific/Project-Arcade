@@ -16,17 +16,15 @@ class Instance {
   	 *	 Although these constructors can be used for 'custom' objects, it is not advised to use this.
   	 *	 You should only use the subclasses' constructors.
   	 */
-  	bool isOpen;
+
  	int type;	 
 	Instance() {
 		properly_init = true;
-		isOpen = false;
 	}
 	Instance(int t, bool m) {
 		type = t;
 		movable = m;
 		properly_init = true;
-		isOpen = false;
 	}
 	
 	/**
@@ -82,9 +80,7 @@ class Instance {
 	 *	Prints basic information about the instance. To be used for testing purposes only.
 	 */
 	void print_instance();
-
-	bool getOpen();
-
+	
 	~Instance();
 };
 
@@ -99,14 +95,12 @@ class Player: public Instance {
       movable = false;
       type = 0;
       properly_init = true;
-      isOpen = false;
     }
     Player(std::string n) {
       movable = false;
       type = 0;
       properly_init = true;
       name = n;
-      isOpen = false;
     }
     ~Player();
 };
@@ -117,7 +111,6 @@ class Wall: public Instance {
       movable = false;
       type = 1;
       properly_init = true;
-      isOpen = false;
     }
     ~Wall();
 };
@@ -128,7 +121,6 @@ class Barrel: public Instance {
       movable = true;
       type = 2;
       properly_init = true;
-      isOpen = false;
     }
     ~Barrel();
 };
@@ -139,14 +131,12 @@ class Monster: public Instance {
       movable = false;
       type = 3;
       properly_init = true;
-      isOpen = false;
     }
     Monster(std::string n) {
       movable = false;
       type = 3;
       properly_init = true;
       name = n;
-      isOpen = false;
     }
     ~Monster();
 };
@@ -157,7 +147,6 @@ class Water: public Instance {
       movable = false;
       type = 4;
       properly_init = true;
-      isOpen = false;
     }
     ~Water();
 };
@@ -168,14 +157,12 @@ class Gate: public Instance {
 		movable = false;
 		type = 5;
 		properly_init = true;
-		isOpen = false;
     }
     Gate(std::string n) {
 		movable = false;
 		type = 5;
 		properly_init = true;
 		name = n;
-		isOpen = false;
     }
     ~Gate();
 };
@@ -186,14 +173,12 @@ class Button: public Instance {
       movable = false;
       type = 6;
       properly_init = true;
-      isOpen = false;
     }
     Button(std::string n) {
       movable = false;
       type = 6;
       properly_init = true;
       name = n;
-      isOpen = false;
     }
     ~Button();
 };
@@ -204,7 +189,6 @@ class Target: public Instance {
       movable = false;
       type = 7;
       properly_init = true;
-      isOpen = false;
     }
     ~Target();
 };

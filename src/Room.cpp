@@ -15,6 +15,7 @@ class Room {
 	int height;
 	std::vector< std::vector< Instance*> > instances;
 	bool is_initialized;
+	bool win;
 	
   public:
 	std::vector< Move*> moves;
@@ -23,6 +24,7 @@ class Room {
 		width = 0;
 		height = 0;
 		is_initialized = false;
+		win = false;
 	}
 	
 	Room(int w, int h, std::string n) {
@@ -30,6 +32,7 @@ class Room {
 		height = h;
 		name = n;
 		is_initialized = false;
+		win = false;
 	}
 
 	~Room();
@@ -101,6 +104,9 @@ class Room {
 
 	// Linked gates
 	Instance* getLinkedGate(int width, int height);
+
+	// Removing instances
+	void removeInstance(Instance* instance);
 };
 
 void Room::print_dimensions() {
@@ -400,10 +406,18 @@ bool Room::execute_move(Move*& move) {
 		return false;
 	}
 
+	// Destination is a button
+	if (get_instance(instance_x + offset_x, instance_y + offset_y)->get_type() == 6) {
+		this->removeInstance(getLinkedGate(instance_x + offset_x, instance_y + offset_y));
+		this->move_instance(instance_x, instance_y, instance_x + offset_x, instance_y + offset_y);
+		return true;
+	}
+
 	// Destination is the target
 	if (get_instance(instance_x + offset_x, instance_y + offset_y)->get_type() == 7) {
 		if (get_instance(instance_x, instance_y)->get_type() == 0) {
 			std::cerr << "YOU WIN: You have reached the target. Good job!" << std::endl;
+			win = true;
 		}
 		else {
 			std::cerr << "YOU LOSE: A monster has reached the target before you did :(" << std::endl;
@@ -412,11 +426,14 @@ bool Room::execute_move(Move*& move) {
 		return false;
 	}
 
-	// Destination is a non-movable instance and is not air
+	// Destination is a non-movable instance
 	if (! get_instance(instance_x + offset_x, instance_y + offset_y)->get_movable()) {
 		// Wall
 		if (get_instance(instance_x + offset_x, instance_y + offset_y)->get_type() == 1)
-			std::cerr << "ERROR: Destination contains a non-movable instance" << std::endl;
+			std::cerr << "ERROR: Destination contains a non-movable instance. (WALL)" << std::endl;
+		// Gate
+		if (get_instance(instance_x + offset_x, instance_y + offset_y)->get_type() == 5)
+			std::cerr << "ERROR: Destination contains a non-movable instance. (GATE)" << std::endl;
 		// Player walks into monster
 		if (get_instance(instance_x + offset_x, instance_y + offset_y)->get_type() == 3) {
 			if (get_instance(instance_x, instance_y)->get_type() == 0)
@@ -432,6 +449,7 @@ bool Room::execute_move(Move*& move) {
 	
 	// Destination is a moveable instance
 	if (get_instance(instance_x + offset_x, instance_y + offset_y)->get_movable()) {
+		std::cout << "pushing barrel" << std::endl;
 		// Object behind destination is out of bounds -> moveable object gets pushed off the platform
 		if ((instance_x + 2 * offset_x > width) || (instance_x + 2 * offset_x < 0) || (instance_y + 2 * offset_y > height) || (instance_y + 2 * offset_y < 0)) {
 			this->move_instance(instance_x, instance_y, instance_x + offset_x, instance_y + offset_y);
@@ -443,7 +461,8 @@ bool Room::execute_move(Move*& move) {
 			return false;
 		}
 		// Object behind destination is air -> move both objects
-		this->move_instance(instance_x + offset_x, instance_x + offset_y, instance_x + 2 * offset_x, instance_y + 2 * offset_y);
+		std:: cout << "Barrel can be pushed" << std::endl;
+		this->move_instance(instance_x + offset_x, instance_y + offset_y, instance_x + 2 * offset_x, instance_y + 2 * offset_y);
 		this->move_instance(instance_x, instance_y, instance_x + offset_x, instance_y + offset_y);
 		return true;
 	}
@@ -643,7 +662,6 @@ void Room::executeMoves(const char* roomfilename, const char* movesfilename, int
 	REQUIRE(is_initialized, "ERROR: Could not execute any moves because Room was not initialized.");
 
 	if (moves.size() <= n) {
-		std::cout << "ALL" << std::endl;
 		this->executeAllMoves(roomfilename, movesfilename);
 	}
 	else {
@@ -662,22 +680,23 @@ void Room::executeMoves(const char* roomfilename, const char* movesfilename, int
 
 void Room::executeAllMoves(const char* roomfilename, const char* movesfilename) {
 	REQUIRE(is_initialized, "ERROR: Could not execute any moves because Room was not initialized.");
-	
-	int i = 0;
 
 	while (moves.size() != 0) {
 		if (this->execute_move(*moves.begin())) {
-			std::cout << i++ << std::endl;
 			moves.erase(moves.begin());
 		}
 		else {
-			std::cerr << "ERROR: Could not execute move. Writing current room state and remaining moves to ascii file." << std::endl;
+			if (win)
+				std::cerr << "Congratulations!" << std::endl;
+			else
+				std::cerr << "ERROR: Could not execute move. Writing current room state and remaining moves to ascii file." << std::endl;
 			break;
 		}
 	}
 	
 	this->writeToFile(roomfilename);
-	this->writeMovesToFile(movesfilename);
+	if (! win)
+		this->writeMovesToFile(movesfilename);
 	
 	return;
 }
@@ -696,6 +715,17 @@ Instance* Room::getLinkedGate(int width, int height) {
 				if (get_instance(j, i)->get_name() == buttonName) {
 					return get_instance(j, i);
 				}
+			}
+		}
+	}	
+}
+
+void Room::removeInstance(Instance* instance) {
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			if (get_instance(j, i) == instance) {
+				instances[i][j] = NULL;
+				break;
 			}
 		}
 	}	

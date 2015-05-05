@@ -21,16 +21,13 @@ class Instance {
 	
   public:
   	int type;
-    bool isOpen;
 	Instance() {
 		properly_init = true;
-		isOpen = false;
 	}
 	Instance(int t, bool m) {
 		type = t;
 		movable = m;
 		properly_init = true;
-		isOpen = false;
 	}
 	~Instance();
 	
@@ -46,8 +43,6 @@ class Instance {
 	std::string getSymbol();
 	
 	void print_instance();
-
-	bool getOpen();
 };
 
 class Player: public Instance {
@@ -56,14 +51,12 @@ class Player: public Instance {
       movable = false;
       type = 0;
       properly_init = true;
-      isOpen = false;
     }
     Player(std::string n) {
       movable = false;
       type = 0;
       properly_init = true;
       name = n;
-      isOpen = false;
     }
     ~Player();
 };
@@ -74,7 +67,6 @@ class Wall: public Instance {
       movable = false;
       type = 1;
       properly_init = true;
-      isOpen = false;
     }
     ~Wall();
 };
@@ -85,7 +77,6 @@ class Barrel: public Instance {
       movable = true;
       type = 2;
       properly_init = true;
-      isOpen = false;
     }
     ~Barrel();
 };
@@ -96,14 +87,12 @@ class Monster: public Instance {
       movable = false;
       type = 3;
       properly_init = true;
-      isOpen = false;
     }
     Monster(std::string n) {
       movable = false;
       type = 3;
       properly_init = true;
       name = n;
-      isOpen = false;
     }
     ~Monster();
 };
@@ -114,7 +103,6 @@ class Water: public Instance {
       movable = false;
       type = 4;
       properly_init = true;
-      isOpen = false;
     }
     ~Water();
 };
@@ -125,14 +113,12 @@ class Gate: public Instance {
 		movable = false;
 		type = 5;
 		properly_init = true;
-		isOpen = false;
     }
     Gate(std::string n) {
 		movable = false;
 		type = 5;
 		properly_init = true;
 		name = n;
-		isOpen = false;
     }
     ~Gate();
 };
@@ -143,14 +129,12 @@ class Button: public Instance {
       movable = false;
       type = 6;
       properly_init = true;
-      isOpen = false;
     }
     Button(std::string n) {
       movable = false;
       type = 6;
       properly_init = true;
       name = n;
-      isOpen = false;
     }
     ~Button();
 };
@@ -161,7 +145,6 @@ class Target: public Instance {
       movable = false;
       type = 7;
       properly_init = true;
-      isOpen = false;
     }
     ~Target();
 };
@@ -199,12 +182,8 @@ std::string Instance::getSymbol() {
 		return "&";
 	if (type == 4)
 		return "~";
-	if (type == 5) {
-		if (isOpen)
-			return " ";
-		else
-			return "=";
-	}
+	if (type == 5)
+		return "=";
 	if (type == 6)
 		return ".";
 	if (type == 7)
@@ -231,10 +210,6 @@ void Instance::set_movable(bool m) {
 
 void Instance::print_instance() {
 	std::cout << "INSTANCE: Type: " << type << std::endl;
-}
-
-bool Instance::getOpen() {
-	return isOpen;
 }
 
 Instance::~Instance(){}
