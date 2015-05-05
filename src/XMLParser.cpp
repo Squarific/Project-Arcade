@@ -57,7 +57,10 @@ void Room::parseRoomInfo (TiXmlElement* elem) {
 
 	REQUIRE(elemName == "NAAM" || elemName == "LENGTE" || elemName == "BREEDTE", "PARSE ERROR: room info element has to be NAAM, LENGTE OR BREEDTE but was: " + elemName);
 	
-	if (elemName == "NAAM") this->set_name(str);
+	if (elemName == "NAAM") {
+		this->set_name(str);
+	}
+	
 	if (elemName == "LENGTE") this->set_height(atoi(str.c_str()));
 	if (elemName == "BREEDTE") this->set_width(atoi(str.c_str()));
 }

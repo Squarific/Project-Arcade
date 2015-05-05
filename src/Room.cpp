@@ -98,11 +98,11 @@ void Room::print_ascii() {
 
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
-			if (instances[height - 1 - i][j] == NULL) {
+			if (get_instance(j, height - 1 -i) == NULL) {
 				std::cout << "| ";
 			}
 			else {
-				std::cout << "|" << instances[height - 1 - i][j]->get_type();
+				std::cout << "|" << get_instance(j, height - 1 -i)->get_type();
 			}
 		}
 		std::cout << "|" << std::endl;
@@ -113,11 +113,11 @@ void Room::print_ascii() {
 void Room::printRoom() {
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
-			if (instances[height - 1 - i][j] == NULL) {
+			if (get_instance(j, height - 1 -i) == NULL) {
 				std::cout << " ";
 			}
 			else {
-				std::cout << instances[height - 1 - i][j]->getSymbol();
+				std::cout << get_instance(j, height - 1 -i)->getSymbol();
 			}
 		}
 		std::cout << std::endl;
@@ -248,16 +248,13 @@ bool Room::set_instance(int width, int height, int type, std::string id) {
 Instance* Room::get_instance(int width, int height) {
 	REQUIRE(is_initialized, "ERROR: Could not get_instance() because Room was not properly initialized. Returning empty instance.");
 	
-	if (is_initialized)
-		return instances[height][width];
-	else
-		return NULL;
+	return instances[height][width];
 }
 
 void Room::set_instance_name(int width, int height, std::string str) {
 	REQUIRE(is_initialized, "ERROR: Could not set_instance_name() because Room was not properly initialized.");
 	
-	instances[height][width]->set_name(str);
+	get_instance(width, height)->set_name(str);
 }
 
 void Room::move_instance(int from_width, int from_height, int to_width, int to_height) {
@@ -272,9 +269,9 @@ int Room::get_player_width() {
 	
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
-			if (instances[i][j] == NULL)
+			if (get_instance(j, i) == NULL)
 				continue;
-			if (instances[i][j]->get_type() == 0)
+			if (get_instance(j, i)->get_type() == 0)
 				return j;
 		}
 	}
@@ -287,9 +284,9 @@ int Room::get_player_height() {
 	
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
-			if (instances[i][j] == NULL)
+			if (get_instance(j, i) == NULL)
 				continue;
-			if (instances[i][j]->get_type() == 0)
+			if (get_instance(j, i)->get_type() == 0)
 				return i;
 		}
 	}
@@ -330,38 +327,38 @@ bool Room::execute_move(Move*& move) {
 	}
 	
 	// Destination is air
-	if (instances[player_y + offset_y][player_x + offset_x] == NULL) {
+	if (get_instance(player_x + offset_x, player_y + offset_y) == NULL) {
 		this->move_instance(player_x, player_y, player_x + offset_x, player_y + offset_y);
 		return true;
 	}
 
 	// Destination is water
-	if (instances[player_y + offset_y][player_x + offset_x]->get_type() == 4) {
+	if (get_instance(player_x + offset_x, player_y + offset_y)->get_type() == 4) {
 		std::cerr << "GAME OVER: Destination contains water. You died!" << std::endl;
 		return false;
 	}
 
 	// Destination is the target
-	if (instances[player_y + offset_y][player_x + offset_x]->get_type() == 7) {
+	if (get_instance(player_x + offset_x, player_y + offset_y)->get_type() == 7) {
 		std::cerr << "YOU WIN: You have reached the target. Good job!" << std::endl;
 		return false;
 	}
 
 	// Destination is a non-movable instance and is not air
-	if (! instances[player_y + offset_y][player_x + offset_x]->get_movable()) {
+	if (! get_instance(player_x + offset_x, player_y + offset_y)->get_movable()) {
 		std::cerr << "ERROR: Destination contains a non-movable instance" << std::endl;
 		return false;
 	}
 	
 	// Destination is a moveable instance
-	if (instances[player_y + offset_y][player_x + offset_x]->get_movable()) {
+	if (get_instance(player_x + offset_x, player_y + offset_y)->get_movable()) {
 		// Object behind destination is out of bounds -> moveable object gets pushed off the platform
 		if ((player_x + 2 * offset_x > width) || (player_x + 2 * offset_x < 0) || (player_y + 2 * offset_y > height) || (player_y + 2 * offset_y < 0)) {
 			this->move_instance(player_x, player_y, player_x + offset_x, player_y + offset_y);
 			return true;
 		}
 		// Object behind destination is not air -> cannot move in that direction
-		if (instances[player_y + 2 * offset_y][player_x + 2 * offset_x] != NULL) {
+		if (get_instance(player_x + 2 * offset_x, player_y + 2 * offset_y) != NULL) {
 			std::cerr << "ERROR: Second non-air instance located behind moveable instance" << std::endl;
 			return false;
 		}
@@ -389,41 +386,41 @@ void Room::writeToFile(const char* filename) {
 	// Player location
 	int player_x = get_player_width();
 	int player_y = get_player_height();
-	file << "Speler " << instances[player_y][player_x]->get_name() << " bevindt zich in het speelveld op positie (" << player_x << ", " << player_y << ").\n\n";
+	file << "Speler " << get_instance(player_x, player_y)->get_name() << " bevindt zich in het speelveld op positie (" << player_x << ", " << player_y << ").\n\n";
 	
 	// Barrel locations
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
-			if (instances[i][j] == NULL)
+			if (get_instance(j, i) == NULL)
 				continue;
 
 			// Barrel
-			if (instances[i][j]->get_type() == 2) {
+			if (get_instance(j, i)->get_type() == 2) {
 				file << "Er bevindt zich een ton op positie (" << j << ", " << i << ").\n\n";
 			}
 
 			// Monster
-			if (instances[i][j]->get_type() == 3) {
+			if (get_instance(j, i)->get_type() == 3) {
 				file << "Er bevindt zich een monster op positie (" << j << ", " << i << ").\n\n";
 			}
 
 			// Water
-			if (instances[i][j]->get_type() == 4) {
+			if (get_instance(j, i)->get_type() == 4) {
 				file << "Er bevindt zich water op positie (" << j << ", " << i << ").\n\n";
 			}
 
 			// Gate
-			if (instances[i][j]->get_type() == 5) {
-				file << "Er bevindt zich een poort op positie (" << j << ", " << i << ").\n\n";
+			if (get_instance(j, i)->get_type() == 5) {
+				file << "Er bevindt zich een poort (met id " << get_instance(j, i)->get_name() << ") op positie (" << j << ", " << i << ").\n\n";
 			}
 
 			// Button
-			if (instances[i][j]->get_type() == 6) {
-				file << "Er bevindt zich een knop op positie (" << j << ", " << i << ").\n\n";
+			if (get_instance(j, i)->get_type() == 6) {
+				file << "Er bevindt zich een knop (gelinkt aan poort" << get_instance(j, i)->get_name() << ") op positie (" << j << ", " << i << ").\n\n";
 			}
 
 			// Target
-			if (instances[i][j]->get_type() == 7) {
+			if (get_instance(j, i)->get_type() == 7) {
 				file << "Er bevindt zich een doel op positie (" << j << ", " << i << ").\n\n";
 			}
 		}
