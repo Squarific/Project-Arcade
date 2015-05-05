@@ -130,7 +130,7 @@ bool Room::loadMovesFromXMLFile(const char* filename) {
 	for (TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
 		string elemName = elem->Value();
 		
-		if (elemName == "BEWEGING") {
+		if (elemName == "BEWEGING" || elemName == "AANVAL") {
 			TiXmlElement* playernameElem = elem->FirstChildElement();
 			TiXmlElement* directionElem = playernameElem->NextSiblingElement();
 
@@ -165,7 +165,7 @@ bool Room::loadMovesFromXMLFile(const char* filename) {
 				continue;
 			}
 
-			this->moves.push_back(new Move(directionint, playername, false));
+			this->moves.push_back(new Move(directionint, playername, elemName == "AANVAL"));
 		}
 	}
 	return true;
