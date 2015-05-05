@@ -19,25 +19,30 @@ void UserInterface::enterMenu (istream& in, ostream& out) {
 	}
 };
 
-void UserInterface::parseCommand (ostream& out, string command) {
-	string actual_command;
-	istringstream iss(command, istringstream::in);
+ void UserInterface::parseCommand (ostream& out, string command) {
+// 	string actual_command;
+// 	istringstream iss(command, istringstream::in);
 
-	// Extract the first word
-	iss >> actual_command;
+// 	// Extract the first word
+// 	iss >> actual_command;
 
-	out << "You executed: " << actual_command << endl;
+// 	out << "You executed: " << actual_command << endl;
 
-	if (actual_command == "help") {
-		printHelp(out);
-	} else if (actual_command == "") {
-		
-	}
-	// Split the word on spaces
-	while( iss >> word ) {
+// 	if (actual_command == "help") {
+// 		printHelp(out);
+// 	} else if (actual_command == "loadlevel" || actual_command == "loadLevel") {
 
-	}
-};
+// 	} else if (actual_command == "loadmoves" || actual_command == "loadMoves") {
+
+// 	} else if (actual_command == "print") {
+
+// 	}
+
+// 	// Split the word on spaces
+// 	while( iss >> word ) {
+
+// 	}
+ };
 
 void UserInterface::printHelp (ostream& out) {
 	out << "The following commands are available:" << endl << endl;

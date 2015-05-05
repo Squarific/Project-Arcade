@@ -13,7 +13,9 @@ bool Room::loadFromXMLFile (const char* filename) {
 	// Create xml dom
 	TiXmlDocument doc(filename);
 
-	REQUIRE(doc.LoadFile(), "File " + filename + " not found");
+	bool success = doc.LoadFile();
+
+	REQUIRE(success, "File " + filename + " not found");
 
 	// Get root element
 	TiXmlElement* root = doc.FirstChildElement();
