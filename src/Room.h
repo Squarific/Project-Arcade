@@ -182,6 +182,7 @@ class Room {
 	 *		Room::init() is called
 	 *		is_initialized = true;
 	 */
+
 	bool loadFromXMLFile(const char* filename);
 
 	/**
@@ -210,11 +211,29 @@ class Room {
 	 */
 
 	tuple <int, int, int, string> parseInstanceWithId (TiXmlElement* elem);
+
+	/**
+	 *	PRE CONDITIONS
+	 * 		is_initialized == true
+	 *
+	 */
+
+	void saveToXMLFile (const char* filename);
+
+	/**
+	 *	PRE CONDITIONS
+	 * 		is_initialized == true
+	 *
+	 */
+
+	void saveMovesToXMLFile (const char* filename);
+
 	
 	/**
 	 *	Load the to-be-executed moves from an XML file into the vector<Move> moves.
 	 *	Use executeAllMoves() to execute the loaded moves.
 	 */
+
 	bool loadMovesFromXMLFile(const char* filename);
 	
 	/**
@@ -224,6 +243,7 @@ class Room {
 	 * 	Writes the current state of the room to an ascii file,
 	 *	including the name, width, height, location of the player and location(s) of barrels.
 	 */
+
 	void writeToFile(const char* filename);
 	
 	/**
