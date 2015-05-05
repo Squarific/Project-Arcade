@@ -1,3 +1,6 @@
+#ifndef ROOM_H
+#define ROOM_H
+
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -232,3 +235,6 @@ class Room {
 
 	~Room();
 };
+
+
+#endif /* ROOM_H */
