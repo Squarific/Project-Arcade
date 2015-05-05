@@ -6,6 +6,8 @@
 #include "Instance.h"
 #include "DesignByContract.h"
 
+using namespace std;
+
 class Room {
   private:
 	std::string name;
@@ -34,8 +36,8 @@ class Room {
 	
 	// Prints
 	void print_dimensions();
-	void print_ascii();
-	void printRoom();
+	void print_ascii(ostream& out);
+	void printRoom(ostream& out);
 
 	// Init
 	// Fills the room width empty instances. (type = 0, movable = false)
@@ -95,35 +97,35 @@ void Room::print_dimensions() {
 	std::cout << width << "x" << height << std::endl;
 }
 
-void Room::print_ascii() {
+void Room::print_ascii(ostream& out) {
 	// TOP DASHES
-	std::cout << std::string(2 * width + 1, '-') << std::endl;
+	out << std::string(2 * width + 1, '-') << std::endl;
 
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
 			if (get_instance(j, height - 1 -i) == NULL) {
-				std::cout << "| ";
+				out << "| ";
 			}
 			else {
-				std::cout << "|" << get_instance(j, height - 1 -i)->get_type();
+				out << "|" << get_instance(j, height - 1 -i)->get_type();
 			}
 		}
-		std::cout << "|" << std::endl;
-		std::cout << std::string(2 * width + 1, '-') << std::endl;
+		out << "|" << std::endl;
+		out << std::string(2 * width + 1, '-') << std::endl;
 	}
 }
 
-void Room::printRoom() {
+void Room::printRoom(ostream& out) {
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
 			if (get_instance(j, height - 1 -i) == NULL) {
-				std::cout << " ";
+				out << " ";
 			}
 			else {
-				std::cout << get_instance(j, height - 1 -i)->getSymbol();
+				out << get_instance(j, height - 1 -i)->getSymbol();
 			}
 		}
-		std::cout << std::endl;
+		out << std::endl;
 	}
 }
 

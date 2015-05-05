@@ -1,5 +1,5 @@
 #include <iostream>
-// #include "UserInterface.h"
+#include "UserInterface.h"
 #include "Room.h"
 #include "XMLParser.cpp"
 

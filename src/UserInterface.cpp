@@ -46,7 +46,21 @@ void UserInterface::enterMenu (istream& in, ostream& out) {
 	}
 	
 	else if (actual_command == "print") {
-		this->room.printRoom();
+		out << "Printing: " << endl;
+		this->room.printRoom(out);
+	}
+
+	else if (actual_command == "printToFile") {
+		string filename;
+		iss >> filename;
+		filename = "game_board_" + filename;
+
+		out << "Printing to file '" << filename << "'" << endl;
+
+		std::ofstream file;
+		file.open(filename);
+
+		this->room.printRoom(file);
 	}
 	
 	else if (actual_command == "run") {
@@ -70,6 +84,9 @@ void UserInterface::printHelp (ostream& out) {
 
 	out << "- print" << endl;
 	out << "\t Prints the current room" << endl << endl;
+
+	out << "- printToFile [filename]" << endl;
+	out << "\t Prints the current room to a file called game_board_[filename]" << endl << endl;
 
 	out << "- run [maxsteps]" << endl;
 	out << "\t Runs the simulation untill the end" << endl;
