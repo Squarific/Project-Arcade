@@ -7,7 +7,6 @@
 
 class Instance {
   protected:
-	int type;	 
 	bool movable;
 	std::string name;
 	bool properly_init = false;
@@ -17,7 +16,8 @@ class Instance {
   	 *	 Although these constructors can be used for 'custom' objects, it is not advised to use this.
   	 *	 You should only use the subclasses' constructors.
   	 */
-  bool isOpen;
+  	bool isOpen;
+ 	int type;	 
 	Instance() {
 		properly_init = true;
 		isOpen = false;
@@ -82,6 +82,8 @@ class Instance {
 	 *	Prints basic information about the instance. To be used for testing purposes only.
 	 */
 	void print_instance();
+
+	bool getOpen();
 
 	~Instance();
 };

@@ -4,7 +4,6 @@
 
 class Instance {
   protected:
-	int type;
 	bool movable;
 	std::string name;
 	/**
@@ -21,6 +20,7 @@ class Instance {
 	bool properly_init = false;
 	
   public:
+  	int type;
     bool isOpen;
 	Instance() {
 		properly_init = true;
@@ -46,6 +46,8 @@ class Instance {
 	std::string getSymbol();
 	
 	void print_instance();
+
+	bool getOpen();
 };
 
 class Player: public Instance {
@@ -120,14 +122,12 @@ class Water: public Instance {
 class Gate: public Instance {
   public:
     Gate() {
-    	isOpen = false;
 		movable = false;
 		type = 5;
 		properly_init = true;
 		isOpen = false;
     }
     Gate(std::string n) {
-    	isOpen = false;
 		movable = false;
 		type = 5;
 		properly_init = true;
@@ -200,7 +200,6 @@ std::string Instance::getSymbol() {
 	if (type == 4)
 		return "~";
 	if (type == 5) {
-    std::cout << &isOpen << std::endl;
 		if (isOpen)
 			return " ";
 		else
@@ -232,6 +231,10 @@ void Instance::set_movable(bool m) {
 
 void Instance::print_instance() {
 	std::cout << "INSTANCE: Type: " << type << std::endl;
+}
+
+bool Instance::getOpen() {
+	return isOpen;
 }
 
 Instance::~Instance(){}

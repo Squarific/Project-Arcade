@@ -170,6 +170,15 @@ class Room {
 
 	/**
 	 *	PRE CONDITIONS:
+	 *		is_initialized == true
+	 *
+	 *	These functions are used to get an objects location on the field, given an id.
+	 */
+	int get_instance_width(std::string id);
+	int get_instance_height(std::string id);
+
+	/**
+	 *	PRE CONDITIONS:
 	 *		REQUIRE(doc.LoadFile(), "File " + filename + " not found");
 	 *		REQUIRE(doc.FirstChildElement() != NULL, "XML Error: No root element");
 	 *		REQUIRE(string(doc.FirstChildElement()->Value()) == "VELD", "XML Error: Root element has to be called 'VELD' but was '" + root->Value() + "'");	

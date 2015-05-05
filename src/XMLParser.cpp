@@ -131,7 +131,7 @@ bool Room::loadMovesFromXMLFile(const char* filename) {
 	}
 
 	// Root element should be 'VELD'
-	if (string(root->Value()) != "BEWEGINGEN") {
+	if (string(root->Value()) != "ACTIES") {
 		cerr << "XML Error: Root element has to be called 'BEWEGINGEN' but was '" << root->Value() << "'" << endl;
 		return false;
 	}
@@ -148,7 +148,7 @@ bool Room::loadMovesFromXMLFile(const char* filename) {
 				cerr << "XML Error: BEWEGING tags need to contain 2 tags, the first is a playername, the second a direction" << endl;
 			}
 
-			if (string(playernameElem->Value()) != "SPELERNAAM" || string(directionElem->Value()) != "RICHTING") {
+			if (string(playernameElem->Value()) != "ID" || string(directionElem->Value()) != "RICHTING") {
 				cerr << "XML Error: BEWEGING needs to contain a tag SPELERNAAM and a tag RICHTING but contained '" << playernameElem->Value() << "' and '" << directionElem->Value() << "'" << endl;
 			}
 
@@ -175,7 +175,7 @@ bool Room::loadMovesFromXMLFile(const char* filename) {
 				continue;
 			}
 
-			this->moves.push_back(new Move(directionint, playername));
+			this->moves.push_back(new Move(directionint, playername, false));
 		}
 	}
 	return true;

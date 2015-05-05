@@ -7,10 +7,11 @@ Move::Move() {
 	_initcheck = this;
 }
 
-Move::Move(int d, std::string n) {
+Move::Move(int d, std::string n, bool a) {
 	_initcheck = this;
 	direction = d;
 	name = n;
+	isAttack = a;
 }
 
 bool Move::properlyInitialized() {

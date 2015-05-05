@@ -81,6 +81,10 @@ class Room {
 	int get_player_width();
 	int get_player_height();
 
+	// Other Coordinates
+	int get_instance_width(std::string id);
+	int get_instance_height(std::string id);
+
 	// XML
 	bool loadFromXMLFile(const char* filename);
 	bool loadMovesFromXMLFile(const char* filename);
@@ -240,6 +244,7 @@ bool Room::set_instance(int width, int height, int type, std::string id) {
 		return true;
 	}
 	else if (type == 5) {
+		std::cout << "CREATING GATE" << std::endl;
 		Gate* instance = new Gate(id);
 		instances[height][width] = instance;
 		return true;
@@ -302,13 +307,50 @@ int Room::get_player_height() {
 	return 0;
 }
 
+int Room::get_instance_width(std::string id) {
+	REQUIRE(is_initialized, "ERROR: Could not get_instance_width() because Room was not properly initialized.");
+	
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			if (get_instance(j, i) == NULL)
+				continue;
+			if ((get_instance(j, i)->get_type() == 0) || (get_instance(j, i)->get_type() == 3))
+				if (get_instance(j, i)->get_name() == id)
+					return j;
+		}
+	}
+
+	return 0;
+}
+
+int Room::get_instance_height(std::string id) {
+	REQUIRE(is_initialized, "ERROR: Could not get_instance_height() because Room was not properly initialized.");
+	
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			if (get_instance(j, i) == NULL)
+				continue;
+			if ((get_instance(j, i)->get_type() == 0) || (get_instance(j, i)->get_type() == 3))
+				if (get_instance(j, i)->get_name() == id)
+					return i;
+		}
+	}
+
+	return 0;
+}
+
+
 bool Room::execute_move(Move*& move) {
 	REQUIRE(is_initialized, "ERROR: Could not execute move because Room was not properly initialized.");
 	
-	int player_x = this->get_player_width();
-	int player_y = this->get_player_height();
+	int instance_x = this->get_instance_width(move->get_name());
+	int instance_y = this->get_instance_height(move->get_name());
 	int direction = move->get_direction();
 	int offset_x, offset_y;
+
+	std::cout << "Move direction: " << move->get_direction() << std::endl;
+	std::cout << "Move id: " << move->get_name() << std::endl;
+	std::cout << "Instance_x: " << instance_x << "  Instance_y: " << instance_y << std::endl;
 	
 	// Get offset
 	if (direction == 0) {
@@ -329,50 +371,68 @@ bool Room::execute_move(Move*& move) {
 	}
 	
 	// Destination out of bounds
-	if ((player_x + offset_x > width) || (player_x + offset_x < 0) || (player_y + offset_y > height) || (player_y + offset_y < 0)) {
+	if ((instance_x + offset_x > width) || (instance_x + offset_x < 0) || (instance_y + offset_y > height) || (instance_y + offset_y < 0)) {
 		std::cerr << "ERROR: Destination is out of bounds" << std::endl;
 		return false;
 	}
 	
 	// Destination is air
-	if (get_instance(player_x + offset_x, player_y + offset_y) == NULL) {
-		this->move_instance(player_x, player_y, player_x + offset_x, player_y + offset_y);
+	if (get_instance(instance_x + offset_x, instance_y + offset_y) == NULL) {
+		this->move_instance(instance_x, instance_y, instance_x + offset_x, instance_y + offset_y);
 		return true;
 	}
 
 	// Destination is water
-	if (get_instance(player_x + offset_x, player_y + offset_y)->get_type() == 4) {
+	if (get_instance(instance_x + offset_x, instance_y + offset_y)->get_type() == 4) {
 		std::cerr << "GAME OVER: Destination contains water. You died!" << std::endl;
 		return false;
 	}
 
 	// Destination is the target
-	if (get_instance(player_x + offset_x, player_y + offset_y)->get_type() == 7) {
-		std::cerr << "YOU WIN: You have reached the target. Good job!" << std::endl;
+	if (get_instance(instance_x + offset_x, instance_y + offset_y)->get_type() == 7) {
+		if (get_instance(instance_x, instance_y)->get_type() == 0) {
+			std::cerr << "YOU WIN: You have reached the target. Good job!" << std::endl;
+		}
+		else {
+			std::cerr << "YOU LOSE: A monster has reached the target before you did :(" << std::endl;
+		}
+		this->move_instance(instance_x, instance_y, instance_x + offset_x, instance_y + offset_y);
 		return false;
 	}
 
 	// Destination is a non-movable instance and is not air
-	if (! get_instance(player_x + offset_x, player_y + offset_y)->get_movable()) {
-		std::cerr << "ERROR: Destination contains a non-movable instance" << std::endl;
+	if (! get_instance(instance_x + offset_x, instance_y + offset_y)->get_movable()) {
+		// Wall
+		if (get_instance(instance_x + offset_x, instance_y + offset_y)->get_type() == 1)
+			std::cerr << "ERROR: Destination contains a non-movable instance" << std::endl;
+		// Player walks into monster
+		if (get_instance(instance_x + offset_x, instance_y + offset_y)->get_type() == 3) {
+			if (get_instance(instance_x, instance_y)->get_type() == 0)
+				std::cerr << "YOU DIED: You walked right into a monster!" << std::endl;
+		}
+		// Monster walks into player
+		if (get_instance(instance_x + offset_x, instance_y + offset_y)->get_type() == 0) {
+			if (get_instance(instance_x, instance_y)->get_type() == 3)
+				std::cerr << "YOU DIED: A monster ate you!" << std::endl;
+		}
 		return false;
 	}
 	
 	// Destination is a moveable instance
-	if (get_instance(player_x + offset_x, player_y + offset_y)->get_movable()) {
+	if (get_instance(instance_x + offset_x, instance_y + offset_y)->get_movable()) {
 		// Object behind destination is out of bounds -> moveable object gets pushed off the platform
-		if ((player_x + 2 * offset_x > width) || (player_x + 2 * offset_x < 0) || (player_y + 2 * offset_y > height) || (player_y + 2 * offset_y < 0)) {
-			this->move_instance(player_x, player_y, player_x + offset_x, player_y + offset_y);
+		if ((instance_x + 2 * offset_x > width) || (instance_x + 2 * offset_x < 0) || (instance_y + 2 * offset_y > height) || (instance_y + 2 * offset_y < 0)) {
+			this->move_instance(instance_x, instance_y, instance_x + offset_x, instance_y + offset_y);
 			return true;
 		}
 		// Object behind destination is not air -> cannot move in that direction
-		if (get_instance(player_x + 2 * offset_x, player_y + 2 * offset_y) != NULL) {
+		if (get_instance(instance_x + 2 * offset_x, instance_y + 2 * offset_y) != NULL) {
 			std::cerr << "ERROR: Second non-air instance located behind moveable instance" << std::endl;
 			return false;
 		}
 		// Object behind destination is air -> move both objects
-		this->move_instance(player_x + offset_x, player_y + offset_y, player_x + 2 * offset_x, player_y + 2 * offset_y);
-		this->move_instance(player_x, player_y, player_x + offset_x, player_y + offset_y);
+		this->move_instance(instance_x + offset_x, instance_x + offset_y, instance_x + 2 * offset_x, instance_y + 2 * offset_y);
+		this->move_instance(instance_x, instance_y, instance_x + offset_x, instance_y + offset_y);
 		return true;
 	}
 	
@@ -463,7 +523,7 @@ void Room::writeMovesToFile(const char* filename) {
 			else if (tempmove->get_direction() == 3) {
 				directionstr = "Omlaag";
 			}
-			file << "Speler " << tempmove->get_name() << " zal volgende beweging nog uitvoeren: \n" << directionstr << "\n\n";
+			file << tempmove->get_name() << " zal volgende beweging nog uitvoeren: \n" << directionstr << "\n\n";
 		}
 	}
 	

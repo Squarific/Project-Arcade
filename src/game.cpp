@@ -11,13 +11,11 @@ int main(int argc, char *argv[]) {
 			std::cout << "No arguments given. Entering the developer testing grounds..." << std::endl;
 
 			current_room.loadFromXMLFile("xmlfiles/Level3.xml");
-			current_room.loadMovesFromXMLFile("xmlfiles/Bewegingen1.0.xml");
-
-			current_room.set_instance(2, 8, 7);
+			current_room.loadMovesFromXMLFile("xmlfiles/Level3Acties.xml");
 
 			current_room.printRoom(std::cout);
 
-			current_room.executeMoves("HuidigSpeelveld.txt", "ResterendeBewegingen.txt", 1);
+			current_room.executeAllMoves("HuidigSpeelveld.txt", "ResterendeBewegingen.txt");
 
 			current_room.printRoom(std::cout);
 

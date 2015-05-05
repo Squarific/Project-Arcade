@@ -6,10 +6,11 @@ class Move {
 	std::string name;
 	int direction;
 	Move* _initcheck;
+	bool isAttack;
 
   public:
 	Move();
-	Move(int d, std::string n);
+	Move(int d, std::string n, bool a);
 
 	/*
 	 * Returns true if initialized using one of the constructors above
