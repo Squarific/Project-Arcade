@@ -117,24 +117,14 @@ bool Room::loadMovesFromXMLFile(const char* filename) {
 	// Create xml dom
 	TiXmlDocument doc(filename);
 	
-	// Load the document
-	if (!doc.LoadFile()) {
-		cerr << "File " << filename << " not found" << endl;
-		return false;
-	}
+	bool success = doc.LoadFile();
+	REQUIRE(success, "File " + filename + " not found while trying to parse moves from xml file");
 
 	// Get root element
 	TiXmlElement* root = doc.FirstChildElement();
-	if (root == NULL) {
-		cerr << "XML Error: No root element" << endl;
-		return false;
-	}
 
-	// Root element should be 'VELD'
-	if (string(root->Value()) != "ACTIES") {
-		cerr << "XML Error: Root element has to be called 'BEWEGINGEN' but was '" << root->Value() << "'" << endl;
-		return false;
-	}
+	REQUIRE(root != NULL, "XML Error: No root XML element!")
+	REQUIRE(string(root->Value()) == "ACTIES" || string(root->Value()) == "BEWEGINGEN", "XML Error: Root element has to be called 'BEWEGINGEN' or 'ACTIES' but was '" + root->Value() + "'");
 
 	// Parse the tags 'BEWEGING'
 	for (TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
