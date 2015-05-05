@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include "UserInterface.h"
 
 using namespace std;
@@ -20,28 +21,53 @@ void UserInterface::enterMenu (istream& in, ostream& out) {
 };
 
  void UserInterface::parseCommand (ostream& out, string command) {
-// 	string actual_command;
-// 	istringstream iss(command, istringstream::in);
+	string actual_command;
+	istringstream iss(command);
 
-// 	// Extract the first word
-// 	iss >> actual_command;
+	// Extract the first word
+	iss >> actual_command;
 
-// 	out << "You executed: " << actual_command << endl;
+	out << "You executed: " << actual_command << endl;
 
-// 	if (actual_command == "help") {
-// 		printHelp(out);
-// 	} else if (actual_command == "loadlevel" || actual_command == "loadLevel") {
+	if (actual_command == "help") {
+		printHelp(out);
+	}
+	
+	else if (actual_command == "loadlevel" || actual_command == "loadLevel") {
+		string filename;
+		iss >> filename;
+		this->room.loadFromXMLFile(filename.c_str());
+	}
+	
+	else if (actual_command == "loadmoves" || actual_command == "loadMoves") {
+		string filename;
+		iss >> filename;
+		this->room.loadMovesFromXMLFile(filename.c_str());
+	}
+	
+	else if (actual_command == "print") {
+		out << "Printing: " << endl;
+		this->room.printRoom(out);
+	}
 
-// 	} else if (actual_command == "loadmoves" || actual_command == "loadMoves") {
+	else if (actual_command == "printToFile") {
+		string filename;
+		iss >> filename;
+		filename = "game_board_" + filename;
 
-// 	} else if (actual_command == "print") {
+		out << "Printing to file '" << filename << "'" << endl;
 
-// 	}
+		std::ofstream file;
+		file.open(filename);
 
-// 	// Split the word on spaces
-// 	while( iss >> word ) {
-
-// 	}
+		this->room.printRoom(file);
+	}
+	
+	else if (actual_command == "run") {
+		string moves;
+		iss >> moves;
+		this->room.executeMoves("HuidigSpeelveld.txt", "ResterendeBewegingen.txt", atoi(moves.c_str()));
+	}
  };
 
 void UserInterface::printHelp (ostream& out) {
@@ -58,6 +84,9 @@ void UserInterface::printHelp (ostream& out) {
 
 	out << "- print" << endl;
 	out << "\t Prints the current room" << endl << endl;
+
+	out << "- printToFile [filename]" << endl;
+	out << "\t Prints the current room to a file called game_board_[filename]" << endl << endl;
 
 	out << "- run [maxsteps]" << endl;
 	out << "\t Runs the simulation untill the end" << endl;

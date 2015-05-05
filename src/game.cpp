@@ -1,5 +1,5 @@
 #include <iostream>
-// #include "UserInterface.h"
+#include "UserInterface.h"
 #include "Room.h"
 #include "XMLParser.cpp"
 
@@ -15,11 +15,11 @@ int main(int argc, char *argv[]) {
 
 			current_room.set_instance(2, 8, 7);
 
-			current_room.printRoom();
+			current_room.printRoom(std::cout);
 
 			current_room.executeMoves("HuidigSpeelveld.txt", "ResterendeBewegingen.txt", 1);
 
-			current_room.printRoom();
+			current_room.printRoom(std::cout);
 
 			// UserInterface ui;
 
