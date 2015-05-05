@@ -14,4 +14,3 @@ Er bevindt zich een doel op positie (2, 8).
 Er bevindt zich een doel op positie (5, 8).
 
 Er bevindt zich een knop (gelinkt aan poort) op positie (8, 8).
-
