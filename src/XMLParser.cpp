@@ -90,16 +90,17 @@ tuple <int, int, int, string> Room::parseInstanceWithId (TiXmlElement* elem) {
 	string elemName = elem->Value();
 	const char *id = elem->Attribute("id");
 	TiXmlNode* node = elem->FirstChild();
+	string name;
 
 	REQUIRE(instanceTypesWithId.count(elemName) == 1, "PARSE ERROR: Invalid instance type. Type was: " + elemName);
 	REQUIRE(id != NULL || node != NULL, "PARSE ERROR: No id in attribute or in tags for element " + elemName);
 
 	if (id != NULL) {
-		string name = string(id);
+		name = string(id);
 	} else {
 		node = node->FirstChild();
 		TiXmlText* text = node->ToText();
-		string name = text->Value();
+		name = text->Value();
 	}
 	
 	int x = 0;
