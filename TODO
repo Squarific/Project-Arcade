@@ -1,0 +1,5 @@
+HTML, XML and UI
+Makefile
+Tests (file compare)
+Split room into cpp and h
+Move xmlparser out game.cpp
