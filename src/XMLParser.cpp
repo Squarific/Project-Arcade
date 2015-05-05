@@ -15,13 +15,13 @@ bool Room::loadFromXMLFile (const char* filename) {
 
 	bool success = doc.LoadFile();
 
-	REQUIRE(success, "File " + filename + " not found");
+	REQUIRE(success, (string("File ") + string(filename) + string(" not found")).c_str());
 
 	// Get root element
 	TiXmlElement* root = doc.FirstChildElement();
 
 	REQUIRE(root != NULL, "XML Error: No root element");
-	REQUIRE(string(root->Value()) == "VELD", "XML Error: Root element has to be called 'VELD' but was '" + root->Value() + "'");
+	REQUIRE(string(root->Value()) == "VELD", (string("XML Error: Root element has to be called 'VELD' but was '") + string(root->Value()) + string("'")).c_str());
 
 	vector < vector <int>> instances;
 	vector < tuple <int, int, int, string>> instancesWithId;
@@ -57,7 +57,7 @@ void Room::parseRoomInfo (TiXmlElement* elem) {
 	string str = text->Value();
 	string elemName = elem->Value();
 
-	REQUIRE(elemName == "NAAM" || elemName == "LENGTE" || elemName == "BREEDTE", "PARSE ERROR: room info element has to be NAAM, LENGTE OR BREEDTE but was: " + elemName);
+	REQUIRE(elemName == "NAAM" || elemName == "LENGTE" || elemName == "BREEDTE", (string("PARSE ERROR: room info element has to be NAAM, LENGTE OR BREEDTE but was: ") + string(elemName)).c_str());
 	
 	if (elemName == "NAAM") {
 		this->set_name(str);
@@ -71,7 +71,7 @@ vector <int> Room::parseInstance (TiXmlElement* elem) {
 	string elemName = elem->Value();
 	vector <int> instance;
 
-	REQUIRE(instanceTypes.count(elemName) == 1, "PARSE ERROR: Invalid instance type. Type was: " + elemName);
+	REQUIRE(instanceTypes.count(elemName) == 1, (string("PARSE ERROR: Invalid instance type. Type was: ") + string(elemName)).c_str());
 
 	int x = 0;
 	int y = 0;
@@ -92,8 +92,8 @@ tuple <int, int, int, string> Room::parseInstanceWithId (TiXmlElement* elem) {
 	TiXmlNode* node = elem->FirstChild();
 	string name;
 
-	REQUIRE(instanceTypesWithId.count(elemName) == 1, "PARSE ERROR: Invalid instance type. Type was: " + elemName);
-	REQUIRE(id != NULL || node != NULL, "PARSE ERROR: No id in attribute or in tags for element " + elemName);
+	REQUIRE(instanceTypesWithId.count(elemName) == 1, (string("PARSE ERROR: Invalid instance type. Type was: ") + string(elemName)).c_str());
+	REQUIRE(id != NULL || node != NULL, (string("PARSE ERROR: No id in attribute or in tags for element ") + string(elemName)).c_str());
 
 	if (id != NULL) {
 		name = string(id);
@@ -118,13 +118,13 @@ bool Room::loadMovesFromXMLFile(const char* filename) {
 	TiXmlDocument doc(filename);
 	
 	bool success = doc.LoadFile();
-	REQUIRE(success, "File " + filename + " not found while trying to parse moves from xml file");
+	REQUIRE(success, (string("File ") + string(filename) + string(" not found while trying to parse moves from xml file")).c_str());
 
 	// Get root element
 	TiXmlElement* root = doc.FirstChildElement();
 
-	REQUIRE(root != NULL, "XML Error: No root XML element!")
-	REQUIRE(string(root->Value()) == "ACTIES" || string(root->Value()) == "BEWEGINGEN", "XML Error: Root element has to be called 'BEWEGINGEN' or 'ACTIES' but was '" + root->Value() + "'");
+	REQUIRE(root != NULL, "XML Error: No root XML element!");
+	REQUIRE(string(root->Value()) == "ACTIES" || string(root->Value()) == "BEWEGINGEN", (string("XML Error: Root element has to be called 'BEWEGINGEN' or 'ACTIES' but was '") + string(root->Value()) + string("'")).c_str());
 
 	// Parse the tags 'BEWEGING'
 	for (TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {

@@ -171,8 +171,8 @@ std::string Instance::get_name() {
 
 std::string Instance::getSymbol() {
 	REQUIRE(properly_init, "ERROR: Instance was not properly initialized.");
-	REQUIRE(type >= 0, "ERROR: Instance type out of bounds.")
-	REQUIRE(type < 8, "ERROR: Instance type out of bounds.")
+	REQUIRE(type >= 0, "ERROR: Instance type out of bounds.");
+	REQUIRE(type < 8, "ERROR: Instance type out of bounds.");
 
 	if (type == 0)
 		return "Y";
