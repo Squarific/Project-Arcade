@@ -7,7 +7,6 @@ class Instance {
 	int type;
 	bool movable;
 	std::string name;
-	bool isOpen;
 	/**
 	 *	The following ints are used to define which type the instance is:
 	 *	0: Player
@@ -22,6 +21,7 @@ class Instance {
 	bool properly_init = false;
 	
   public:
+    bool isOpen;
 	Instance() {
 		properly_init = true;
 		isOpen = false;
@@ -198,6 +198,7 @@ std::string Instance::getSymbol() {
 	if (type == 4)
 		return "~";
 	if (type == 5) {
+    std::cout << &isOpen << std::endl;
 		if (isOpen)
 			return " ";
 		else

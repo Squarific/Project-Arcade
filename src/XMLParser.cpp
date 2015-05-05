@@ -7,7 +7,7 @@
 using namespace std;
 
 map <string, int> instanceTypes = {{"MUUR", 1}, {"TON", 2}, {"WATER", 4}, {"DOEL", 7}};
-map <string, int> instanceTypesWithId = {{"SPELER", 0}, {"MONSTER", 1}, {"POORT", 5}, {"KNOP", 6}};
+map <string, int> instanceTypesWithId = {{"SPELER", 0}, {"MONSTER", 3}, {"POORT", 5}, {"KNOP", 6}};
 
 bool Room::loadFromXMLFile (const char* filename) {
 	// Create xml dom

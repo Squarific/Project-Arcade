@@ -11,13 +11,13 @@ class Instance {
 	bool movable;
 	std::string name;
 	bool properly_init = false;
-	bool isOpen;
 	
   public:
   	/**
   	 *	 Although these constructors can be used for 'custom' objects, it is not advised to use this.
   	 *	 You should only use the subclasses' constructors.
   	 */
+  bool isOpen;
 	Instance() {
 		properly_init = true;
 		isOpen = false;
@@ -163,14 +163,12 @@ class Water: public Instance {
 class Gate: public Instance {
   public:
     Gate() {
-    	isOpen = false;
 		movable = false;
 		type = 5;
 		properly_init = true;
 		isOpen = false;
     }
     Gate(std::string n) {
-    	isOpen = false;
 		movable = false;
 		type = 5;
 		properly_init = true;
