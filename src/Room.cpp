@@ -84,6 +84,8 @@ class Room {
 	// XML
 	bool loadFromXMLFile(const char* filename);
 	bool loadMovesFromXMLFile(const char* filename);
+	void saveToXMLFile (ostream& file);
+	void saveMovesToXMLFile (ostream& file);
 	
 	// File Outpot
 	void writeToFile(const char* filename);
@@ -435,6 +437,103 @@ void Room::writeToFile(const char* filename) {
 	}
 	
 	file.close();
+}
+
+void Room::saveToXMLFile (ostream& file) {
+	REQUIRE(is_initialized, "ERROR: Could not write room properties to file because Room was not properly initialized.");
+
+	file << "<?xml version=\"1.0\" encoding=\"utf-8\"?>" << endl;
+	file << "<VELD>" << endl;
+	file << "<NAAM>" << this->get_name() << "</NAAM>"<< endl;
+	file << "<LENGTE>" << this->get_width() << "</LENGTE>"<< endl;
+	file << "<BREEDTE>" << this->get_height() << "</BREEDTE>"<< endl;
+
+
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			if (get_instance(j, i) == NULL)
+				continue;
+
+			if (get_instance(j, i)->get_type() == 0) {
+				file << "    <SPELER x=\"" << j << "\" y=\"" << i << "\">"<< endl;
+				file << "        <NAAM>" << get_instance(j, i)->get_name()  << "</NAAM>"<< endl;
+				file << "    </SPELER>"<< endl;
+			}
+
+			if (get_instance(j, i)->get_type() == 1) {
+				file << "    <MUUR beweegbaar=\"false\" x=\"" << j << "\" y=\"" << i << "\"/>"<< endl;
+			}
+
+			// Barrel
+			if (get_instance(j, i)->get_type() == 2) {
+				file << "    <TON beweegbaar=\"true\" x=\"" << j << "\" y=\"" << i << "\"/>"<< endl;
+			}
+
+			// Monster
+			if (get_instance(j, i)->get_type() == 3) {
+				file << "    <MONSTER x=\"" << j << "\" y=\"" << i << "\">"<< endl;
+				file << "        <NAAM>" << get_instance(j, i)->get_name()  << "</NAAM>"<< endl;
+				file << "    </MONSTER>"<< endl;
+			}
+
+			// Water
+			if (get_instance(j, i)->get_type() == 4) {
+				file << "    <WATER beweegbaar=\"false\" x=\"" << j << "\" y=\"" << i << "\"/>"<< endl;
+			}
+
+			// Gate
+			if (get_instance(j, i)->get_type() == 5) {
+				file << "    <POORT x=\"" << j << "\" y=\"" << i << "\">"<< endl;
+				file << "        <NAAM>" << get_instance(j, i)->get_name()  << "</NAAM>"<< endl;
+				file << "    </POORT>"<< endl;
+			}
+
+			// Button
+			if (get_instance(j, i)->get_type() == 6) {
+				file << "    <KNOP id=\"" << get_instance(j, i)->get_name() << "\" beweegbaar=\"false\" x=\"" << j << "\" y=\"" << i << "\"/>"<< endl;
+			}
+
+			// Target
+			if (get_instance(j, i)->get_type() == 7) {
+				file << "    <DOEL beweegbaar=\"false\" x=\"" << j << "\" y=\"" << i << "\"/>"<< endl;
+			}
+		}
+	}
+
+	file << "</VELD>" << endl;
+}
+
+void Room::saveMovesToXMLFile (ostream& file) {
+	REQUIRE(is_initialized, "ERROR: Could not write room properties to file because Room was not properly initialized.");
+
+	file << "<?xml version=\"1.0\" encoding=\"utf-8\"?>" << endl;
+
+	file << "<BEWEGINGEN>" << endl;
+
+	for (std::vector< Move*>::iterator it = moves.begin(); it != moves.end(); ++it) {
+		Move* tempmove = *it;
+		string directionstr;
+	
+		if (tempmove->get_direction() == 0) {
+			directionstr = "RECHTS";
+		}
+		else if (tempmove->get_direction() == 1) {
+			directionstr = "OMHOOG";
+		}
+		else if (tempmove->get_direction() == 2) {
+			directionstr = "LINKS";
+		}
+		else if (tempmove->get_direction() == 3) {
+			directionstr = "OMLAAG";
+		}
+
+		file << "    <BEWEGING>" << endl;
+		file << "         <ID>" << tempmove->get_name() << "</ID>" << endl;
+		file << "         <RICHTING>" << directionstr << "</RICHTING>" << endl;
+		file << "    </BEWEGING>" << endl;
+	}
+
+	file << "</BEWEGINGEN>" << endl;
 }
 
 void Room::writeMovesToFile(const char* filename) {

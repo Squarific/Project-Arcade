@@ -1,11 +1,17 @@
 #include <iostream>
 #include <sstream>
+#include <algorithm>
 #include "UserInterface.h"
 
 using namespace std;
 
 void UserInterface::enterMenu (istream& in, ostream& out) {
 	bool quit = false;
+
+
+	cout << "REMOVE THIS" << endl;
+	this->room.loadFromXMLFile("xmlfiles/Level3.xml");
+	this->room.loadMovesFromXMLFile("xmlfiles/Bewegingen1.0.xml");
 
 	this->printHelp(out);
 
@@ -26,6 +32,7 @@ void UserInterface::enterMenu (istream& in, ostream& out) {
 
 	// Extract the first word
 	iss >> actual_command;
+	std::transform(actual_command.begin(), actual_command.end(), actual_command.begin(), ::tolower);
 
 	out << "You executed: " << actual_command << endl;
 
@@ -33,13 +40,13 @@ void UserInterface::enterMenu (istream& in, ostream& out) {
 		printHelp(out);
 	}
 	
-	else if (actual_command == "loadlevel" || actual_command == "loadLevel") {
+	else if (actual_command == "loadlevel") {
 		string filename;
 		iss >> filename;
 		this->room.loadFromXMLFile(filename.c_str());
 	}
 	
-	else if (actual_command == "loadmoves" || actual_command == "loadMoves") {
+	else if (actual_command == "loadmoves") {
 		string filename;
 		iss >> filename;
 		this->room.loadMovesFromXMLFile(filename.c_str());
@@ -50,7 +57,7 @@ void UserInterface::enterMenu (istream& in, ostream& out) {
 		this->room.printRoom(out);
 	}
 
-	else if (actual_command == "printToFile") {
+	else if (actual_command == "printtofile") {
 		string filename;
 		iss >> filename;
 		filename = "game_board_" + filename;
@@ -61,6 +68,32 @@ void UserInterface::enterMenu (istream& in, ostream& out) {
 		file.open(filename);
 
 		this->room.printRoom(file);
+	}
+
+	else if (actual_command == "printtoxmlfile") {
+		string filename;
+		iss >> filename;
+		filename = "xml_game_board_" + filename;
+
+		out << "Printing to file '" << filename << "'" << endl;
+
+		std::ofstream file;
+		file.open(filename);
+
+		this->room.saveToXMLFile(file);
+	}
+
+	else if (actual_command == "printmovestoxmlfile") {
+		string filename;
+		iss >> filename;
+		filename = "xml_moves_" + filename;
+
+		out << "Printing to file '" << filename << "'" << endl;
+
+		std::ofstream file;
+		file.open(filename);
+
+		this->room.saveMovesToXMLFile(file);
 	}
 	
 	else if (actual_command == "run") {
@@ -87,6 +120,12 @@ void UserInterface::printHelp (ostream& out) {
 
 	out << "- printToFile [filename]" << endl;
 	out << "\t Prints the current room to a file called game_board_[filename]" << endl << endl;
+
+	out << "- printToXMLFile [filename]" << endl;
+	out << "\t Prints the current room to a file called game_board_[filename]" << endl << endl;
+
+	out << "- printMovesToXMLFile [filename]" << endl;
+	out << "\t Prints the currently left moves to a file called game_board_[filename]" << endl << endl;
 
 	out << "- run [maxsteps]" << endl;
 	out << "\t Runs the simulation untill the end" << endl;
