@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<ACTIES>
+    <BEWEGING>
+        <ID>Chip</ID>
+        <RICHTING>LINKS</RICHTING>
+    </BEWEGING>
+    <BEWEGING>
+        <ID>Chip</ID>
+        <RICHTING>LINKS</RICHTING>
+    </BEWEGING>
+    <BEWEGING>
+        <ID>Chip</ID>
+        <RICHTING>OMHOOG</RICHTING>
+    </BEWEGING>
+    <BEWEGING>
+        <ID>Chip</ID>
+        <RICHTING>OMHOOG</RICHTING>
+    </BEWEGING>
+    <BEWEGING>
+        <ID>Chip</ID>
+        <RICHTING>OMHOOG</RICHTING>
+    </BEWEGING>
+</ACTIES>

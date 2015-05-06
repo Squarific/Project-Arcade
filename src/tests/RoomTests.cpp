@@ -51,6 +51,17 @@ TEST(roomtests, xmlinstancecheck3) {
 	EXPECT_TRUE(testroom.get_instance(2, 7)->get_movable());
 }
 
+// INSTANCE TEST 4 - WATER
+TEST(roomtests, xmlinstancecheck4) {
+	Room testroom;
+	testroom.loadFromXMLFile("xmlfiles/Level2.xml");
+	
+	EXPECT_EQ(testroom.get_instance(1, 5)->get_type(), 4);
+	EXPECT_EQ(testroom.get_instance(2, 5)->get_type(), 4);
+	EXPECT_EQ(testroom.get_instance(1, 6)->get_type(), 4);
+	EXPECT_EQ(testroom.get_instance(2, 6)->get_type(), 4);
+}
+
 // PLAYER LOCATION TEST
 TEST(roomtests, xmlplayerlocationcheck) {
 	Room testroom;
