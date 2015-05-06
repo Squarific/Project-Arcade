@@ -2,7 +2,7 @@
 <ACTIES>
     <BEWEGING>
         <ID>monster1</ID>
-        <RICHTING>OMHOOG</RICHTING>
+        <RICHTING>RECHTS</RICHTING>
     </BEWEGING>
     <BEWEGING>
         <ID>Chip</ID>
