@@ -201,7 +201,7 @@ bool Room::set_instance(int width, int height, int type) {
 	REQUIRE(width >= 0, "ERROR: set_instance() coordinates out of bounds.");
 	REQUIRE(height >= 0, "ERROR: set_instance() coordinates out of bounds.");
 	REQUIRE(width < this->get_width(), "ERROR: set_instance() coordinates out of bounds.");
-	REQUIRE(width < this->get_height(), "ERROR: set_instance() coordinates out of bounds.");
+	REQUIRE(height < this->get_height(), "ERROR: set_instance() coordinates out of bounds.");
 
 	if (type == 0) {
 		Player* instance = new Player();
