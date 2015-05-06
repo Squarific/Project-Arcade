@@ -83,3 +83,13 @@ TEST(movetests, barrelmovecheck2) {
 	
 	EXPECT_EQ(testroom.get_instance(2, 7)->get_type(), 2);
 }
+
+// EXECUTE MOVES - CHECK DROWNING
+TEST(movetests, drowncheck) {
+	Room testroom;
+	testroom.loadFromXMLFile("xmlfiles/Level2.xml");
+	testroom.loadMovesFromXMLFile("xmlfiles/Level2Drown.xml");
+	testroom.executeAllMoves("HuidigSpeelveld.txt", "ResterendeBewegingen.txt", );
+	
+	EXPECT_EQ(testroom.get_instance(2, 7)->get_type(), 2);
+}
