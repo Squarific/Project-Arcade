@@ -143,6 +143,8 @@ void UserInterface::printHelp (ostream& out) {
 	out << "\t Prints the current room to a file called [filename].html" << endl << endl;
 
 	out << "- run [maxsteps]" << endl;
-	out << "\t Runs the simulation untill the end" << endl;
-	out << "\t If maxsteps is a positive number the simulation is run till the end or till maxsteps steps have been executed whichever comes first." << endl << endl;
+	out << "\t Runs the simulation untill the end" << endl << endl;
+
+	out << "- runAll" << endl;
+	out << "\t Runs all the simulation steps" << endl << endl;
 }

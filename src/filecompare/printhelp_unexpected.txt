@@ -1,0 +1,19 @@
+The following commands are available:
+
+- help
+	 Prints this help menu
+
+- loadLevel [filename]
+	 Parses current room to a file called game_board_[filename].txt
+
+- printToXMLFile [filename]
+	 Prints the current room to a file called xml_game_board_[filename].xml
+
+- printMovesToXMLFile [filename]
+	 Prints the currently left moves to a file called xml_moves_[filename].xml
+
+- printToHTMLFile [filename
+	 Prints the current room to a file called [filename].html
+- run [maxsteps]
+	 Runs the simulation untill the end
+	 If maxsteps is a positive number the simulation is run till the end or till maxsteps steps have been executed whichever comes first.

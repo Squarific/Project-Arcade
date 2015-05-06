@@ -147,8 +147,8 @@ void Room::printRoom(ostream& out) {
 
 void Room::init() {
 	REQUIRE(!is_initialized, "ERROR: Room was already initialized.");
-	REQUIRE(width > 0, "ERROR: Width is less than 0. Cannot initialize.")
-	REQUIRE(height > 0, "ERROR: Width is less than 0. Cannot initialize.")
+	REQUIRE(width > 0, "ERROR: Width is less than 0. Cannot initialize.");
+	REQUIRE(height > 0, "ERROR: Height is less than 0. Cannot initialize.");
 
 	if ((width > 0) && (height > 0)) {
 		instances.resize(height, std::vector< Instance*>(width, NULL));
