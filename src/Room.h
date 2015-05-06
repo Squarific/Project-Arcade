@@ -54,9 +54,9 @@ class Room {
 	
 	/**
 	 *	PRE CONDITIONS:
-	 *		is_initialized == false
-	 *		width > 0
-	 *		height > 0
+	 *		REQUIRE(!is_initialized, "ERROR: Room was already initialized.");
+	 *		REQUIRE(width > 0, "ERROR: Width is less than 0. Cannot initialize.")
+	 *		REQUIRE(height > 0, "ERROR: Width is less than 0. Cannot initialize.")
 	 *
 	 *	Fills the room width empty instances. (type = 0, movable = false)
 	 * 	This function is used during the XML Parsing, so that before any instances are added,
@@ -65,17 +65,21 @@ class Room {
 	 *	or when either of them are smaller than 1.
 	 *
 	 *	POST CONDITIONS:
-	 *		is_initialized = true;
+	 *		ENSURE(is_initialized, "ERROR: Room could not be initialized.");
 	 */
 	void init();
 	
 	/**
 	 *	PRE CONDITIONS:
 	 *		is_initialized == false
-	 *	(only for set)
+	 *		(only for set)
 	 *
 	 *	Get and set functions for the 'height' attribute.
 	 *	! Starts counting from 1. (so if the height = 10, the 'highest' accessible cell has a y value of 9.)
+	 *
+	 *	POST CONDITIONS:
+	 *		ENSURE(this->get_height() == h, "ERROR: set_height() did not work correctly.");
+	 *		(set only)
 	 */
 	void set_height(int h);
 	int get_height();
@@ -87,6 +91,10 @@ class Room {
 	 *
 	 *	Get and set functions for the 'width' attribute.
 	 *	! Starts counting from 1. (so if the width = 10, the 'furthest' accessible cell has an x value of 9.)
+	 *
+	 *	POST CONDITIONS:
+	 *		ENSURE(this->get_width() == w, "ERROR: set_width() did not work correctly.");
+	 *		(set only)
 	 */
 	void set_width(int w);
 	int get_width();
@@ -95,6 +103,10 @@ class Room {
 	 *	Get and set functions for the 'name' attribute.
 	 *	This attribute is used when writing the room properties to an ascii file,
 	 *	to display the room's name. (e.g. 'Level 1')
+	 *
+	 *	POST CONDITIONS:
+	 *		ENSURE(this->get_name() == str, "ERROR: set_name() did not work correctly.");
+	 *		(set only)
 	 */
 	void set_name(std::string str);
 	std::string get_name();
@@ -109,6 +121,10 @@ class Room {
 	 *	Since the set_instance() function creates a new object using the new operator,
 	 *	it should only be used when parsing the .xml files, not to modify an instance.
 	 * 	With set_instance, an optional string id can be included for instances that have an id (Player, Monster, Gate, Button).
+	 *
+	 *	POST CONDITIONS:
+	 *		ENSURE(this->get_instance(width, height) != NULL, "ERROR: set_instance did not work correctly.");
+	 *		(set only)
 	 */
 	bool set_instance(int width, int height, int type);
 	bool set_instance(int width, int height, int type, std::string id);
@@ -132,17 +148,30 @@ class Room {
 	 *	The previous location will be filled with an empty instance.
 	 *	This function is used in execute_move(), and should probably not be used anywhere else.
 	 *	If you want to move the player, use execute_move().
+	 *
+	 *	POST CONDITIONS:
+	 *		ENSURE(this->get_instance(from_width, from_height) == NULL, "ERROR: move_instance() did not work correctly.");
+	 *		ENSURE(this->get_instance(to_width, to_height) != NULL, "ERROR: move_instance() did not work correctly.");
 	 */
 	void move_instance(int from_width, int from_height, int to_width, int to_height);
 	
 	/**
 	 *	PRE CONDITIONS:
-	 *		is_initialized == true
+	 *		REQUIRE(is_initialized, "ERROR: Could not execute move because Room was not properly initialized.");
 	 *
 	 *	Executes a move command, moving the player and other adjacent objects depending on their movable status.
 	 *	Returns true if the move was succesfully executed, otherwise returns false.
 	 */
 	bool execute_move(Move& move);
+
+	/**
+	 *	PRE CONDITIONS:
+	 *		REQUIRE(is_initialized, "ERROR: Could not execute move because Room was not properly initialized.");
+	 *		REQUIRE(move->isAttack, "ERROR: Tried to executeAttack on non-attack move.");
+	 *
+	 *	Executes an attack command, attacking adjacent objects.
+	 *	Returns true if the attack was succesfully executed, otherwise returns false.
+	 */
 	bool executeAttack(Move*& move, int offset_x, int offset_y);
 	
 	/**
@@ -274,8 +303,8 @@ class Room {
 
 	/**
 	 *	PRE CONDITIONS:
-	 *		is_initialized == true
-	 *		get_instance(width, height)->get_type == 6
+	 *		REQUIRE(is_initialized, "ERROR: Could not execute any moves because Room was not initialized.");
+	 *		REQUIRE(this->get_instance(width, height)->get_type() == 6, "ERROR: That instance is not a button.");
 	 *
 	 *	Returns a pointer to the gate that is linked to the given button.
 	 */

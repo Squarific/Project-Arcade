@@ -28,6 +28,10 @@ class Move {
 	 *	1: Up
 	 *	2: Left
 	 *	3: Down
+   	 *
+   	 *  POST CONDITIONS:
+   	 *    ENSURE(this->get_direction() == d, "ERROR: set_direction() did not work correctly.");
+   	 *    (set only)
 	 */
 	void set_direction(int d);
 	int get_direction();
@@ -39,6 +43,10 @@ class Move {
 	 *	Get and set functions for the 'name' attribute.
 	 *	The name attribute determines which player executes the move.
 	 *	It must have the same name as the player instance.
+   	 *
+   	 *  POST CONDITIONS:
+   	 *    ENSURE(this->get_name() == str, "ERROR: set_name() did not work correctly.");
+   	 *    (set only)
 	 */
 	void set_name(std::string str);
 	std::string get_name();
