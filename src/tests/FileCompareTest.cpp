@@ -34,3 +34,14 @@ TEST(filecompare, movesWrong) {
 
 	EXPECT_FALSE(FileCompare("ResterendeBewegingen.txt", "filecompare/BewegingenWrong.txt"));
 }
+
+// EXECUTE MOVES - CHECK DROWNING
+TEST(filecompare, drowncheck) {
+	Room testroom;
+	testroom.loadFromXMLFile("xmlfiles/Level2.xml");
+	testroom.loadMovesFromXMLFile("xmlfiles/Level2Drown.xml");
+	testroom.executeAllMoves("HuidigSpeelveld.txt", "ResterendeBewegingen.txt");
+	
+	EXPECT_TRUE(FileCompare("HuidigSpeelveld.txt", "filecompare/SpeelveldDrown.txt"));
+	EXPECT_TRUE(FileCompare("ResterendeBewegingen.txt", "filecompare/BewegingenDrown.txt"));
+}

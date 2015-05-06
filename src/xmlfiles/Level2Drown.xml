@@ -20,4 +20,8 @@
         <ID>Chip</ID>
         <RICHTING>OMHOOG</RICHTING>
     </BEWEGING>
+    <BEWEGING>
+        <ID>Chip</ID>
+        <RICHTING>OMHOOG</RICHTING>
+    </BEWEGING>
 </ACTIES>

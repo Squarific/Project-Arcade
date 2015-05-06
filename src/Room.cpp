@@ -670,7 +670,7 @@ void Room::saveToHTMLFile (ostream& file) {
 		file << "<br style=\"clear:both;\"/>\n";
 	}
 
-	file << "\t</body>\n</html>" << endl;
+	file << "\t<audio style=\"visibility:hidden;\" src=\"sound/Le Epik Song.mp3\" autoplay loop>\t\n</body>\n</html>" << endl;
 };
 
 void Room::writeMovesToFile(const char* filename) {
