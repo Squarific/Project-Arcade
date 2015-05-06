@@ -1,6 +1,8 @@
 #include "../Googletests/include/gtest/gtest.h"
 #include "../Room.h"
 #include "../XMLParser.cpp"
+#include "../UserInterface.h"
+#include <fstream>
 
 bool FileCompare(std::string leftFileName, std::string rightFileName) {
 	std::ifstream leftFile, rightFile;
@@ -49,6 +51,7 @@ bool FileCompare(std::string leftFileName, std::string rightFileName) {
 #include "MoveTests.cpp"
 #include "MetaFileCompareTest.cpp"
 #include "FileCompareTest.cpp"
+#include "UserInterfaceTests.cpp"
 
 int main(int argc, char *argv[]) {
 	::testing::InitGoogleTest(&argc, argv);
