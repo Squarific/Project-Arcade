@@ -151,7 +151,6 @@ class Target: public Instance {
 
 int Instance::get_type() {
 	REQUIRE(properly_init, "ERROR: Instance was not properly initialized.");
-	
 	return type;
 }
 

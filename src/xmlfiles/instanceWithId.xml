@@ -1,0 +1,5 @@
+<VELD>
+	<MONSTER beweegbaar="false" x="6" y="7">
+		<ID>test_id</ID>
+	</MONSTER>
+</VELD>
