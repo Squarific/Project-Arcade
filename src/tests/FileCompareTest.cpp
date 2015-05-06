@@ -7,4 +7,6 @@ TEST(filecompare, filecomparecomplete) {
 
 	EXPECT_TRUE(FileCompare("HuidigSpeelveld.txt", "filecompare/SpeelveldComplete.txt"));
 	EXPECT_TRUE(FileCompare("ResterendeBewegingen.txt", "filecompare/BewegingenComplete.txt"));
+	EXPECT_FALSE(FileCompare("HuidigSpeelveld.txt", "filecompare/SpeelveldWrong.txt"));
+	EXPECT_FALSEE(FileCompare("ResterendeBewegingen.txt", "filecompare/BewegingenWrong.txt"));
 }

@@ -41,6 +41,10 @@ class Instance {
 	 *	5: Gate
 	 *	6: Button
 	 *	7: Target
+   	 *
+   	 *  POST CONDITIONS:
+   	 *    ENSURE(this->get_type() == t, "ERROR: set_type() did not work correctly.");
+   	 *    (set only)
 	 */
 	int get_type();
 	void set_type(int t);
@@ -52,13 +56,19 @@ class Instance {
 	 *	Get and set for the 'name' attribute.
 	 *	This is currently only used for the player.
 	 * 	Barrels, Walls, ... do not use a name.
+   	 *
+   	 *  POST CONDITIONS:
+   	 *    ENSURE(this->get_name() == n, "ERROR: set_name() did not work correctly.");
+   	 *    (set only)
 	 */
 	std::string get_name();
 	void set_name(std::string n);
 
 	/**
 	 *	PRE CONDITIONS:
-	 *		properly_init == true
+	 *		REQUIRE(properly_init, "ERROR: Instance was not properly initialized.");
+  	 *		REQUIRE(type >= 0, "ERROR: Instance type out of bounds.");
+  	 *		REQUIRE(type < 8, "ERROR: Instance type out of bounds.");
 	 *
 	 *	Returns the symbol used in the printRoom() function.
 	 */
@@ -72,6 +82,10 @@ class Instance {
 	 *	Moveable objects are able to be pushed around by the player,
 	 *	as long as there is an empty space in the specified direction.
 	 *	This attribute is not used for Players and Empty cells, although it is set to 'false' by default.
+   	 *
+   	 *  POST CONDITIONS:
+   	 *    ENSURE(this->get_movable() == m, "ERROR: set_movable() did not work correctly.");
+   	 *    (set only)
 	 */
 	bool get_movable();
 	void set_movable(bool m);
