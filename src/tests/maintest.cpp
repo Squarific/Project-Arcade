@@ -1,6 +1,7 @@
 #include "../Googletests/include/gtest/gtest.h"
 #include "../Room.h"
 #include "../XMLParser.cpp"
+#include "../UserInterface.h"
 
 bool FileCompare(std::string leftFileName, std::string rightFileName) {
 	std::ifstream leftFile, rightFile;
