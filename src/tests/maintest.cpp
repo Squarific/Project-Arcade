@@ -51,9 +51,11 @@ bool FileCompare(std::string leftFileName, std::string rightFileName) {
 #include "MoveTests.cpp"
 #include "MetaFileCompareTest.cpp"
 #include "FileCompareTest.cpp"
+#include "FaultyXML.cpp"
 #include "UserInterfaceTests.cpp"
 
 int main(int argc, char *argv[]) {
+	::testing::FLAGS_gtest_death_test_style = "threadsafe";
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
 }

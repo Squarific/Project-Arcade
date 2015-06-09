@@ -15,7 +15,7 @@ bool Room::loadFromXMLFile (const char* filename) {
 
 	bool success = doc.LoadFile();
 
-	REQUIRE(success, (string("File ") + string(filename) + string(" not found")).c_str());
+	REQUIRE(success, (string("File ") + string(filename) + string(" was not found, was empty or contained syntax errors")).c_str());
 
 	// Get root element
 	TiXmlElement* root = doc.FirstChildElement();
@@ -118,7 +118,7 @@ bool Room::loadMovesFromXMLFile(const char* filename) {
 	TiXmlDocument doc(filename);
 	
 	bool success = doc.LoadFile();
-	REQUIRE(success, (string("File ") + string(filename) + string(" not found while trying to parse moves from xml file")).c_str());
+	REQUIRE(success, (string("File ") + string(filename) + string(" not found, was empty or contained syntax errors")).c_str());
 
 	// Get root element
 	TiXmlElement* root = doc.FirstChildElement();
@@ -135,11 +135,7 @@ bool Room::loadMovesFromXMLFile(const char* filename) {
 			TiXmlElement* directionElem = playernameElem->NextSiblingElement();
 
 			if (playernameElem == NULL || directionElem == NULL) {
-				cerr << "XML Error: BEWEGING tags need to contain 2 tags, the first is a playername, the second a direction" << endl;
-			}
-
-			if (string(playernameElem->Value()) != "ID" || string(directionElem->Value()) != "RICHTING") {
-				cerr << "XML Error: BEWEGING needs to contain a tag SPELERNAAM and a tag RICHTING but contained '" << playernameElem->Value() << "' and '" << directionElem->Value() << "'" << endl;
+				cerr << "XML Error: MISSING TAGS: BEWEGING tags need to contain at least 2 tags, the first is a playername, the second a direction" << endl;
 			}
 
 			TiXmlNode* playernameNode = playernameElem->FirstChild();
